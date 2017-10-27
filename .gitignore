@@ -1,1 +1,9 @@
+#Macs are pigs
 **/.DS_Store
+#LaTex is a pig, too
+**/*.aux
+**/*.fdb_latexmk
+**/*.log
+**/*.pdf
+**/*.gz
+**/*.fls
