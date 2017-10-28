@@ -4,6 +4,6 @@ namespace GameModel {
     /// </summary>
     public interface IMoveResult
     {
-        
+        BoardPosition Destination {get;}
     }
 }

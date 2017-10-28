@@ -1,5 +1,8 @@
 namespace GameModel
 {
+    /// <summary>
+    /// Player slot type
+    /// </summary>
     public enum PlayerEnum {
         PLAYER_1,
         PLAYER_2,

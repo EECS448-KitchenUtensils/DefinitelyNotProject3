@@ -1,4 +1,7 @@
 namespace GameModel {
+    /// <summary>
+    /// Allows indexing the board using algebraic notation 
+    /// </summary>
     enum XCoord {
         a = 0,
         b,
