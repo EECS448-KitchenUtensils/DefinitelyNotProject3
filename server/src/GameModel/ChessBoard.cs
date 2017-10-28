@@ -1,8 +1,8 @@
 namespace GameModel
 {
-    class ChessBoard
+    public class ChessBoard
     {
-        internal ChessBoard()
+        public ChessBoard()
         {
             
         }
