@@ -13,12 +13,6 @@ public class main_scene_start : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		//Move main camera to center of grid.
-		float cam_x = (gridWidth - 1) / 2;
-		float cam_y = (gridWidth - 1) / 2;
-		Vector3 cam_coords = new Vector3(cam_x, cam_y, -10);
-		Camera.main.transform.position = cam_coords;
-
 		//Draws board and maps quares to array
 		for (int y = 0; y < gridDepth; y=y+1) {
 			for (int x = 0; x < gridWidth; x = x +1) {
