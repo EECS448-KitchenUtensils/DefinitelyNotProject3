@@ -9,12 +9,12 @@ namespace GameModel
         /// </summary>
         /// <returns>The valid moves for this piece</returns>
         public abstract IEnumerable<IValidMoveResult> PossibleMoves { get; }
-        
+
         /// <summary>
         /// The owner of this piece
         /// </summary>
         /// <returns>A ChessPlayer reference</returns>
-        public abstract ChessPlayer Owner { get; protected set; }
+        public ChessPlayer Owner { get; protected set; }
 
         /// <summary>
         /// Checks if this piece can move to a given location
