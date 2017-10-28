@@ -1,5 +1,5 @@
 namespace GameModel {
-    struct BoardPosition {
+    public struct BoardPosition {
         XCoord x;
         int y;
     }
