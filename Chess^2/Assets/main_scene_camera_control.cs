@@ -21,4 +21,9 @@ public class main_scene_camera_control : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	// on successful movement by a player, call this function to rotate the camera
+	void rotateNextPlayer() {
+		Camera.main.transform.Rotate(0, 0, 90); // rotate 90 degress about the z axis
+	}
 }
