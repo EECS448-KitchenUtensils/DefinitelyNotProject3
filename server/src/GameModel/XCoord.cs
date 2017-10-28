@@ -2,7 +2,7 @@ namespace GameModel {
     /// <summary>
     /// Allows indexing the board using algebraic notation 
     /// </summary>
-    enum XCoord {
+    public enum XCoord {
         a = 0,
         b,
         c,
