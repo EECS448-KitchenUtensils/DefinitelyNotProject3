@@ -2,17 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class main_scene_start : MonoBehaviour {
+public class MainSceneStart : MonoBehaviour {
 
 	public Transform square_dark;
 	public Transform square_light;
 	public float gridWidth;
 	public float gridDepth;
 	public Transform[, ] squares = new Transform[14, 14];
+	public Dictionary<string, Transform>[] clientPiecesCollection = new Dictionary<string, Transform>[4];
+
 
 	// Use this for initialization
 	void Start () {
+		CreateGrid ();
+		CreatePieces ();
+	}
 
+	// Update is called once per frame
+	void Update () {
+
+	}
+
+
+	//Pre: 
+	void CreateGrid (){
 		//Draws board and maps quares to array
 		for (int y = 0; y < gridDepth; y=y+1) {
 			for (int x = 0; x < gridWidth; x = x +1) {
@@ -34,9 +47,10 @@ public class main_scene_start : MonoBehaviour {
 			}
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	void CreatePieces(){
+		foreach(Dictionary<string, Transform> dict in clientPiecesCollection){
+
+		}
 	}
 }
