@@ -15,5 +15,12 @@ namespace GameModel
         /// </summary>
         /// <returns>A ChessPlayer reference</returns>
         public abstract ChessPlayer Owner { get; protected set; }
+
+        /// <summary>
+        /// Checks if this piece can move to a given location
+        /// </summary>
+        /// <param name="position">The position to check</param>
+        /// <returns>true if the move is valid</returns>
+        public abstract bool CanMoveTo(BoardPosition position);
     }
 }
