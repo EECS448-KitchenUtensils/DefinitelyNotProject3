@@ -6,6 +6,8 @@ public class MainSceneStart : MonoBehaviour {
 
 	public Transform square_dark;
 	public Transform square_light;
+	public GameObject test_bishop;
+
 	public float gridWidth;
 	public float gridDepth;
 	public Transform[, ] squares = new Transform[14, 14];
@@ -16,11 +18,16 @@ public class MainSceneStart : MonoBehaviour {
 	void Start () {
 		CreateGrid ();
 		CreatePieces ();
+
+
 	}
 
 	// Update is called once per frame
+	/// <summary>
+	/// Main Update
+	/// </summary>
 	void Update () {
-
+		BishopTest ();
 	}
 
 
@@ -52,5 +59,14 @@ public class MainSceneStart : MonoBehaviour {
 		foreach(Dictionary<string, Transform> dict in clientPiecesCollection){
 
 		}
+	}
+
+	void BishopTest(){
+		Renderer rend = test_bishop.GetComponent<Renderer>();
+		rend.material.color = new Color (2, 0, 0);
+		Vector3 current = test_bishop.transform.position;
+		Vector3 dest = new Vector3 (5, 5, -1);
+		Vector3 to = Vector3.MoveTowards (current, dest, 2 * Time.deltaTime);
+		test_bishop.transform.position = to;
 	}
 }
