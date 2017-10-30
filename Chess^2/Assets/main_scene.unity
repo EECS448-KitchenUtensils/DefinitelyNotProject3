@@ -744,7 +744,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   square_dark: {fileID: 1413555972}
   square_light: {fileID: 714831408}
-  test_bishop: {fileID: 757328362}
+  piece_bishop: {fileID: 757328362}
+  piece_knight: {fileID: 1766430287}
+  piece_rook: {fileID: 105401536}
+  piece_king: {fileID: 83509179}
+  piece_queen: {fileID: 1508770758}
+  piece_pawn: {fileID: 187189779}
   gridWidth: 14
   gridDepth: 14
 --- !u!4 &1646519465
