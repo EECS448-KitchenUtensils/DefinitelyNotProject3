@@ -8,7 +8,7 @@ namespace GameModel
         /// Enumerates all of the valid possible moves for this piece
         /// </summary>
         /// <returns>The valid moves for this piece</returns>
-        public abstract IEnumerable<IValidMoveResult> PossibleMoves { get; }
+        public abstract IEnumerable<PositionDelta> PossibleMoves { get; }
 
         /// <summary>
         /// The owner of this piece

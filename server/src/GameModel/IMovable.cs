@@ -7,7 +7,7 @@ namespace GameModel
         /// All of this piece's possible moves
         /// </summary>
         /// <returns>Valid moves that can be taken</returns>
-        IEnumerable<IValidMoveResult> PossibleMoves {get;}
+        IEnumerable<PositionDelta> PossibleMoves {get;}
 
         /// <summary>
         /// Checks whether this piece can move to the given position
