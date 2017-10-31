@@ -72,10 +72,30 @@ public class MainSceneStart : MonoBehaviour {
 
 			dict.Add ("king", (Instantiate (piece_king, new Vector3(1, 1, -1), Quaternion.identity)) );
 			dict.Add ("queen", (Instantiate (piece_queen, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("knight", (Instantiate (piece_knight, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("rook", (Instantiate (piece_rook, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("bishop", (Instantiate (piece_bishop, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("pawn", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
+
+			//2 Knights
+			dict.Add ("knight0", (Instantiate (piece_knight, new Vector3(1, 1, -1), Quaternion.identity)) );
+			dict.Add ("knight1", (Instantiate (piece_knight, new Vector3(1, 1, -1), Quaternion.identity)) );
+
+			//2 Rooks
+			dict.Add ("rook0", (Instantiate (piece_rook, new Vector3(1, 1, -1), Quaternion.identity)) );
+			dict.Add ("rook1", (Instantiate (piece_rook, new Vector3(1, 1, -1), Quaternion.identity)) );
+
+
+			//2 Bishops
+			dict.Add ("bishop0", (Instantiate (piece_bishop, new Vector3(1, 1, -1), Quaternion.identity)) );
+			dict.Add ("bishop1", (Instantiate (piece_bishop, new Vector3(1, 1, -1), Quaternion.identity)) );
+
+
+			//8 Pawns.
+			dict.Add ("pawn0", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
+			dict.Add ("pawn1", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
+			dict.Add ("pawn2", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
+			dict.Add ("pawn3", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
+			dict.Add ("pawn4", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
+			dict.Add ("pawn5", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
+			dict.Add ("pawn6", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
+			dict.Add ("pawn7", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
 
 		}
 	}
@@ -110,11 +130,67 @@ public class MainSceneStart : MonoBehaviour {
 	/// Moves chess pieces to their starting position.
 	/// </summary>
 	void PiecesToInitialPosition(){
-		//At the moment just the kings.
-		clientPiecesCollection[0]["king"].transform.position = new Vector3(5,5,-1);
-		clientPiecesCollection[1]["king"].transform.position = new Vector3(5,7,-1);
-		clientPiecesCollection[2]["king"].transform.position = new Vector3(5,6,-1);
-		clientPiecesCollection[3]["king"].transform.position = new Vector3(12,5,-1);
+		
+		//Move Pieces besides pawn
+		string[] list0 = new string[8];
+		list0 [0] = "rook0";
+		list0 [1] = "knight0";
+		list0 [2] = "bishop0";
+		list0 [3] = "king";
+		list0 [4] = "queen";
+		list0 [5] = "bishop1";
+		list0 [6] = "knight1";
+		list0 [7] = "rook1";
+
+		string[] list1 = new string[8];
+		list1 [0] = "rook0";
+		list1 [1] = "knight0";
+		list1 [2] = "bishop0";
+		list1 [3] = "queen";
+		list1 [4] = "king";
+		list1 [5] = "bishop1";
+		list1 [6] = "knight1";
+		list1 [7] = "rook1";
+
+		int xory = 0;
+		for (int i = 0; i < 4; i++){
+			if (i % 2 == 0) {
+				int j = 0;
+				foreach (string piece in list0) {
+					clientPiecesCollection[i][piece].transform.position = new Vector3(3+j,xory,-1);
+					j++;
+				}
+			}
+			else{
+				int j = 0;
+				foreach (string piece in list0) {
+					clientPiecesCollection[i][piece].transform.position = new Vector3(xory,3+j,-1);
+					j++;
+				}
+				xory = 13;
+			}
+		}
+
+		//Move Pawns.
+		for (int i = 0; i < 8; i++) {
+			string temp = "pawn" + i.ToString ();
+			clientPiecesCollection[0][temp].transform.position = new Vector3(3+i,1,-1);
+		}
+		//Player 2
+		for (int i = 0; i < 8; i++) {
+			string temp = "pawn" + i.ToString ();
+			clientPiecesCollection[1][temp].transform.position = new Vector3(1,3+i,-1);
+		}
+		//Player 3
+		for (int i = 0; i < 8; i++) {
+			string temp = "pawn" + i.ToString ();
+			clientPiecesCollection[2][temp].transform.position = new Vector3(3+i,12,-1);
+		}
+		//Player 4
+		for (int i = 0; i < 8; i++) {
+			string temp = "pawn" + i.ToString ();
+			clientPiecesCollection[3][temp].transform.position = new Vector3(12,3+i,-1);
+		}
 	}
 
 //	void BishopTest(){
