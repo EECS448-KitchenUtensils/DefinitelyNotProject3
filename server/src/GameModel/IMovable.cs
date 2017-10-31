@@ -6,8 +6,9 @@ namespace GameModel
         /// <summary>
         /// All of this piece's possible moves
         /// </summary>
+        /// <param name="from">The position to start from</param>
         /// <returns>Valid moves that can be taken</returns>
-        IEnumerable<PositionDelta> PossibleMoves {get;}
+        IEnumerable<BoardPosition> PossibleMoves(BoardPosition from);
 
         /// <summary>
         /// Checks whether this piece can move to the given position

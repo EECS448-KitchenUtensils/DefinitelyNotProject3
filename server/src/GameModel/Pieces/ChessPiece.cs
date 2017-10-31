@@ -7,8 +7,9 @@ namespace GameModel
         /// <summary>
         /// Enumerates all of the valid possible moves for this piece
         /// </summary>
+        /// <param name="from">The position to move from</param>
         /// <returns>The valid moves for this piece</returns>
-        public abstract IEnumerable<PositionDelta> PossibleMoves { get; }
+        public abstract IEnumerable<BoardPosition> PossibleMoves(BoardPosition from);
 
         /// <summary>
         /// The owner of this piece

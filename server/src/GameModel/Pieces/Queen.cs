@@ -5,10 +5,9 @@ namespace GameModel
 {
     class Queen : ChessPiece
     {
-        public override IEnumerable<IValidMoveResult> PossibleMoves {
-            get {
-                return Enumerable.Empty<IValidMoveResult>();
-            }
+        public override IEnumerable<BoardPosition> PossibleMoves(BoardPosition pos)
+        {
+            return Enumerable.Empty<BoardPosition>();
         }
         public override bool CanMoveTo(BoardPosition position)
         {
