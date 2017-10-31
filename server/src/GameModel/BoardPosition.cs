@@ -9,6 +9,7 @@ namespace GameModel {
             this.x = x;
             this.y = y;
         }
+        public override int GetHashCode() => (int)x ^ y;
         public XCoord x;
         public int y;
     }
