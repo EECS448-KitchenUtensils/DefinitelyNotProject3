@@ -14,10 +14,10 @@ namespace GameModel.Tests
         [TestCase(XCoord.n, 7, true)] //Right wing
         [TestCase(XCoord.f, 12, true)] //Top wing
         [TestCase(XCoord.f, 02, true)] //Bottom wing
-        public void CheckPositionExists(XCoord x, int y, bool inBounds) {
-            var board = new ChessBoard();
+        public void CheckPositionExists(XCoord x, int y, bool inBounds)
+        {
             var pos = new BoardPosition(x, y);
-            Assert.AreEqual(board.CheckPositionExists(pos), inBounds);
+            Assert.AreEqual(ChessBoard.CheckPositionExists(pos), inBounds);
         }
     }
 }
