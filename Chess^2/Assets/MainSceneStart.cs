@@ -25,7 +25,7 @@ public class MainSceneStart : MonoBehaviour {
 		CreatePieces ();
 		GivePiecesColors ();
 		PiecesToInitialPosition ();
-
+		GivePiecesBehavior ();
 	}
 
 	// Update is called once per frame
@@ -124,6 +124,17 @@ public class MainSceneStart : MonoBehaviour {
 			Renderer rend = o.GetComponent<Renderer> ();
 			rend.material.color = new Color (0, 1, 0);
 		}
+	}
+
+	void GivePiecesBehavior(){
+
+		for (int i = 0; i < 4; i++) {
+			foreach (string key in clientPiecesCollection[i].Keys) {
+				clientPiecesCollection [i] [key].AddComponent<PieceBehavior> ();
+				clientPiecesCollection [i] [key].GetComponent<PieceBehavior> ().thisPiece = key;
+			}
+		}
+
 	}
 
 	/// <summary>
