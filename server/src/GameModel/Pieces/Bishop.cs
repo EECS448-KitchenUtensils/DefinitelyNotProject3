@@ -17,7 +17,7 @@ namespace GameModel
         {
             var directions = new[,] {{-1, -1}, {-1, 1}, {1, -1}, {-1, -1}};
             for(var i = 0; i < directions.Length; i++) {
-                for(int centerDistance = 1; true; i++)
+                for(int centerDistance = 1; true; centerDistance++)
                 {
                     var newX = pos.x + (directions[i, 0] * centerDistance);
                     var newY = pos.y + (directions[i, 1] * centerDistance);
