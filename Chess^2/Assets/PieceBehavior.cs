@@ -17,6 +17,20 @@ public class PieceBehavior : MonoBehaviour {
 	}
 
 	void OnMouseDown (){
-		this.gameObject.transform.Translate (1, 0, 0);
+		if (thisPiece.Contains ("pawn")) {
+
+		} else if (thisPiece.Contains ("king")) {
+
+		} else if (thisPiece.Contains ("queen")) {
+
+		} else if (thisPiece.Contains ("rook")) {
+
+		} else if (thisPiece.Contains ("knight")) {
+
+		} else if (thisPiece.Contains ("bishop")) {
+
+		} else {
+
+		}
 	}
 }
