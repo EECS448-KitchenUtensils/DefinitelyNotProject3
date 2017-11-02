@@ -13,7 +13,7 @@ namespace GameModel
                 for(int centerDistance = 1; true; centerDistance++)
                 {
                     var newX = pos.x + (_moveOffsets[i].x * centerDistance);
-                    var newY = pos.y + (_moveOffseets[i].y * centerDistance);
+                    var newY = pos.y + (_moveOffsets[i].y * centerDistance);
                     var candidate = new BoardPosition(newX, newY);
 
                     if (ChessBoard.CheckPositionExists(candidate))

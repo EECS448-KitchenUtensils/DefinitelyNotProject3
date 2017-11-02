@@ -7,3 +7,6 @@
 **/*.pdf
 **/*.gz
 **/*.fls
+#VS is a pig
+**/.vs
+server/packages/
