@@ -67,6 +67,7 @@
     <Compile Include="ChessGame.cs" />
     <Compile Include="ChessPlayer.cs" />
     <Compile Include="Data\BoardPosition.cs" />
+    <Compile Include="Data\SpaceStatus.cs" />
     <Compile Include="Data\PositonDelta.cs" />
     <Compile Include="IMovable.cs" />
     <Compile Include="IMoveResult.cs" />
