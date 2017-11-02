@@ -1,11 +1,10 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
-
 namespace GameModel
 {
     class Rook : ChessPiece
     {
-        public override IEnumerable<BoardPosition> PossibleMoves(BoardPosition pos)
+        public override IEnumerable<BoardPosition> PossibleMoves(BoardPosition pos, Func<BoardPosition, bool> positionChecker)
         {
             for(int i = 0; i < 4; i++) {
 
@@ -17,16 +16,15 @@ namespace GameModel
                     var candidate = new BoardPosition(newX, newY);
 
                     if (ChessBoard.CheckPositionExists(candidate))
+                    {
                         yield return candidate;
+                        if (positionChecker(candidate))
+                            break;
+                    }
                     else
                         break;
                 }
             }
-        }
-
-        public override bool CanMoveTo(BoardPosition position)
-        {
-            throw new System.NotImplementedException();
         }
 
         private (int x, int y)[] _moveOffsets =

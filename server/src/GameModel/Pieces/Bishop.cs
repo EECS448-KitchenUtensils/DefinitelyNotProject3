@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +14,7 @@ namespace GameModel
         /// </summary>
         /// <param name="pos">The position to start from</param>
         /// <returns>A stream of potential positions</returns>
-        public override IEnumerable<BoardPosition> PossibleMoves(BoardPosition pos)
+        public override IEnumerable<BoardPosition> PossibleMoves(BoardPosition pos, Func<BoardPosition, bool> positionChecker)
         {
             var directions = new[,] {{-1, -1}, {-1, 1}, {1, -1}, {-1, -1}};
             for(var i = 0; i < directions.Length; i++) {
@@ -23,9 +24,13 @@ namespace GameModel
                     var newY = pos.y + (directions[i, 1] * centerDistance);
                     var candidate = new BoardPosition(newX, newY);
                     if (ChessBoard.CheckPositionExists(candidate))
+                    {
                         yield return candidate;
+                        if (positionChecker(candidate))
+                            break;
+                    }
                     else
-                        break;
+                        yield break;
                 }
             }
         }

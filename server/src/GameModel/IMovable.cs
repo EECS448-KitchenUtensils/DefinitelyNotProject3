@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace GameModel
@@ -7,14 +8,8 @@ namespace GameModel
         /// All of this piece's possible moves
         /// </summary>
         /// <param name="from">The position to start from</param>
+        /// <param name="positionChecker">A function that checks if a piece is at a given position</param>
         /// <returns>Valid moves that can be taken</returns>
-        IEnumerable<BoardPosition> PossibleMoves(BoardPosition from);
-
-        /// <summary>
-        /// Checks whether this piece can move to the given position
-        /// </summary>
-        /// <param name="dest">The position to check for</param>
-        /// <returns>true if can move, false otherwise</returns>
-        bool CanMoveTo (BoardPosition dest);
+        IEnumerable<BoardPosition> PossibleMoves(BoardPosition from, Func<BoardPosition, bool> positionChecker);
     }
 }
