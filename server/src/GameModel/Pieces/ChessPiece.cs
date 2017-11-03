@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace GameModel
 {
-    public abstract class ChessPiece : IMoveable
+    public abstract class ChessPiece
     {
         /// <summary>
         /// Enumerates all of the valid possible moves for this piece
@@ -12,7 +12,7 @@ namespace GameModel
         /// <param name="from">The position to move from</param>
         /// <param name="positionChecker">A function that checks if a piece is at a given position</param>
         /// <returns>The valid moves for this piece</returns>
-        public virtual IEnumerable<BoardPosition> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
+        public virtual IEnumerable<(BoardPosition dest, MoveType outcome)> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
         {
             for (var i = 0; i < _moveOffsets.Length; i++)
             {
@@ -29,11 +29,11 @@ namespace GameModel
                         var status = positionChecker(candidate);
                         if (status == SpaceStatus.Empty)
                         {
-                            yield return candidate;
+                            yield return (candidate, MoveType.Move);
                         }
                         else if (status == SpaceStatus.Enemy)
                         {
-                            yield return candidate;
+                            yield return (candidate, MoveType.Capture);
                             break;
                         }
                         else if (status == SpaceStatus.Friendly)

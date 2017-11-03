@@ -26,7 +26,7 @@ namespace GameModel
         /// <param name="from">The position to move from</param>
         /// <param name="positionChecker">A function that checks if a piece is at a given position</param>
         /// <returns>The valid moves for this piece</returns>
-        public override IEnumerable<BoardPosition> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
+        public override IEnumerable<(BoardPosition dest, MoveType outcome)> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
         {
             //Check both capture possiblities
             foreach(var offset in _captureOffsets)
@@ -34,12 +34,12 @@ namespace GameModel
                 var captureCandidate = new BoardPosition(Position.x + offset.x, Position.y + offset.y);
                 if (ChessBoard.CheckPositionExists(captureCandidate)
                     && positionChecker(captureCandidate) == SpaceStatus.Enemy)
-                    yield return captureCandidate;
+                    yield return (captureCandidate, MoveType.Capture);
             }
             var moveOffset = (_hasMovedYet) ? _hasMovedMoveOffset : _hasNotMovedMoveOffset;
             var moveCandidate = new BoardPosition(Position.x + moveOffset.x, Position.y + moveOffset.y);
             if (ChessBoard.CheckPositionExists(moveCandidate))
-                yield return moveCandidate;
+                yield return (moveCandidate, MoveType.Move);
         }
 
         /// <summary>
