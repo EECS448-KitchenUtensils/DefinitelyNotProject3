@@ -1,43 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace GameModel
 {
     class Bishop : ChessPiece
     {
-        public Bishop()
+        public Bishop(PlayerEnum owner, BoardPosition initialPosition)
         {
-        }
-        /// <summary>
-        /// Enumerates all possible moves from a bishop
-        /// </summary>
-        /// <param name="pos">The position to start from</param>
-        /// <returns>A stream of potential positions</returns>
-        public override IEnumerable<BoardPosition> PossibleMoves(BoardPosition pos, Func<BoardPosition, bool> positionChecker)
-        {
-            var directions = new[,] {{-1, -1}, {-1, 1}, {1, -1}, {-1, -1}};
-            for(var i = 0; i < directions.Length; i++) {
-                for(int centerDistance = 1; true; centerDistance++)
-                {
-                    var newX = pos.x + (directions[i, 0] * centerDistance);
-                    var newY = pos.y + (directions[i, 1] * centerDistance);
-                    var candidate = new BoardPosition(newX, newY);
-                    if (ChessBoard.CheckPositionExists(candidate))
-                    {
-                        yield return candidate;
-                        if (positionChecker(candidate))
-                            break;
-                    }
-                    else
-                        yield break;
-                }
-            }
+            Owner = owner;
+            Position = initialPosition;
         }
 
-        public override bool CanMoveTo(BoardPosition position)
+        protected override int _maxSteps => 18; //Chosen based on board dimensions + extra
+        protected override (int x, int y)[] _moveOffsets => _bishopMoves;
+
+        private (int x, int y)[] _bishopMoves =
         {
-            throw new System.NotImplementedException();
-        }
+            (1, 1),
+            (1, -1),
+            (-1, -1),
+            (-1, -1)
+        };
     }
 }

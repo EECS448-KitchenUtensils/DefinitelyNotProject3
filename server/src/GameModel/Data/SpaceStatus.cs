@@ -4,7 +4,7 @@
     /// Represents whether a position is empty, occupied by an enemy, or occupied by 
     /// a friendly piece
     /// </summary>
-    enum SpaceStatus
+    public enum SpaceStatus
     {
         Empty,
         Friendly,

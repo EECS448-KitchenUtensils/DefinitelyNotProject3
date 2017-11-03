@@ -1,3 +1,4 @@
+using GameModel.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,27 @@ namespace GameModel
     class Knight : ChessPiece
     {
         /// <summary>
-        /// Enumerates all of the valid possible moves for this piece
+        /// Creates a Knight instance
         /// </summary>
-        /// <param name="from">The position to move from</param>
-        /// <param name="positionChecker">A function that checks if a piece is at a given position</param>
-        /// <returns>The valid moves for this piece</returns>
-        public override IEnumerable<BoardPosition> PossibleMoves(BoardPosition pos, Func<BoardPosition, bool> positionChecker) =>
-            _moveOffsets.Select(posMove => new BoardPosition(pos.x + posMove.x, pos.y + posMove.y))
-                        .Where(candidate => ChessBoard.CheckPositionExists(candidate));
+        /// <param name="owner">The owner of this piece</param>
+        /// <param name="initialPosition">The initial position on the board</param>
+        public Knight(PlayerEnum owner, BoardPosition initialPosition)
+        {
+            Owner = owner;
+            Position = initialPosition;
+        }
 
-        private (int x, int y)[] _moveOffsets = 
+        /// <summary>
+        /// A Knight can only move once per turn
+        /// </summary>
+        protected override int _maxSteps => 1;
+
+        /// <summary>
+        /// The possible offsets that a Knight can move to
+        /// </summary>
+        protected override (int x, int y)[] _moveOffsets => _knightMoveOffsets;
+
+        private (int x, int y)[] _knightMoveOffsets = 
         {
             (1, 2),
             (2, 1),
