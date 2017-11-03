@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using LanguageExt;
+using System.Linq;
 
 namespace GameModel
 {
@@ -8,7 +9,8 @@ namespace GameModel
     {
         public ChessBoard()
         {
-            _pieces = new Dictionary<BoardPosition, ChessPiece>();
+            _pieces = new List<ChessPiece>();
+
         }
         /// <summary>
         /// Bounds-checks the given position
@@ -18,19 +20,6 @@ namespace GameModel
         public static bool CheckPositionExists(BoardPosition pos) =>
             (_WING_WIDTH <= (int)pos.x) && ((int)pos.x <= (_WIDTH + _WING_WIDTH)) ||
             (_WING_WIDTH <= pos.y) && (pos.y <= (_HEIGHT + _WING_WIDTH));
-        
-        /// <summary>
-        /// Finds a piece by its position on the board
-        /// </summary>
-        /// <param name="pos">The position to check</param>
-        /// <returns>Either a ChessPiece or None</returns>
-        internal Option<ChessPiece> PieceAtPosition(BoardPosition pos)
-        {
-            if (_pieces.TryGetValue(pos, out var piece))
-                return Option<ChessPiece>.Some(piece);
-            else
-                return Option<ChessPiece>.None;
-        }
 
         /// <summary>
         /// Attempts to move a piece on the board, with no rules checking
@@ -38,19 +27,37 @@ namespace GameModel
         /// <param name="src">The position the piece is currently in</param>
         /// <param name="dest">The desired destination position</param>
         /// <returns>The destination position if the operation succeeds</returns>
-        internal bool Translate(BoardPosition src, BoardPosition dest)
+        private bool Translate(BoardPosition src, BoardPosition dest, bool isCapturing = false)
         {
-            if (_pieces.ContainsKey(src) && !(_pieces.ContainsKey(dest))) {
-                _pieces[dest] = _pieces[src];
-                _pieces.Remove(src);
-                return true;
-            } else {
+            //bail early if either position doesn't exist
+            if (!CheckPositionExists(src) || !CheckPositionExists(dest))
                 return false;
+            //check to make sure that src piece exists
+            var srcPiece = _pieces.FirstOrDefault(piece => piece.Position == src);
+            if (srcPiece == null)
+                return false;
+            var destPiece = _pieces.FirstOrDefault(piece => piece.Position == dest);
+            if (!isCapturing)
+            {
+                //if we aren't capturing, then moving to an occupied piece is invalid
+                if (destPiece == null)
+                {
+                    srcPiece.Position = dest;
+                    return true;
+                }
+                return false;
+            }
+            else
+            {
+                if (destPiece != null)
+                    _pieces.Remove(destPiece);
+                srcPiece.Position = dest;
+                return true;
             }
         }
         private const int _WING_WIDTH = 3;
         private const int _HEIGHT = 8;
         private const int _WIDTH = 8;
-        private IDictionary<BoardPosition, ChessPiece> _pieces;
+        private List<ChessPiece> _pieces;
     }
 }
