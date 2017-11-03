@@ -1,4 +1,5 @@
 using GameModel.Data;
+using System.Collections.Generic;
 
 namespace GameModel
 {
@@ -9,6 +10,8 @@ namespace GameModel
             _board = new ChessBoard();
             _current_player = 0;
         }
+
+        public IEnumerable<(BoardPosition, MoveType)> PossibleMoves(BoardPosition pos) => _board.PossibleMoves(pos);
         public PlayerEnum GetActivePlayer() => _players[_current_player];
         private int _current_player;
         private ChessBoard _board;

@@ -21,6 +21,28 @@ namespace GameModel
             (_WING_WIDTH <= (int)pos.x) && ((int)pos.x <= (_WIDTH + _WING_WIDTH)) ||
             (_WING_WIDTH <= pos.y) && (pos.y <= (_HEIGHT + _WING_WIDTH));
 
+        public IEnumerable<(BoardPosition, MoveType)> PossibleMoves(BoardPosition pos)
+        {
+            var piece = _pieces.FirstOrDefault(p => p.Position == pos);
+            if (piece == null)
+                return Enumerable.Empty<(BoardPosition, MoveType)>();
+            return piece.PossibleMoves((checkPos) =>
+            {
+                var checkSpace = _pieces.FirstOrDefault(p => p.Position == checkPos);
+                if (checkSpace == null)
+                    return SpaceStatus.Empty;
+                else
+                {
+                    if ((int)(checkSpace.Owner) % 2 == ((int)piece.Owner % 2))
+                    {
+                        //Same team
+                        return SpaceStatus.Friendly;
+                    }
+                    else
+                        return SpaceStatus.Enemy;
+                }
+            });
+        }
 
         /// <summary>
         /// Attempts to move a piece on the board, with no rules checking
