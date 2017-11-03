@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using GameModel.Data;
 namespace GameModel
 {
     class Rook : ChessPiece

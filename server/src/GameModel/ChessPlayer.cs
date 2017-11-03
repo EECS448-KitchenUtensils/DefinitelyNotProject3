@@ -1,3 +1,5 @@
+using GameModel.Data;
+
 namespace GameModel
 {
     /// <summary>

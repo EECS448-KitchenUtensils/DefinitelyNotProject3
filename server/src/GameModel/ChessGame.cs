@@ -1,6 +1,4 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
+using GameModel.Data;
 
 namespace GameModel
 {
@@ -9,14 +7,11 @@ namespace GameModel
         public ChessGame()
         {
             _board = new ChessBoard();
-            _playerEnums.Select(e => new ChessPlayer(e))
-                        .ToArray();
             _current_player = 0;
         }
-        public ChessPlayer GetActivePlayer() => _players[_current_player];
+        public PlayerEnum GetActivePlayer() => _players[_current_player];
         private int _current_player;
-        private ChessPlayer[] _players;
         private ChessBoard _board;
-        private PlayerEnum[] _playerEnums = {PlayerEnum.PLAYER_1, PlayerEnum.PLAYER_2, PlayerEnum.PLAYER_3, PlayerEnum.PLAYER_4};
+        private PlayerEnum[] _players = {PlayerEnum.PLAYER_1, PlayerEnum.PLAYER_2, PlayerEnum.PLAYER_3, PlayerEnum.PLAYER_4};
     }
 }

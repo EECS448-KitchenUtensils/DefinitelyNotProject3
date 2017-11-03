@@ -1,4 +1,4 @@
-namespace GameModel
+namespace GameModel.Data
 {
     /// <summary>
     /// Player slot type
