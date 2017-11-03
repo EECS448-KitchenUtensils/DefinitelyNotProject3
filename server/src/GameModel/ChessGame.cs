@@ -17,6 +17,8 @@ namespace GameModel
         /// <returns>A sequence of moves and their type</returns>
         public IEnumerable<(BoardPosition, MoveType)> PossibleMoves(BoardPosition pos) => _board.PossibleMoves(pos);
 
+        public ChessPiece GetPieceByPosition(BoardPosition pos) => _board.GetPieceByPosition(pos);
+
         /// <summary>
         /// Gets which player owns the current turn
         /// </summary>

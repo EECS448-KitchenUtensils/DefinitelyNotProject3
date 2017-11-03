@@ -21,6 +21,9 @@ namespace GameModel
             (_WING_WIDTH <= (int)pos.x) && ((int)pos.x <= (_WIDTH + _WING_WIDTH)) ||
             (_WING_WIDTH <= pos.y) && (pos.y <= (_HEIGHT + _WING_WIDTH));
 
+        internal ChessPiece GetPieceByPosition(BoardPosition pos) =>
+            _pieces.FirstOrDefault(p => p.Position == pos);
+
         public IEnumerable<(BoardPosition, MoveType)> PossibleMoves(BoardPosition pos)
         {
             var piece = _pieces.FirstOrDefault(p => p.Position == pos);
