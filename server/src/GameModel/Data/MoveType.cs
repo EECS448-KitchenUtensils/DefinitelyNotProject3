@@ -3,6 +3,7 @@
     public enum MoveType
     {
         Move,
-        Capture
+        Capture,
+        Failure
     }
 }
