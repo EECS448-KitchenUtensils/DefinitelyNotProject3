@@ -24,7 +24,7 @@ namespace GameModel
         internal ChessPiece GetPieceByPosition(BoardPosition pos) =>
             _pieces.FirstOrDefault(p => p.Position == pos);
 
-        public IEnumerable<(BoardPosition, MoveType)> PossibleMoves(BoardPosition pos)
+        public IEnumerable<(BoardPosition pos, MoveType type)> PossibleMoves(BoardPosition pos)
         {
             var piece = _pieces.FirstOrDefault(p => p.Position == pos);
             if (piece == null)
@@ -46,6 +46,7 @@ namespace GameModel
                 }
             });
         }
+        
 
         /// <summary>
         /// Attempts to move a piece on the board, with no rules checking

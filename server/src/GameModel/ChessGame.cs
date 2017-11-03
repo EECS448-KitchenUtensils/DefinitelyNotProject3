@@ -1,5 +1,6 @@
 using GameModel.Data;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameModel
 {
@@ -18,6 +19,25 @@ namespace GameModel
         public IEnumerable<(BoardPosition, MoveType)> PossibleMoves(BoardPosition pos) => _board.PossibleMoves(pos);
 
         public ChessPiece GetPieceByPosition(BoardPosition pos) => _board.GetPieceByPosition(pos);
+
+        public MoveType MakeMove(BoardPosition src, BoardPosition dest)
+        {
+            //Source must be valid
+            if (!ChessBoard.CheckPositionExists(src))
+                return MoveType.Failure;
+            //Destination must be valid
+            if (!ChessBoard.CheckPositionExists(dest))
+                return MoveType.Failure;
+            var currentPlayer = _players[_current_player];
+            var piece = _board.GetPieceByPosition(src);
+            //Make sure move is possible
+            var moves = _board.PossibleMoves(src)
+                              .Where(move => move.pos == dest)
+                              .ToList();
+            if (moves.Count == 1)
+                return moves[0].type;
+            return MoveType.Failure;
+        }
 
         /// <summary>
         /// Gets which player owns the current turn
