@@ -1,6 +1,7 @@
 using GameModel.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameModel
 {
@@ -29,17 +30,26 @@ namespace GameModel
         public override IEnumerable<(BoardPosition dest, MoveType outcome)> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
         {
             //Check both capture possiblities
-            foreach(var offset in _captureOffsets)
+            var captureOffsets = _captureOffsets[(int)Owner];
+            var laterMoveOffset = _hasMovedMoveOffset[(int)Owner];
+            var firstMoveOffset = _hasNotMovedMoveOffset[(int)Owner];
+            //At the beginning of the game, the pawn can move either one or two spaces forward
+            var moveOffsets = (_hasMovedYet) ? new[] { laterMoveOffset } : new[] { firstMoveOffset, laterMoveOffset };
+            var leftPosition = new BoardPosition(Position.x + captureOffsets.left.x, Position.y + captureOffsets.left.y);
+            var rightPosition = new BoardPosition(Position.x + captureOffsets.right.x, Position.y + captureOffsets.right.y);
+            var forwardPositions = moveOffsets.Select(offset => new BoardPosition(Position.x + offset.x, Position.y + offset.y));
+            foreach (var position in new[] {leftPosition, rightPosition})
             {
-                var captureCandidate = new BoardPosition(Position.x + offset.x, Position.y + offset.y);
-                if (ChessBoard.CheckPositionExists(captureCandidate)
-                    && positionChecker(captureCandidate) == SpaceStatus.Enemy)
-                    yield return (captureCandidate, MoveType.Capture);
+                if (positionChecker(position) == SpaceStatus.Enemy)
+                {
+                    yield return (position, MoveType.Capture);
+                }
             }
-            var moveOffset = (_hasMovedYet) ? _hasMovedMoveOffset : _hasNotMovedMoveOffset;
-            var moveCandidate = new BoardPosition(Position.x + moveOffset.x, Position.y + moveOffset.y);
-            if (ChessBoard.CheckPositionExists(moveCandidate))
-                yield return (moveCandidate, MoveType.Move);
+            foreach (var position in forwardPositions)
+            {
+                if (positionChecker(position) == SpaceStatus.Empty)
+                    yield return (position, MoveType.Move);
+            }
         }
 
         /// <summary>
@@ -56,12 +66,50 @@ namespace GameModel
         }
 
         private bool _hasMovedYet;
-        private (int x, int y)[] _captureOffsets =
+        private ((int x, int y) left, (int x, int y) right)[] _captureOffsets =
         {
-            (-1, 1),
-            (1, 1)
+            //Player 1
+            (
+                (-1, 1),
+                (1, 1)
+            ),
+            //Player 2
+            (
+                (-1, -1),
+                (-1, 1)
+            ),
+            //Player 3
+            (
+                (-1, -1),
+                (1, -1)
+            ),
+            //Player 4
+            (
+                (1, -1),
+                (1, 1)
+            )
         };
-        private (int x, int y) _hasMovedMoveOffset = (0, 1);
-        private (int x, int y) _hasNotMovedMoveOffset = (0, 2);
+        private (int x, int y)[] _hasMovedMoveOffset =
+        {
+            //Player 1
+            (0, 1),
+            //Player 2
+            (-1, 0),
+            //Player 3
+            (0, -1),
+            //Player 4
+            (1, 0)
+        };
+        private (int x, int y)[] _hasNotMovedMoveOffset =
+        {
+            //Player 1
+            (0, 2),
+            //Player 2
+            (-2, 0),
+            //Player 3
+            (0, -2),
+            //Player 4
+            (2, 0)
+        };
     }
 }
