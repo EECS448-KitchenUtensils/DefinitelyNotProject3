@@ -20,6 +20,13 @@ namespace GameModel
 
         public ChessPiece GetPieceByPosition(BoardPosition pos) => _board.GetPieceByPosition(pos);
 
+        /// <summary>
+        /// Attempts to move a piece from position to another
+        /// Handles capturing, bad moves, and advancing the turn counter on success
+        /// </summary>
+        /// <param name="src">The current position of a piece</param>
+        /// <param name="dest">The intended destination of the piece</param>
+        /// <returns>Failure on invalid moves, Move on valid moves, Capture on valid Captures</returns>
         public MoveType MakeMove(BoardPosition src, BoardPosition dest)
         {
             //Source must be valid
@@ -35,7 +42,10 @@ namespace GameModel
                               .Where(move => move.Position == dest)
                               .ToList();
             if (moves.Count == 1)
+            {
+                _current_player = (_current_player + 1) % 4; //Advance next player, mod 4
                 return moves[0].Outcome;
+            }
             return MoveType.Failure;
         }
 
