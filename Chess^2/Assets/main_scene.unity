@@ -121,6 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 83509181}
   - component: {fileID: 83509180}
+  - component: {fileID: 83509182}
   m_Layer: 0
   m_Name: w_king_png_withShadow
   m_TagString: Untagged
@@ -185,6 +186,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &83509182
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 83509179}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 8.8, y: 8.86}
+    newSize: {x: 8.8, y: 8.86}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 8.8, y: 8.86}
+  m_EdgeRadius: 0
 --- !u!1 &105401536
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,6 +220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 105401538}
   - component: {fileID: 105401537}
+  - component: {fileID: 105401539}
   m_Layer: 0
   m_Name: w_rook_png_withShadow
   m_TagString: Untagged
@@ -258,6 +285,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &105401539
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 105401536}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 7.04, y: 7.66}
+    newSize: {x: 7.04, y: 7.66}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 7.04, y: 7.66}
+  m_EdgeRadius: 0
 --- !u!1 &187189779
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,6 +319,7 @@ GameObject:
   m_Component:
   - component: {fileID: 187189781}
   - component: {fileID: 187189780}
+  - component: {fileID: 187189782}
   m_Layer: 0
   m_Name: w_pawn_png_withShadow
   m_TagString: Untagged
@@ -331,6 +384,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &187189782
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 187189779}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.86, y: 6.94}
+    newSize: {x: 5.86, y: 6.94}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.86, y: 6.94}
+  m_EdgeRadius: 0
 --- !u!1 &714831406
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,6 +418,7 @@ GameObject:
   m_Component:
   - component: {fileID: 714831408}
   - component: {fileID: 714831407}
+  - component: {fileID: 714831409}
   m_Layer: 0
   m_Name: square brown light_png
   m_TagString: Untagged
@@ -404,6 +483,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &714831409
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 714831406}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 9.01, y: 9.01}
+    newSize: {x: 9.01, y: 9.01}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 9.01, y: 9.01}
+  m_EdgeRadius: 0
 --- !u!1 &757328362
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +517,7 @@ GameObject:
   m_Component:
   - component: {fileID: 757328364}
   - component: {fileID: 757328363}
+  - component: {fileID: 757328365}
   m_Layer: 0
   m_Name: w_bishop_png_withShadow
   m_TagString: Untagged
@@ -471,12 +576,37 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 757328362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.9, y: -8.9, z: 0}
+  m_LocalPosition: {x: -15.59, y: -9.02, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &757328365
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 757328362}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 8.3, y: 8.36}
+    newSize: {x: 8.3, y: 8.36}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 8.3, y: 8.36}
+  m_EdgeRadius: 0
 --- !u!1 &1413555970
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,6 +616,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1413555972}
   - component: {fileID: 1413555971}
+  - component: {fileID: 1413555973}
   m_Layer: 0
   m_Name: square brown dark_png
   m_TagString: Untagged
@@ -550,6 +681,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1413555973
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1413555970}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 9.01, y: 9.01}
+    newSize: {x: 9.01, y: 9.01}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 9.01, y: 9.01}
+  m_EdgeRadius: 0
 --- !u!1 &1508770758
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,6 +715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1508770760}
   - component: {fileID: 1508770759}
+  - component: {fileID: 1508770761}
   m_Layer: 0
   m_Name: w_queen_png_withShadow
   m_TagString: Untagged
@@ -623,6 +780,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1508770761
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1508770758}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 8.74, y: 8.04}
+    newSize: {x: 8.74, y: 8.04}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 8.74, y: 8.04}
+  m_EdgeRadius: 0
 --- !u!1 &1603322191
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,13 +879,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1603322191}
-  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1603322196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -744,6 +926,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   square_dark: {fileID: 1413555972}
   square_light: {fileID: 714831408}
+  piece_bishop: {fileID: 757328362}
+  piece_knight: {fileID: 1766430287}
+  piece_rook: {fileID: 105401536}
+  piece_king: {fileID: 83509179}
+  piece_queen: {fileID: 1508770758}
+  piece_pawn: {fileID: 187189779}
   gridWidth: 14
   gridDepth: 14
 --- !u!4 &1646519465
@@ -768,6 +956,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1766430289}
   - component: {fileID: 1766430288}
+  - component: {fileID: 1766430290}
   m_Layer: 0
   m_Name: w_knight_png_withShadow
   m_TagString: Untagged
@@ -832,3 +1021,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1766430290
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1766430287}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 7.28, y: 8.04}
+    newSize: {x: 7.28, y: 8.04}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 7.28, y: 8.04}
+  m_EdgeRadius: 0
