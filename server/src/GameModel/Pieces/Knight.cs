@@ -13,6 +13,17 @@ namespace GameModel
         {
             Owner = owner;
             Position = initialPosition;
+            _knightMoveOffsets = new[]
+            {
+                new PositionDelta(1, 2),
+                new PositionDelta(2, 1),
+                new PositionDelta(2, -1),
+                new PositionDelta(1, -2),
+                new PositionDelta(-1, -2),
+                new PositionDelta(-2, -1),
+                new PositionDelta(-2, 1),
+                new PositionDelta(-1, 2)
+            };
         }
 
         /// <summary>
@@ -23,18 +34,8 @@ namespace GameModel
         /// <summary>
         /// The possible offsets that a Knight can move to
         /// </summary>
-        protected override (int x, int y)[] _moveOffsets => _knightMoveOffsets;
+        protected override PositionDelta[] _moveOffsets => _knightMoveOffsets;
 
-        private (int x, int y)[] _knightMoveOffsets = 
-        {
-            (1, 2),
-            (2, 1),
-            (2, -1),
-            (1, -2),
-            (-1, -2),
-            (-2, -1),
-            (-2, 1),
-            (-1, 2)
-        };
+        private PositionDelta[] _knightMoveOffsets;
     }
 }

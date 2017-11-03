@@ -12,14 +12,14 @@ namespace GameModel
         /// <param name="from">The position to move from</param>
         /// <param name="positionChecker">A function that checks if a piece is at a given position</param>
         /// <returns>The valid moves for this piece</returns>
-        public virtual IEnumerable<(BoardPosition dest, MoveType outcome)> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
+        public virtual IEnumerable<MoveResult> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
         {
             for (var i = 0; i < _moveOffsets.Length; i++)
             {
                 for (int step = 1; step <= _maxSteps; step++)
                 {
-                    var newX = Position.x + (_moveOffsets[i].x * step);
-                    var newY = Position.y + (_moveOffsets[i].y * step);
+                    var newX = Position.x + (_moveOffsets[i].X * step);
+                    var newY = Position.y + (_moveOffsets[i].Y * step);
                     var candidate = new BoardPosition(newX, newY);
                     if (ChessBoard.CheckPositionExists(candidate))
                     {
@@ -29,11 +29,11 @@ namespace GameModel
                         var status = positionChecker(candidate);
                         if (status == SpaceStatus.Empty)
                         {
-                            yield return (candidate, MoveType.Move);
+                            yield return new MoveResult(candidate, MoveType.Move);
                         }
                         else if (status == SpaceStatus.Enemy)
                         {
-                            yield return (candidate, MoveType.Capture);
+                            yield return new MoveResult(candidate, MoveType.Capture);
                             break;
                         }
                         else if (status == SpaceStatus.Friendly)
@@ -59,7 +59,7 @@ namespace GameModel
         /// <summary>
         /// This should be overridden with the directions that a piece can move
         /// </summary>
-        protected virtual (int x, int y)[] _moveOffsets { get; }
+        protected virtual PositionDelta[] _moveOffsets { get; }
 
         /// <summary>
         /// This should be overriden with the maximum number of times that _moveOffsets 

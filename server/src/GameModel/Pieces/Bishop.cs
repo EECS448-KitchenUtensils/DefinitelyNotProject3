@@ -8,17 +8,18 @@ namespace GameModel
         {
             Owner = owner;
             Position = initialPosition;
+            _bishopMoves = new[]
+            {
+                new PositionDelta(1, 1),
+                new PositionDelta(1, -1),
+                new PositionDelta(-1, -1),
+                new PositionDelta(-1, -1)
+            };
         }
 
         protected override int _maxSteps => 18; //Chosen based on board dimensions + extra
-        protected override (int x, int y)[] _moveOffsets => _bishopMoves;
+        protected override PositionDelta[] _moveOffsets => _bishopMoves;
 
-        private (int x, int y)[] _bishopMoves =
-        {
-            (1, 1),
-            (1, -1),
-            (-1, -1),
-            (-1, -1)
-        };
+        private PositionDelta[] _bishopMoves;
     }
 }

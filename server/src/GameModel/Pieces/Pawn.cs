@@ -20,6 +20,50 @@ namespace GameModel
             _hasMovedYet = false;
             Owner = owner;
             Position = initialPosition;
+            _hasMovedMoveOffset = new[]
+            {
+                //Player 1
+                new PositionDelta(0, 1),
+                //Player 2
+                new PositionDelta(-1, 0),
+                //Player 3
+                new PositionDelta(0, -1),
+                //Player 4
+                new PositionDelta(1, 0)
+            };
+            _hasNotMovedMoveOffset = new[]
+            {
+                //Player 1
+                new PositionDelta(0, 2),
+                //Player 2
+                new PositionDelta(-2, 0),
+                //Player 3
+                new PositionDelta(0, -2),
+                //Player 4
+                new PositionDelta(2, 0)
+            };
+            _leftCaptureOffsets = new[]
+            {
+                //Player 1
+                new PositionDelta(-1, 1),
+                //Player 2
+                new PositionDelta(-1, -1),
+                //Player 3
+                new PositionDelta(-1, -1),
+                //Player 4
+                new PositionDelta(1, -1)
+            };
+            _rightCaptureOffsets = new[]
+            {
+                //Player 1
+                new PositionDelta(1, 1),
+                //Player 2
+                new PositionDelta(-1, 1),
+                //Player 3
+                new PositionDelta(1, -1),
+                //Player 4
+                new PositionDelta(1, 1)
+            };
         }
         /// <summary>
         /// Enumerates all of the valid possible moves for this piece
@@ -27,28 +71,27 @@ namespace GameModel
         /// <param name="from">The position to move from</param>
         /// <param name="positionChecker">A function that checks if a piece is at a given position</param>
         /// <returns>The valid moves for this piece</returns>
-        public override IEnumerable<(BoardPosition dest, MoveType outcome)> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
+        public override IEnumerable<MoveResult> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
         {
             //Check both capture possiblities
-            var captureOffsets = _captureOffsets[(int)Owner];
+            var captureOffsets = new[] { _leftCaptureOffsets[(int)Owner], _rightCaptureOffsets[(int)Owner] };
             var laterMoveOffset = _hasMovedMoveOffset[(int)Owner];
             var firstMoveOffset = _hasNotMovedMoveOffset[(int)Owner];
             //At the beginning of the game, the pawn can move either one or two spaces forward
             var moveOffsets = (_hasMovedYet) ? new[] { laterMoveOffset } : new[] { firstMoveOffset, laterMoveOffset };
-            var leftPosition = new BoardPosition(Position.x + captureOffsets.left.x, Position.y + captureOffsets.left.y);
-            var rightPosition = new BoardPosition(Position.x + captureOffsets.right.x, Position.y + captureOffsets.right.y);
-            var forwardPositions = moveOffsets.Select(offset => new BoardPosition(Position.x + offset.x, Position.y + offset.y));
-            foreach (var position in new[] {leftPosition, rightPosition})
+            var capturePositions = captureOffsets.Select(offset => Position + offset);
+            var forwardPositions = moveOffsets.Select(offset => Position + offset);
+            foreach (var position in capturePositions)
             {
                 if (positionChecker(position) == SpaceStatus.Enemy)
                 {
-                    yield return (position, MoveType.Capture);
+                    yield return new MoveResult(position, MoveType.Capture);
                 }
             }
             foreach (var position in forwardPositions)
             {
                 if (positionChecker(position) == SpaceStatus.Empty)
-                    yield return (position, MoveType.Move);
+                    yield return new MoveResult(position, MoveType.Move);
             }
         }
 
@@ -66,50 +109,9 @@ namespace GameModel
         }
 
         private bool _hasMovedYet;
-        private ((int x, int y) left, (int x, int y) right)[] _captureOffsets =
-        {
-            //Player 1
-            (
-                (-1, 1),
-                (1, 1)
-            ),
-            //Player 2
-            (
-                (-1, -1),
-                (-1, 1)
-            ),
-            //Player 3
-            (
-                (-1, -1),
-                (1, -1)
-            ),
-            //Player 4
-            (
-                (1, -1),
-                (1, 1)
-            )
-        };
-        private (int x, int y)[] _hasMovedMoveOffset =
-        {
-            //Player 1
-            (0, 1),
-            //Player 2
-            (-1, 0),
-            //Player 3
-            (0, -1),
-            //Player 4
-            (1, 0)
-        };
-        private (int x, int y)[] _hasNotMovedMoveOffset =
-        {
-            //Player 1
-            (0, 2),
-            //Player 2
-            (-2, 0),
-            //Player 3
-            (0, -2),
-            //Player 4
-            (2, 0)
-        };
+        private PositionDelta[] _leftCaptureOffsets;
+        private PositionDelta[] _rightCaptureOffsets;
+        private PositionDelta[] _hasMovedMoveOffset;
+        private PositionDelta[] _hasNotMovedMoveOffset;
     }
 }

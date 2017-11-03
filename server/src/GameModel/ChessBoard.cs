@@ -24,11 +24,11 @@ namespace GameModel
         internal ChessPiece GetPieceByPosition(BoardPosition pos) =>
             _pieces.FirstOrDefault(p => p.Position == pos);
 
-        public IEnumerable<(BoardPosition pos, MoveType type)> PossibleMoves(BoardPosition pos)
+        public IEnumerable<MoveResult> PossibleMoves(BoardPosition pos)
         {
             var piece = _pieces.FirstOrDefault(p => p.Position == pos);
             if (piece == null)
-                return Enumerable.Empty<(BoardPosition, MoveType)>();
+                return Enumerable.Empty<MoveResult>();
             return piece.PossibleMoves((checkPos) =>
             {
                 var checkSpace = _pieces.FirstOrDefault(p => p.Position == checkPos);
@@ -137,7 +137,7 @@ namespace GameModel
         /// <param name="end">Ending point</param>
         /// <note>The line must be either horizontal or vertical</note>
         /// <returns></returns>
-        private IEnumerable<Pawn> CreatePawnsAlongLine(PlayerEnum owner, BoardPosition start, BoardPosition end)
+        private IEnumerable<ChessPiece> CreatePawnsAlongLine(PlayerEnum owner, BoardPosition start, BoardPosition end)
         {
             //Vertical case
             if (start.x == end.x)

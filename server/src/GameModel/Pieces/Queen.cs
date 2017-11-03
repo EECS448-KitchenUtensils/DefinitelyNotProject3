@@ -13,6 +13,19 @@ namespace GameModel
         {
             Owner = owner;
             Position = initialPosition;
+            _queenMoveOffsets = new[]
+            {
+                //rook moves
+                new PositionDelta(1, 0),
+                new PositionDelta(0, -1),
+                new PositionDelta(-1, 0),
+                new PositionDelta(0, 1),
+                //bishop moves
+                new PositionDelta(1, 1),
+                new PositionDelta(1, -1),
+                new PositionDelta(-1, -1),
+                new PositionDelta(-1, 1)
+            };
         }
         /// <summary>
         /// The maximum number of steps a Queen can take per turn. It's a guess.
@@ -22,20 +35,8 @@ namespace GameModel
         /// <summary>
         /// The possible moves a queen can make consist of the union of the rook and bishop
         /// </summary>
-        protected override (int x, int y)[] _moveOffsets => _queenMoveOffsets;
+        protected override PositionDelta[] _moveOffsets => _queenMoveOffsets;
 
-        private (int x, int y)[] _queenMoveOffsets =
-        {
-            //rook moves
-            (1, 0),
-            (0, -1),
-            (-1, 0),
-            (0, 1),
-            //bishop moves
-            (1, 1),
-            (1, -1),
-            (-1, -1),
-            (-1, 1)
-        };
+        private PositionDelta[] _queenMoveOffsets;
     }
 }

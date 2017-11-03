@@ -16,7 +16,7 @@ namespace GameModel
         /// </summary>
         /// <param name="pos">Position of the piece to query</param>
         /// <returns>A sequence of moves and their type</returns>
-        public IEnumerable<(BoardPosition, MoveType)> PossibleMoves(BoardPosition pos) => _board.PossibleMoves(pos);
+        public IEnumerable<MoveResult> PossibleMoves(BoardPosition pos) => _board.PossibleMoves(pos);
 
         public ChessPiece GetPieceByPosition(BoardPosition pos) => _board.GetPieceByPosition(pos);
 
@@ -32,10 +32,10 @@ namespace GameModel
             var piece = _board.GetPieceByPosition(src);
             //Make sure move is possible
             var moves = _board.PossibleMoves(src)
-                              .Where(move => move.pos == dest)
+                              .Where(move => move.Position == dest)
                               .ToList();
             if (moves.Count == 1)
-                return moves[0].type;
+                return moves[0].Outcome;
             return MoveType.Failure;
         }
 
