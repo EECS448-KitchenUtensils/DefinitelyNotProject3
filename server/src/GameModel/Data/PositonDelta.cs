@@ -11,7 +11,7 @@ namespace GameModel
             Y = yDiff;
         }
         public override int GetHashCode() => X ^ Y;
-        int X;
-        int Y;
+        public int X;
+        public int Y;
     }
 }

@@ -17,6 +17,10 @@ namespace GameModel {
         {
             return !(first == second);
         }
+        public static BoardPosition operator + (BoardPosition orig, PositionDelta offset)
+        {
+            return new BoardPosition(orig.x + offset.X, orig.y + offset.Y);
+        }
         public override bool Equals(object obj)
         {
             switch (obj)
