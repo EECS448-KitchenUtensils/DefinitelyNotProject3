@@ -48,7 +48,7 @@ namespace GameModel
         public override BoardPosition Position
         {
             get => base.Position;
-            protected set
+            set
             {
                 _hasMovedYet = true;
                 base.Position = value;
