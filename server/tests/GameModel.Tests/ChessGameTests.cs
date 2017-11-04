@@ -52,6 +52,17 @@ namespace GameModel.Tests
             Assert.That(pieceAtDest, Is.EqualTo(pieceAtDest));
         }
 
+        [Test]
+        public void SingleValidMakeMoveIncrementsTurn()
+        {
+            var initialPlayer = _chessGame.GetActivePlayer();
+            Assert.That(initialPlayer, Is.EqualTo(PlayerEnum.PLAYER_1));
+            var result = _chessGame.MakeMove(Pos(XCoord.d, 2), Pos(XCoord.d, 4));
+            Assert.That(result, Is.EqualTo(MoveType.Move)); //Make sure this test fails if the move failed
+            var resultingPlayer = _chessGame.GetActivePlayer();
+            Assert.That(resultingPlayer, Is.EqualTo(PlayerEnum.PLAYER_2));
+        }
+
         public static IEnumerable BoundsCheckCases
         {
             get
