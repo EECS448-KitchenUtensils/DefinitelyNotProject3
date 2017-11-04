@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="ChessBoard.cs" />
     <Compile Include="ChessGame.cs" />
-    <Compile Include="ChessPlayer.cs" />
     <Compile Include="Data\BoardPosition.cs" />
     <Compile Include="Data\MoveResult.cs" />
     <Compile Include="Data\MoveType.cs" />
