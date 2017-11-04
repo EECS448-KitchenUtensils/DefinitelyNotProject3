@@ -19,7 +19,7 @@ namespace GameModel
         {
             _hasMovedYet = false;
             Owner = owner;
-            Position = initialPosition;
+            _position = initialPosition;
             _hasMovedMoveOffset = new[]
             {
                 //Player 1
@@ -94,17 +94,18 @@ namespace GameModel
         /// </summary>
         public override BoardPosition Position
         {
-            get => base.Position;
+            get => _position;
             set
             {
                 _hasMovedYet = true;
-                base.Position = value;
+                _position = value;
             }
         }
 
         private bool _hasMovedYet;
         private PositionDelta[] _leftCaptureOffsets;
         private PositionDelta[] _rightCaptureOffsets;
+        private BoardPosition _position;
         private PositionDelta[] _hasMovedMoveOffset;
         private PositionDelta[] _hasNotMovedMoveOffset;
     }
