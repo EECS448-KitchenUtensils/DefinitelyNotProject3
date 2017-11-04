@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameModel;
 
 public class PieceBehavior : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class PieceBehavior : MonoBehaviour {
 	public float starty;
 	private GameObject tempSquare;
 	private Vector3 mousePosition;
+
 
 	// Use this for initialization
 	void Start () {

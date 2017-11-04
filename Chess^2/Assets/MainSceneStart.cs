@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameModel;
 
 public class MainSceneStart : MonoBehaviour {
+
+	public ChessGame game = new ChessGame();
 
 	public Transform square_dark;
 	public Transform square_light;
@@ -16,7 +19,7 @@ public class MainSceneStart : MonoBehaviour {
 	public float gridWidth;
 	public float gridDepth;
 	public Transform[, ] squares = new Transform[14, 14];
-	public Dictionary<string, GameObject>[] clientPiecesCollection = new Dictionary<string, GameObject>[4];
+	public Dictionary<ChessPiece, GameObject>[] clientPiecesCollection = new Dictionary<ChessPiece, GameObject>[4];
 
 	public bool moveState = false;
 
@@ -26,7 +29,6 @@ public class MainSceneStart : MonoBehaviour {
 		CreateGrid ();
 		CreatePieces ();
 		GivePiecesColors ();
-		PiecesToInitialPosition ();
 		GivePiecesBehavior ();
 	}
 
@@ -72,7 +74,7 @@ public class MainSceneStart : MonoBehaviour {
 		}
 		foreach(Dictionary<string, GameObject> dict in clientPiecesCollection){
 
-			dict.Add ("king", (Instantiate (piece_king, new Vector3(1, 1, -1), Quaternion.identity)) );
+			dict.Add (ChessPiece, (Instantiate (piece_king, new Vector3(1, 1, -1), Quaternion.identity)) );
 			dict.Add ("queen", (Instantiate (piece_queen, new Vector3(1, 1, -1), Quaternion.identity)) );
 
 			//2 Knights
@@ -137,73 +139,6 @@ public class MainSceneStart : MonoBehaviour {
 			}
 		}
 
-	}
-
-	/// <summary>
-	/// Moves chess pieces to their starting position.
-	/// </summary>
-	void PiecesToInitialPosition(){
-		
-		//Move Pieces besides pawn
-		string[] list0 = new string[8];
-		list0 [0] = "rook0";
-		list0 [1] = "knight0";
-		list0 [2] = "bishop0";
-		list0 [3] = "king";
-		list0 [4] = "queen";
-		list0 [5] = "bishop1";
-		list0 [6] = "knight1";
-		list0 [7] = "rook1";
-
-		string[] list1 = new string[8];
-		list1 [0] = "rook0";
-		list1 [1] = "knight0";
-		list1 [2] = "bishop0";
-		list1 [3] = "queen";
-		list1 [4] = "king";
-		list1 [5] = "bishop1";
-		list1 [6] = "knight1";
-		list1 [7] = "rook1";
-
-		int xory = 0;
-		for (int i = 0; i < 4; i++){
-			if (i % 2 == 0) {
-				int j = 0;
-				foreach (string piece in list0) {
-					clientPiecesCollection[i][piece].transform.position = new Vector3(3+j,xory,-1);
-					j++;
-				}
-			}
-			else{
-				int j = 0;
-				foreach (string piece in list0) {
-					clientPiecesCollection[i][piece].transform.position = new Vector3(xory,3+j,-1);
-					j++;
-				}
-				xory = 13;
-			}
-		}
-
-		//Move Pawns.
-		for (int i = 0; i < 8; i++) {
-			string temp = "pawn" + i.ToString ();
-			clientPiecesCollection[0][temp].transform.position = new Vector3(3+i,1,-1);
-		}
-		//Player 2
-		for (int i = 0; i < 8; i++) {
-			string temp = "pawn" + i.ToString ();
-			clientPiecesCollection[1][temp].transform.position = new Vector3(1,3+i,-1);
-		}
-		//Player 3
-		for (int i = 0; i < 8; i++) {
-			string temp = "pawn" + i.ToString ();
-			clientPiecesCollection[2][temp].transform.position = new Vector3(3+i,12,-1);
-		}
-		//Player 4
-		for (int i = 0; i < 8; i++) {
-			string temp = "pawn" + i.ToString ();
-			clientPiecesCollection[3][temp].transform.position = new Vector3(12,3+i,-1);
-		}
 	}
 
 //	void BishopTest(){
