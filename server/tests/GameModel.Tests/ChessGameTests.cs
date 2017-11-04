@@ -42,6 +42,16 @@ namespace GameModel.Tests
             }
         }
 
+        [Test, TestCaseSource("MakeMoveValidMovesCases")]
+        public void SingleMakeMoveValidMoves(BoardPosition src, BoardPosition dest)
+        {
+            var piece = _chessGame.GetPieceByPosition(src);
+            var result = _chessGame.MakeMove(src, dest);
+            Assert.That(result, Is.EqualTo(MoveType.Move));
+            var pieceAtDest = _chessGame.GetPieceByPosition(dest);
+            Assert.That(pieceAtDest, Is.EqualTo(pieceAtDest));
+        }
+
         public static IEnumerable BoundsCheckCases
         {
             get
@@ -61,6 +71,17 @@ namespace GameModel.Tests
                     .SetName("GetPieceByPositionReturnsNullForNonexistantPiece");
                 yield return new TestCaseData(Pos(XCoord.d, 2), true, typeof(Pawn), PlayerEnum.PLAYER_1)
                     .SetName("GetPieceByPositionPlayer1Pawn");
+            }
+        }
+
+        public static IEnumerable MakeMoveValidMovesCases
+        {
+            get
+            {
+                yield return new TestCaseData(Pos(XCoord.d, 2), Pos(XCoord.d, 4))
+                    .SetName("MakeMoveValidPlayer1PawnFirstMove");
+                yield return new TestCaseData(Pos(XCoord.e, 1), Pos(XCoord.f, 3))
+                    .SetName("MakeMoveValidPlayer1LeftKnightAdvance");
             }
         }
 
