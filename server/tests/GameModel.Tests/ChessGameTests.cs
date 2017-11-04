@@ -1,5 +1,6 @@
 ﻿using GameModel.Data;
 using NUnit.Framework;
+using System;
 using System.Collections;
 using static GameModel.Tests.TestUtils;
 
@@ -13,8 +14,6 @@ namespace GameModel.Tests
         //Test MakeMove honors which player is active
         //Test MakeMove increments the active player count on success
         //Test MakeMove loops back to Player 1 after Player 4 is done
-        //Test GetPieceByPosition works for valid pieces
-        //Test GetPieceByPosition returns null for invalid pieces
         [SetUp]
         public void Init()
         {
@@ -26,6 +25,23 @@ namespace GameModel.Tests
             var result = _chessGame.MakeMove(src, dest);
             Assert.That(result, Is.EqualTo(MoveType.Failure));
         }
+
+        [Test, TestCaseSource("GetPieceCases")]
+        public void GetPieceByPositionBeforeFirstMove(BoardPosition pos, bool exists, Type expectedType, PlayerEnum expectedOwner)
+        {
+            var piece = _chessGame.GetPieceByPosition(pos);
+            if (exists)
+            {
+                Assert.That(piece.GetType(), Is.EqualTo(expectedType));
+                Assert.That(piece.Owner, Is.EqualTo(expectedOwner));
+                Assert.That(piece.Position, Is.EqualTo(pos));
+            }
+            else
+            {
+                Assert.That(piece, Is.Null);
+            }
+        }
+
         public static IEnumerable BoundsCheckCases
         {
             get
@@ -36,6 +52,18 @@ namespace GameModel.Tests
                     .SetName("MakeMoveBoundsChecksValidSrcInvalidDest");
             }
         }
+
+        public static IEnumerable GetPieceCases
+        {
+            get
+            {
+                yield return new TestCaseData(Pos(XCoord.a, 1), false, typeof(ChessPiece), PlayerEnum.PLAYER_1)
+                    .SetName("GetPieceByPositionReturnsNullForNonexistantPiece");
+                yield return new TestCaseData(Pos(XCoord.d, 2), true, typeof(Pawn), PlayerEnum.PLAYER_1)
+                    .SetName("GetPieceByPositionPlayer1Pawn");
+            }
+        }
+
         private ChessGame _chessGame;
     }
 }
