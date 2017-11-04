@@ -20,6 +20,8 @@ namespace GameModel
 
         public ChessPiece GetPieceByPosition(BoardPosition pos) => _board.GetPieceByPosition(pos);
 
+        public IEnumerable<ChessPiece> Pieces => _board.Pieces;
+
         /// <summary>
         /// Attempts to move a piece from position to another
         /// Handles capturing, bad moves, and advancing the turn counter on success
