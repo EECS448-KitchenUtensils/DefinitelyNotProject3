@@ -8,14 +8,14 @@ namespace GameModel
     /// <summary>
     /// Represents a Pawn piece. Easily the weirdest piece to implement.
     /// </summary>
-    class Pawn : ChessPiece
+    public class Pawn : ChessPiece
     {
         /// <summary>
         /// Creates a Pawn instance
         /// </summary>
         /// <param name="owner">The owner of this Pawn</param>
         /// <param name="initialPosition">The initial position on the board</param>
-        public Pawn(PlayerEnum owner, BoardPosition initialPosition)
+        internal Pawn(PlayerEnum owner, BoardPosition initialPosition)
         {
             _hasMovedYet = false;
             Owner = owner;

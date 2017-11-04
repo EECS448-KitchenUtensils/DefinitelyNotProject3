@@ -1,9 +1,10 @@
 using GameModel.Data;
+
 namespace GameModel
 {
-    class Rook : ChessPiece
+    public class Rook : ChessPiece
     {
-        public Rook(PlayerEnum owner, BoardPosition initialPosition)
+        internal Rook(PlayerEnum owner, BoardPosition initialPosition)
         {
             Owner = owner;
             Position = initialPosition;

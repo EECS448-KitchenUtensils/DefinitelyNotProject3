@@ -2,9 +2,9 @@ using GameModel.Data;
 
 namespace GameModel
 {
-    class King : ChessPiece
+    public class King : ChessPiece
     {
-        public King(PlayerEnum owner, BoardPosition initialPosition)
+        internal King(PlayerEnum owner, BoardPosition initialPosition)
         {
             Owner = owner;
             Position = initialPosition;

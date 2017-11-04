@@ -6,11 +6,10 @@ namespace GameModel
 {
     public class ChessBoard
     {
-        public ChessBoard()
+        internal ChessBoard()
         {
             _pieces = new List<ChessPiece>();
             InitBoard();
-
         }
         /// <summary>
         /// Bounds-checks the given position

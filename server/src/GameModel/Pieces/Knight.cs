@@ -2,14 +2,14 @@ using GameModel.Data;
 
 namespace GameModel
 {
-    class Knight : ChessPiece
+    public class Knight : ChessPiece
     {
         /// <summary>
         /// Creates a Knight instance
         /// </summary>
         /// <param name="owner">The owner of this piece</param>
         /// <param name="initialPosition">The initial position on the board</param>
-        public Knight(PlayerEnum owner, BoardPosition initialPosition)
+        internal Knight(PlayerEnum owner, BoardPosition initialPosition)
         {
             Owner = owner;
             Position = initialPosition;
