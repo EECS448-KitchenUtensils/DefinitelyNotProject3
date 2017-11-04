@@ -50,9 +50,6 @@
     <Compile Include="Data\MoveType.cs" />
     <Compile Include="Data\SpaceStatus.cs" />
     <Compile Include="Data\PositonDelta.cs" />
-    <Compile Include="IMovable.cs" />
-    <Compile Include="IMoveResult.cs" />
-    <Compile Include="IValidMoveResult.cs" />
     <Compile Include="Pieces\Bishop.cs" />
     <Compile Include="Pieces\ChessPiece.cs" />
     <Compile Include="Pieces\King.cs" />
