@@ -16,9 +16,23 @@ namespace GameModel
         /// </summary>
         /// <param name="pos">The position to check</param>
         /// <returns>true if the position exists on the board</returns>
-        public static bool CheckPositionExists(BoardPosition pos) =>
-            (_WING_WIDTH <= (int)pos.X) && ((int)pos.X <= (_WIDTH + _WING_WIDTH)) ||
-            (_WING_WIDTH <= pos.Y) && (pos.Y <= (_HEIGHT + _WING_WIDTH));
+        public static bool CheckPositionExists(BoardPosition pos)
+        {
+            //This works by viewing the board as the union of two rectangles, one vertical, one
+            //horizontal
+
+            //horizontal case
+            if (pos.Y > _WING_WIDTH && pos.Y < (_HEIGHT + _WING_WIDTH))
+                return pos.X >= 0 && (int)pos.X < (_HEIGHT + _WING_WIDTH * 2);
+            //vertical case
+            if ((int)pos.X > _WING_WIDTH && (int)pos.X <= (_HEIGHT + _WING_WIDTH))
+                return pos.Y >= 1 && pos.Y < (_HEIGHT + _WING_WIDTH * 2);
+            return false;
+        }
+
+        //=>
+        //    (_WING_WIDTH < (int)pos.X) && ((int)pos.X <= (_WIDTH + _WING_WIDTH)) &&
+        //    (_WING_WIDTH < pos.Y) && (pos.Y < (_HEIGHT + _WING_WIDTH));
 
         internal ChessPiece GetPieceByPosition(BoardPosition pos) =>
             _pieces.FirstOrDefault(p => p.Position == pos);
