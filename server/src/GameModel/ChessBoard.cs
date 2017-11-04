@@ -45,42 +45,6 @@ namespace GameModel
                 }
             });
         }
-        
-
-        /// <summary>
-        /// Attempts to move a piece on the board, with no rules checking
-        /// </summary>
-        /// <param name="src">The position the piece is currently in</param>
-        /// <param name="dest">The desired destination position</param>
-        /// <returns>The destination position if the operation succeeds</returns>
-        private bool Translate(BoardPosition src, BoardPosition dest, bool isCapturing = false)
-        {
-            //bail early if either position doesn't exist
-            if (!CheckPositionExists(src) || !CheckPositionExists(dest))
-                return false;
-            //check to make sure that src piece exists
-            var srcPiece = _pieces.FirstOrDefault(piece => piece.Position == src);
-            if (srcPiece == null)
-                return false;
-            var destPiece = _pieces.FirstOrDefault(piece => piece.Position == dest);
-            if (!isCapturing)
-            {
-                //if we aren't capturing, then moving to an occupied piece is invalid
-                if (destPiece == null)
-                {
-                    srcPiece.Position = dest;
-                    return true;
-                }
-                return false;
-            }
-            else
-            {
-                if (destPiece != null)
-                    _pieces.Remove(destPiece);
-                srcPiece.Position = dest;
-                return true;
-            }
-        }
 
         /// <summary>
         /// Creates and places pieces at the correct initial positions
