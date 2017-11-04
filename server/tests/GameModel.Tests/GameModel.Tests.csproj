@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChessBoard.cs" />
+    <Compile Include="ChessGameTests.cs" />
     <Compile Include="Pieces\ChessPiece.cs" />
     <Compile Include="Pieces\PawnTests.cs" />
     <Compile Include="Pieces\QueenTests.cs" />
