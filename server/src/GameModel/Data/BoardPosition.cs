@@ -6,12 +6,12 @@ namespace GameModel.Data {
 
         public BoardPosition(XCoord x, int y)
         {
-            this.x = x;
-            this.y = y;
+            X = x;
+            Y = y;
         }
         public static bool operator == (BoardPosition first, BoardPosition second)
         {
-            return first.x == second.x && first.y == second.y;
+            return first.X == second.X && first.Y == second.Y;
         }
         public static bool operator != (BoardPosition first, BoardPosition second)
         {
@@ -19,20 +19,20 @@ namespace GameModel.Data {
         }
         public static BoardPosition operator + (BoardPosition orig, PositionDelta offset)
         {
-            return new BoardPosition(orig.x + offset.X, orig.y + offset.Y);
+            return new BoardPosition(orig.X + offset.X, orig.Y + offset.Y);
         }
         public override bool Equals(object obj)
         {
             switch (obj)
             {
                 case BoardPosition other:
-                    return other.x == x && other.y == y;
+                    return other.X == X && other.Y == Y;
                 default:
                     return false;
             }
         }
-        public override int GetHashCode() => (int)x ^ y;
-        public XCoord x;
-        public int y;
+        public override int GetHashCode() => (int)X ^ Y;
+        public XCoord X { get; }
+        public int Y { get; }
     }
 }

@@ -17,8 +17,8 @@ namespace GameModel
         /// <param name="pos">The position to check</param>
         /// <returns>true if the position exists on the board</returns>
         public static bool CheckPositionExists(BoardPosition pos) =>
-            (_WING_WIDTH <= (int)pos.x) && ((int)pos.x <= (_WIDTH + _WING_WIDTH)) ||
-            (_WING_WIDTH <= pos.y) && (pos.y <= (_HEIGHT + _WING_WIDTH));
+            (_WING_WIDTH <= (int)pos.X) && ((int)pos.X <= (_WIDTH + _WING_WIDTH)) ||
+            (_WING_WIDTH <= pos.Y) && (pos.Y <= (_HEIGHT + _WING_WIDTH));
 
         internal ChessPiece GetPieceByPosition(BoardPosition pos) =>
             _pieces.FirstOrDefault(p => p.Position == pos);
@@ -103,18 +103,18 @@ namespace GameModel
         private IEnumerable<ChessPiece> CreatePawnsAlongLine(PlayerEnum owner, BoardPosition start, BoardPosition end)
         {
             //Vertical case
-            if (start.x == end.x)
+            if (start.X == end.X)
             {
-                for (int y = start.y; y <= end.y; y++)
+                for (int y = start.Y; y <= end.Y; y++)
                 {
-                    yield return new Pawn(owner, new BoardPosition(start.x, y));
+                    yield return new Pawn(owner, new BoardPosition(start.X, y));
                 }
             }
-            else if (start.y == end.y)
+            else if (start.Y == end.Y)
             {
-                for(XCoord x = start.x; x <= end.x; x++)
+                for(XCoord x = start.X; x <= end.X; x++)
                 {
-                    yield return new Pawn(owner, new BoardPosition(x, start.y));
+                    yield return new Pawn(owner, new BoardPosition(x, start.Y));
                 }
             }
         }

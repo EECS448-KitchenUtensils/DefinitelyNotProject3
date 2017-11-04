@@ -18,8 +18,8 @@ namespace GameModel
             {
                 for (int step = 1; step <= _maxSteps; step++)
                 {
-                    var newX = Position.x + (_moveOffsets[i].X * step);
-                    var newY = Position.y + (_moveOffsets[i].Y * step);
+                    var newX = Position.X + (_moveOffsets[i].X * step);
+                    var newY = Position.Y + (_moveOffsets[i].Y * step);
                     var candidate = new BoardPosition(newX, newY);
                     if (ChessBoard.CheckPositionExists(candidate))
                     {
