@@ -11,8 +11,6 @@ namespace GameModel.Tests
     {
         //Test MakeMove works for valid moves
         //Test MakeMove fails for invalid moves
-        //Test MakeMove honors which player is active
-        //Test MakeMove increments the active player count on success
         //Test MakeMove loops back to Player 1 after Player 4 is done
         [SetUp]
         public void Init()
@@ -61,6 +59,19 @@ namespace GameModel.Tests
             Assert.That(result, Is.EqualTo(MoveType.Move)); //Make sure this test fails if the move failed
             var resultingPlayer = _chessGame.GetActivePlayer();
             Assert.That(resultingPlayer, Is.EqualTo(PlayerEnum.PLAYER_2));
+        }
+
+        [Test]
+        public void MakeMoveHonorsCurrentActivePlayer()
+        {
+            var initialPlayer = _chessGame.GetActivePlayer();
+            //Move Player 1 Pawn 1
+            _chessGame.MakeMove(Pos(XCoord.d, 2), Pos(XCoord.d, 4));
+            //Try to do it again
+            var result = _chessGame.MakeMove(Pos(XCoord.d, 4), Pos(XCoord.d, 5));
+            //Make sure player 1 was active
+            Assert.That(initialPlayer, Is.EqualTo(PlayerEnum.PLAYER_1));
+            Assert.That(result, Is.EqualTo(MoveType.Failure));
         }
 
         public static IEnumerable BoundsCheckCases
