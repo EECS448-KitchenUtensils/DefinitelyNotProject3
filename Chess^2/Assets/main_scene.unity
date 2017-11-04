@@ -618,7 +618,7 @@ GameObject:
   - component: {fileID: 1413555971}
   - component: {fileID: 1413555973}
   m_Layer: 0
-  m_Name: square brown dark_png
+  m_Name: sqaure_dark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -934,6 +934,7 @@ MonoBehaviour:
   piece_pawn: {fileID: 187189779}
   gridWidth: 14
   gridDepth: 14
+  moveState: 0
 --- !u!4 &1646519465
 Transform:
   m_ObjectHideFlags: 0

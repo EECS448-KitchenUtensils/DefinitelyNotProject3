@@ -18,6 +18,8 @@ public class MainSceneStart : MonoBehaviour {
 	public Transform[, ] squares = new Transform[14, 14];
 	public Dictionary<string, GameObject>[] clientPiecesCollection = new Dictionary<string, GameObject>[4];
 
+	public bool moveState = false;
+
 
 	// Use this for initialization
 	void Start () {
