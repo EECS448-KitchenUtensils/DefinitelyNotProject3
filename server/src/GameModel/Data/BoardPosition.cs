@@ -1,4 +1,4 @@
-namespace GameModel {
+namespace GameModel.Data {
     /// <summary>
     /// Represents a position on the board
     /// </summary>

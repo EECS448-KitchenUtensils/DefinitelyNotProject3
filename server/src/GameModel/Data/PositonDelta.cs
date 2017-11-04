@@ -1,4 +1,4 @@
-namespace GameModel
+namespace GameModel.Data
 {
     /// <summary>
     /// Holds a position difference for translating a piece on the board

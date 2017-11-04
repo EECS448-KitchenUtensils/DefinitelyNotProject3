@@ -1,4 +1,4 @@
-namespace GameModel {
+namespace GameModel.Data {
     /// <summary>
     /// Allows indexing the board using algebraic notation 
     /// </summary>

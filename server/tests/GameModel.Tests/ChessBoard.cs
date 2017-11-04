@@ -1,5 +1,6 @@
 using NUnit.Framework;
-using GameModel;
+using GameModel.Data;
+
 namespace GameModel.Tests
 {
     [TestFixture]
