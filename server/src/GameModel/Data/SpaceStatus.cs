@@ -8,6 +8,7 @@
     {
         Empty,
         Friendly,
-        Enemy
+        Enemy,
+        Void
     }
 }

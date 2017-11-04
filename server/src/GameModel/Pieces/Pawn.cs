@@ -69,7 +69,8 @@ namespace GameModel
         /// Enumerates all of the valid possible moves for this piece
         /// </summary>
         /// <param name="from">The position to move from</param>
-        /// <param name="positionChecker">A function that checks if a piece is at a given position</param>
+        /// <param name="positionChecker">A function that checks if a piece is at a given position.</param>
+        /// <note><cref>positionChecker</cref must do bounds checking</note>
         /// <returns>The valid moves for this piece</returns>
         public override IEnumerable<MoveResult> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
         {
@@ -79,20 +80,13 @@ namespace GameModel
             var firstMoveOffset = _hasNotMovedMoveOffset[(int)Owner];
             //At the beginning of the game, the pawn can move either one or two spaces forward
             var moveOffsets = (_hasMovedYet) ? new[] { laterMoveOffset } : new[] { firstMoveOffset, laterMoveOffset };
-            var capturePositions = captureOffsets.Select(offset => Position + offset);
-            var forwardPositions = moveOffsets.Select(offset => Position + offset);
-            foreach (var position in capturePositions)
-            {
-                if (positionChecker(position) == SpaceStatus.Enemy)
-                {
-                    yield return new MoveResult(position, MoveType.Capture);
-                }
-            }
-            foreach (var position in forwardPositions)
-            {
-                if (positionChecker(position) == SpaceStatus.Empty)
-                    yield return new MoveResult(position, MoveType.Move);
-            }
+            var capturePositions = captureOffsets.Select(offset => Position + offset)
+                                                 .Where(position => positionChecker(position) == SpaceStatus.Enemy)
+                                                 .Select(position => new MoveResult(position, MoveType.Capture));
+            var forwardPositions = moveOffsets.Select(offset => Position + offset)
+                                              .Where(position => positionChecker(position) == SpaceStatus.Empty)
+                                              .Select(position => new MoveResult(position, MoveType.Move));
+            return capturePositions.Concat(forwardPositions);
         }
 
         /// <summary>

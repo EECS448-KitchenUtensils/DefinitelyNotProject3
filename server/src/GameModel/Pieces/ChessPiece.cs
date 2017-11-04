@@ -10,7 +10,7 @@ namespace GameModel
         /// Enumerates all of the valid possible moves for this piece
         /// </summary>
         /// <param name="from">The position to move from</param>
-        /// <param name="positionChecker">A function that checks if a piece is at a given position</param>
+        /// <param name="positionChecker">A function that checks if a piece is at a given position and also bounds checks</param>
         /// <returns>The valid moves for this piece</returns>
         public virtual IEnumerable<MoveResult> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
         {
@@ -21,23 +21,18 @@ namespace GameModel
                     var newX = Position.X + (_moveOffsets[i].X * step);
                     var newY = Position.Y + (_moveOffsets[i].Y * step);
                     var candidate = new BoardPosition(newX, newY);
-                    if (ChessBoard.CheckPositionExists(candidate))
+                    //Empty space => valid move and keep going
+                    //Enemy => Capture is valid, but cannot jump piece
+                    //Friendly => Move not valid
+                    var status = positionChecker(candidate);
+                    if (status == SpaceStatus.Empty)
                     {
-                        //Empty space => valid move and keep going
-                        //Enemy => Capture is valid, but cannot jump piece
-                        //Friendly => Move not valid
-                        var status = positionChecker(candidate);
-                        if (status == SpaceStatus.Empty)
-                        {
-                            yield return new MoveResult(candidate, MoveType.Move);
-                        }
-                        else if (status == SpaceStatus.Enemy)
-                        {
-                            yield return new MoveResult(candidate, MoveType.Capture);
-                            break;
-                        }
-                        else if (status == SpaceStatus.Friendly)
-                            break;
+                        yield return new MoveResult(candidate, MoveType.Move);
+                    }
+                    else if (status == SpaceStatus.Enemy)
+                    {
+                        yield return new MoveResult(candidate, MoveType.Capture);
+                        break;
                     }
                     else
                         break;

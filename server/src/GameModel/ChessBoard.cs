@@ -30,6 +30,8 @@ namespace GameModel
                 return Enumerable.Empty<MoveResult>();
             return piece.PossibleMoves((checkPos) =>
             {
+                if (CheckPositionExists(checkPos) == false)
+                    return SpaceStatus.Void;
                 var checkSpace = _pieces.FirstOrDefault(p => p.Position == checkPos);
                 if (checkSpace == null)
                     return SpaceStatus.Empty;
