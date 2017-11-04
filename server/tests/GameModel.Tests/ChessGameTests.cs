@@ -9,8 +9,6 @@ namespace GameModel.Tests
     [TestFixture]
     class ChessGameTests
     {
-        //Test MakeMove works for valid moves
-        //Test MakeMove fails for invalid moves
         //Test MakeMove loops back to Player 1 after Player 4 is done
         [SetUp]
         public void Init()
@@ -48,6 +46,16 @@ namespace GameModel.Tests
             Assert.That(result, Is.EqualTo(MoveType.Move));
             var pieceAtDest = _chessGame.GetPieceByPosition(dest);
             Assert.That(pieceAtDest, Is.EqualTo(pieceAtDest));
+        }
+
+        [Test, TestCaseSource("MakeMoveInvalidMovesCases")]
+        public void SingleMakeMoveInvalidMoves(BoardPosition src, BoardPosition dest, Type expectedPieceAtDest)
+        {
+            var piece = _chessGame.GetPieceByPosition(src);
+            var result = _chessGame.MakeMove(src, dest);
+            Assert.That(result, Is.EqualTo(MoveType.Failure));
+            var pieceAtDest = _chessGame.GetPieceByPosition(dest);
+            Assert.That(pieceAtDest?.GetType(), Is.EqualTo(expectedPieceAtDest));
         }
 
         [Test]
@@ -104,6 +112,19 @@ namespace GameModel.Tests
                     .SetName("MakeMoveValidPlayer1PawnFirstMove");
                 yield return new TestCaseData(Pos(XCoord.e, 1), Pos(XCoord.f, 3))
                     .SetName("MakeMoveValidPlayer1LeftKnightAdvance");
+            }
+        }
+
+        public static IEnumerable MakeMoveInvalidMovesCases
+        {
+            get
+            {
+                yield return new TestCaseData(Pos(XCoord.d, 2), Pos(XCoord.d, 5), null)
+                    .SetName("MakeMoveValidPlayer1PawnFirstMoveTooFar");
+                yield return new TestCaseData(Pos(XCoord.e, 1), Pos(XCoord.g, 2), typeof(Pawn))
+                    .SetName("MakeMoveValidPlayer1LeftKnightAdvanceIntoFriendlyPawn");
+                yield return new TestCaseData(Pos(XCoord.e, 1), Pos(XCoord.e, 3), null)
+                    .SetName("MakeMoveValidPlayer1LeftKnightAdvanceStraightForward");
             }
         }
 
