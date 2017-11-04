@@ -25,7 +25,7 @@ namespace GameModel
             if (pos.Y > _WING_WIDTH && pos.Y < (_HEIGHT + _WING_WIDTH))
                 return pos.X >= 0 && (int)pos.X < (_HEIGHT + _WING_WIDTH * 2);
             //vertical case
-            if ((int)pos.X > _WING_WIDTH && (int)pos.X <= (_HEIGHT + _WING_WIDTH))
+            if ((int)pos.X >= _WING_WIDTH && (int)pos.X <= (_HEIGHT + _WING_WIDTH))
                 return pos.Y >= 1 && pos.Y < (_HEIGHT + _WING_WIDTH * 2);
             return false;
         }

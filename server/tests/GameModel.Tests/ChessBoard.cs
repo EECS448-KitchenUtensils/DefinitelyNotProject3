@@ -8,6 +8,7 @@ namespace GameModel.Tests
     {
         [TestCase(XCoord.a, 0, false)] //Lower left corner
         [TestCase(XCoord.a, 3, false)] //top edge of lower left cutout
+        [TestCase(XCoord.d, 2, true)] //Player 1 pawn 1
         [TestCase(XCoord.n, 0, false)] //Lower right corner
         [TestCase(XCoord.a, 13, false)] //Upper left corner
         [TestCase(XCoord.n, 13, false)] //Upper right corner
