@@ -15,7 +15,7 @@ namespace GameModel.Tests.Pieces
         {
             SpaceStatus positionChecker(BoardPosition pos)
             {
-                if (ChessBoard.CheckPositionExists(pos))
+                if (BoundsCheck(pos))
                     return SpaceStatus.Empty;
                 else
                     return SpaceStatus.Void;
@@ -34,7 +34,7 @@ namespace GameModel.Tests.Pieces
         {
             SpaceStatus positionChecker(BoardPosition pos)
             {
-                if (ChessBoard.CheckPositionExists(pos))
+                if (BoundsCheck(pos))
                 {
                     var xDistance = Math.Abs(piecePosition.X - pos.X);
                     var yDistance = Math.Abs(piecePosition.Y - pos.Y);
@@ -49,6 +49,8 @@ namespace GameModel.Tests.Pieces
             return positionChecker;
         }
 
+        private static bool BoundsCheck(BoardPosition pos) =>
+            (pos.X >= XCoord.a && pos.X <= XCoord.h) && (pos.Y >= 1 && pos.Y <= 8);
 
         /// <summary>
         /// Helper method that allows the tests to generalized
