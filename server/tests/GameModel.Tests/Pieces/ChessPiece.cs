@@ -56,10 +56,10 @@ namespace GameModel.Tests.Pieces
         /// <param name="piece">A piece instance at some position</param>
         /// <param name="expectedMoves"></param>
         /// <param name="positionChecker"></param>
-        protected void PossibleMovesReturnsOnlyValidMoves(ChessPiece piece, ISet<MoveResult> expectedMoves, Func<BoardPosition, SpaceStatus> positionChecker)
+        protected void PossibleMovesReturnsOnlyValidMoves(ChessPiece piece, IEnumerable<MoveResult> expectedMoves, Func<BoardPosition, SpaceStatus> positionChecker)
         {
-            var calculatedMoves = piece.PossibleMoves(positionChecker);
-            Assert.That(() => expectedMoves.SetEquals(calculatedMoves), Is.True);
+            var calculatedMoves = new HashSet<MoveResult>(piece.PossibleMoves(positionChecker));
+            Assert.That(() => calculatedMoves.SetEquals(expectedMoves), Is.True);
         }
     }
 }
