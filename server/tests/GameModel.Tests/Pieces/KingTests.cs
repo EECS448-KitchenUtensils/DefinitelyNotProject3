@@ -46,7 +46,5 @@ namespace GameModel.Tests.Pieces
                 ).SetName("KingPossibleMovesEmptySpace");
             }
         }
-        private static BoardPosition Pos(XCoord x, int y) => new BoardPosition(x, y);
-        private static MoveResult Move(XCoord x, int y, MoveType result) => new MoveResult(Pos(x, y), result);
     }
 }
