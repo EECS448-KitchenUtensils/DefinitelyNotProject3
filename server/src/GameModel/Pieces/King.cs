@@ -35,5 +35,6 @@ namespace GameModel
         protected override PositionDelta[] _moveOffsets => _kingMoveOffsets;
 
         private PositionDelta[] _kingMoveOffsets;
+        public bool Check { get; private set; }
     }
 }
