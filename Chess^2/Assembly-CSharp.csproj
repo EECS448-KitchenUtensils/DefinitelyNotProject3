@@ -54,6 +54,7 @@
      <Compile Include="Assets\MainSceneCameraControl.cs" />
      <Compile Include="Assets\MainSceneStart.cs" />
      <Compile Include="Assets\PieceBehavior.cs" />
+     <Compile Include="Assets\TurnBehavior.cs" />
  <Reference Include="UnityEngine.UIAutomation">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
  </Reference>

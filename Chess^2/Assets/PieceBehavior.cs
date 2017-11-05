@@ -9,7 +9,7 @@ public class PieceBehavior : MonoBehaviour {
 	public ChessPiece thisPiece;
 	public float startx;
 	public float starty;
-	private GameObject[] tempSquare = new GameObject[10];
+	private GameObject[] tempSquare = new GameObject[50];
 	private Vector3 mousePosition;
 
 
