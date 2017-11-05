@@ -2,82 +2,70 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GameModel;
+using GameModel.Data;
 
 public class PieceBehavior : MonoBehaviour {
 
 	public ChessPiece thisPiece;
 	public float startx;
 	public float starty;
-	private GameObject tempSquare;
+	private GameObject[] tempSquare = new GameObject[10];
 	private Vector3 mousePosition;
 
 
 	// Use this for initialization
 	void Start () {
-		
+		Vector3 position = new Vector3 ((float)thisPiece.Position.X, (float)thisPiece.Position.Y - 1, -1);
+		transform.position = position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-		Vector3 position = new Vector3 ((float)thisPiece.Position.X, (float)thisPiece.Position.Y - 1, -1);
-		this.gameObject.transform.position = position;
-		
-//		if(Input.GetMouseButtonUp(0)){
-//			Destroy (tempSquare);
-//		}
+			
+		if(Input.GetMouseButtonUp(0)){
+			foreach (var o in tempSquare) {
+				Destroy (o);
+			}
+		}
 	}
 
 
 	//Theses need to be changed to work with ChessPiece as key instead of tree.
 
 
-//	void OnMouseDrag() {
-//		if (thisPiece.Contains ("pawn")) {
-//			mousePosition = Input.mousePosition;
-//			mousePosition = Camera.main.ScreenToWorldPoint (mousePosition);
-//			transform.position = Vector2.Lerp (transform.position, mousePosition, 0.5f);
-//		}
-//	}
-//	void OnMouseUp() {
-//		if (thisPiece.Contains ("pawn")) {
-//			float x = Mathf.Round(this.gameObject.transform.position.x);
-//			float y = Mathf.Round(this.gameObject.transform.position.y);
-//			if (tempSquare.transform.position.x == x && tempSquare.transform.position.y == y) {
-//				this.gameObject.transform.position = new Vector3 (tempSquare.transform.position.x, tempSquare.transform.position.y, -1);
-//			} 
-//			else {
-//				this.gameObject.transform.position = new Vector3 (startx, starty, -1);
-//			}
-//		}
-//	}
-//
-//	void OnMouseDown (){
-//
-//		GameObject square = GameObject.Find("sqaure_dark");
-//
-//		if (thisPiece.Contains ("pawn")) {
-//			float x = this.gameObject.transform.position.x;
-//			float y = this.gameObject.transform.position.y;
-//			startx = x;
-//			starty = y;
-//			y += 2;
-//			tempSquare = Instantiate (square, new Vector3 (x, y, -0.1f), Quaternion.identity);
-//			tempSquare.GetComponent<Renderer> ().material.color = new Color (0, 0, 1);
-//
-//
-//		} else if (thisPiece.Contains ("king")) {
-//
-//		} else if (thisPiece.Contains ("queen")) {
-//
-//		} else if (thisPiece.Contains ("rook")) {
-//
-//		} else if (thisPiece.Contains ("knight")) {
-//
-//		} else if (thisPiece.Contains ("bishop")) {
-//
-//		} else {
-//
-//		}
-//	}
+	void OnMouseDrag() {
+		mousePosition = Input.mousePosition;
+		mousePosition = Camera.main.ScreenToWorldPoint (mousePosition);
+		transform.position = Vector3.Lerp (transform.position, new Vector3(mousePosition.x, mousePosition.y, -1), 0.5f);
+	}
+
+	void OnMouseUp() {
+		float x = Mathf.Round(this.gameObject.transform.position.x);
+		float y = Mathf.Round(this.gameObject.transform.position.y);
+		foreach (var square in tempSquare) {
+			if (square != null && square.transform.position.x == x && square.transform.position.y == y) {
+				GameObject.Find ("GameObject_Main").GetComponent<MainSceneStart> ().game.MakeMove(thisPiece.Position, new BoardPosition((XCoord) x, (int) y+1));
+			} 
+		}
+		Vector3 position = new Vector3 ((float)thisPiece.Position.X, (float)thisPiece.Position.Y - 1, -1);
+		transform.position = position;
+	}
+
+	void OnMouseDown (){
+
+		GameObject square = GameObject.Find ("whitesquare");
+
+		var moves = GameObject.Find ("GameObject_Main")
+							  .GetComponent<MainSceneStart> ()
+			                  .game
+			                  .PossibleMoves (thisPiece.Position);
+
+		int count = 0;
+		foreach (var move in moves) {
+			tempSquare [count] = Instantiate (square, new Vector3 ((float)move.Position.X, (float)move.Position.Y - 1, -0.1f), Quaternion.identity);
+			tempSquare [count].GetComponent<Renderer> ().material.color = this.gameObject.GetComponent<Renderer> ().material.color;
+			count++;
+		}
+			
+	}
 }
