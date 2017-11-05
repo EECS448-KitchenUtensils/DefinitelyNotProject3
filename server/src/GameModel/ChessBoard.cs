@@ -90,7 +90,7 @@ namespace GameModel
             _pieces.Add(new Knight(PlayerEnum.PLAYER_2, new BoardPosition(XCoord.n, 10)));
             _pieces.Add(new Rook(PlayerEnum.PLAYER_2, new BoardPosition(XCoord.n, 11)));
             //Player 3
-            _pieces.AddRange(CreatePawnsAlongLine(PlayerEnum.PLAYER_3, new BoardPosition(XCoord.d, 13), new BoardPosition(XCoord.d, 13)));
+            _pieces.AddRange(CreatePawnsAlongLine(PlayerEnum.PLAYER_3, new BoardPosition(XCoord.d, 13), new BoardPosition(XCoord.k, 13)));
             _pieces.Add(new Rook(PlayerEnum.PLAYER_3, new BoardPosition(XCoord.d, 14)));
             _pieces.Add(new Knight(PlayerEnum.PLAYER_3, new BoardPosition(XCoord.e, 14)));
             _pieces.Add(new Bishop(PlayerEnum.PLAYER_3, new BoardPosition(XCoord.f, 14)));
