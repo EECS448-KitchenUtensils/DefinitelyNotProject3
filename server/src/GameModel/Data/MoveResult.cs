@@ -1,5 +1,8 @@
 ﻿namespace GameModel.Data
 {
+    /// <summary>
+    /// Represents the result of a piece movement
+    /// </summary>
     public struct MoveResult
     {
         /// <summary>

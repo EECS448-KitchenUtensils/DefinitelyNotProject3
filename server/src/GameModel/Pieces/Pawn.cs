@@ -68,9 +68,8 @@ namespace GameModel
         /// <summary>
         /// Enumerates all of the valid possible moves for this piece
         /// </summary>
-        /// <param name="from">The position to move from</param>
         /// <param name="positionChecker">A function that checks if a piece is at a given position.</param>
-        /// <note><cref>positionChecker</cref must do bounds checking</note>
+        /// <note>positionChecker must do bounds checking</note>
         /// <returns>The valid moves for this piece</returns>
         public override IEnumerable<MoveResult> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
         {
