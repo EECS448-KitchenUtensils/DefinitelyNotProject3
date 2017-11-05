@@ -43,7 +43,9 @@ public class MainSceneStart : MonoBehaviour {
 	}
 
 
-	//Pre: 
+	/// <summary>
+	/// Creates the grid.
+	/// </summary>
 	void CreateGrid (){
 		//Draws board and maps quares to array
 		for (int y = 0; y < gridDepth; y=y+1) {
@@ -71,8 +73,6 @@ public class MainSceneStart : MonoBehaviour {
 	/// Creates the pieces. Adds them to a dictionary for future use.
 	/// </summary>
 	void CreatePieces(){
-
-		//good
 
 		for (int i = 0; i < 4; i++) {
 			clientPiecesCollection [i] = new Dictionary<ChessPiece, GameObject> ();
@@ -140,13 +140,4 @@ public class MainSceneStart : MonoBehaviour {
 		}
 
 	}
-
-//	void BishopTest(){
-//		Renderer rend = test_bishop.GetComponent<Renderer>();
-//		rend.material.color = new Color (2, 0, 0);
-//		Vector3 current = test_bishop.transform.position;
-//		Vector3 dest = new Vector3 (5, 5, -1);
-//		Vector3 to = Vector3.MoveTowards (current, dest, 2 * Time.deltaTime);
-//		test_bishop.transform.position = to;
-//	}
 }
