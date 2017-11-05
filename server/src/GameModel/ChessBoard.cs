@@ -1,6 +1,7 @@
 using GameModel.Data;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace GameModel
 {
@@ -47,20 +48,22 @@ namespace GameModel
             {
                 if (CheckPositionExists(checkPos) == false)
                     return SpaceStatus.Void;
-                var checkSpace = _pieces.FirstOrDefault(p => p.Position == checkPos);
-                if (checkSpace == null)
+                var otherPiece = _pieces.FirstOrDefault(p => p.Position == checkPos);
+                if (otherPiece == null)
                     return SpaceStatus.Empty;
                 else
                 {
-                    if ((int)(checkSpace.Owner) % 2 == ((int)piece.Owner % 2))
-                    {
-                        //Same team
+                    if (IsFriendly(piece, otherPiece))
                         return SpaceStatus.Friendly;
-                    }
                     else
                         return SpaceStatus.Enemy;
                 }
             });
+        }
+
+        private static bool IsFriendly(ChessPiece ourPiece, ChessPiece theirPiece)
+        {
+            return ourPiece.Owner == theirPiece.Owner;
         }
 
         /// <summary>
