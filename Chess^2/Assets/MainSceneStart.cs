@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using GameModel;
+using GameModel.Data;
 
 public class MainSceneStart : MonoBehaviour {
 
@@ -69,39 +71,37 @@ public class MainSceneStart : MonoBehaviour {
 	/// Creates the pieces. Adds them to a dictionary for future use.
 	/// </summary>
 	void CreatePieces(){
-		for(int i = 0; i < 4; i++){
-			clientPiecesCollection[i] = new Dictionary<string, GameObject> ();
-		}
-		foreach(Dictionary<string, GameObject> dict in clientPiecesCollection){
 
-			dict.Add (ChessPiece, (Instantiate (piece_king, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("queen", (Instantiate (piece_queen, new Vector3(1, 1, -1), Quaternion.identity)) );
+		//good
 
-			//2 Knights
-			dict.Add ("knight0", (Instantiate (piece_knight, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("knight1", (Instantiate (piece_knight, new Vector3(1, 1, -1), Quaternion.identity)) );
-
-			//2 Rooks
-			dict.Add ("rook0", (Instantiate (piece_rook, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("rook1", (Instantiate (piece_rook, new Vector3(1, 1, -1), Quaternion.identity)) );
-
-
-			//2 Bishops
-			dict.Add ("bishop0", (Instantiate (piece_bishop, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("bishop1", (Instantiate (piece_bishop, new Vector3(1, 1, -1), Quaternion.identity)) );
-
-
-			//8 Pawns.
-			dict.Add ("pawn0", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("pawn1", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("pawn2", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("pawn3", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("pawn4", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("pawn5", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("pawn6", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
-			dict.Add ("pawn7", (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
+		for (int i = 0; i < 4; i++) {
+			clientPiecesCollection [i] = new Dictionary<ChessPiece, GameObject> ();
 
 		}
+			
+
+		foreach (ChessPiece piece in game.Pieces) {
+
+			if (piece is King) {
+				clientPiecesCollection[(int)piece.Owner].Add (piece, (Instantiate (piece_king, new Vector3(1, 1, -1), Quaternion.identity)) );
+			}
+			else if (piece is Queen) {
+				clientPiecesCollection[(int)piece.Owner].Add (piece, (Instantiate (piece_queen, new Vector3(1, 1, -1), Quaternion.identity)) );
+			}
+			else if (piece is Rook) {
+				clientPiecesCollection[(int)piece.Owner].Add (piece, (Instantiate (piece_rook, new Vector3(1, 1, -1), Quaternion.identity)) );
+			}
+			else if (piece is Knight) {
+				clientPiecesCollection[(int)piece.Owner].Add (piece, (Instantiate (piece_knight, new Vector3(1, 1, -1), Quaternion.identity)) );
+			}
+			else if (piece is Bishop) {
+				clientPiecesCollection[(int)piece.Owner].Add (piece, (Instantiate (piece_bishop, new Vector3(1, 1, -1), Quaternion.identity)) );
+			}
+			else if (piece is Pawn) {
+				clientPiecesCollection[(int)piece.Owner].Add (piece, (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
+			}
+		}
+			
 	}
 
 	/// <summary>
@@ -133,7 +133,7 @@ public class MainSceneStart : MonoBehaviour {
 	void GivePiecesBehavior(){
 
 		for (int i = 0; i < 4; i++) {
-			foreach (string key in clientPiecesCollection[i].Keys) {
+			foreach (ChessPiece key in clientPiecesCollection[i].Keys) {
 				clientPiecesCollection [i] [key].AddComponent<PieceBehavior> ();
 				clientPiecesCollection [i] [key].GetComponent<PieceBehavior> ().thisPiece = key;
 			}
