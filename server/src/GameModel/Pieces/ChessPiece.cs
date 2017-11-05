@@ -49,7 +49,7 @@ namespace GameModel
         /// <summary>
         /// The current position of this piece on the board
         /// </summary>
-        public virtual BoardPosition Position { get; set; }
+        public virtual BoardPosition Position { get; internal set; }
 
         /// <summary>
         /// This should be overridden with the directions that a piece can move

@@ -95,7 +95,7 @@ namespace GameModel
         public override BoardPosition Position
         {
             get => _position;
-            set
+            internal set
             {
                 _hasMovedYet = true;
                 _position = value;
