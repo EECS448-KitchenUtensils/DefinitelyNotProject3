@@ -2,6 +2,9 @@ using GameModel.Data;
 
 namespace GameModel
 {
+    /// <summary>
+    /// A Rook piece instance
+    /// </summary>
     public class Rook : ChessPiece
     {
         internal Rook(PlayerEnum owner, BoardPosition initialPosition)

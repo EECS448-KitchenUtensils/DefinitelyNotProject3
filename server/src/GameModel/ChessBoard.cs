@@ -4,7 +4,10 @@ using System.Linq;
 
 namespace GameModel
 {
-    public class ChessBoard
+    /// <summary>
+    /// Holds all of the pieces and cross-checks piece ownership
+    /// </summary>
+    internal class ChessBoard
     {
         internal ChessBoard()
         {
@@ -29,10 +32,6 @@ namespace GameModel
                 return pos.Y >= 1 && pos.Y < (_HEIGHT + _WING_WIDTH * 2);
             return false;
         }
-
-        //=>
-        //    (_WING_WIDTH < (int)pos.X) && ((int)pos.X <= (_WIDTH + _WING_WIDTH)) &&
-        //    (_WING_WIDTH < pos.Y) && (pos.Y < (_HEIGHT + _WING_WIDTH));
 
         internal ChessPiece GetPieceByPosition(BoardPosition pos) =>
             _pieces.FirstOrDefault(p => p.Position == pos);

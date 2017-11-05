@@ -4,8 +4,14 @@ using System.Linq;
 
 namespace GameModel
 {
+    /// <summary>
+    /// The main model class. Manages the state of the entire game.
+    /// </summary>
     public class ChessGame
     {
+        /// <summary>
+        /// Default constructor for ChessGame
+        /// </summary>
         public ChessGame()
         {
             _board = new ChessBoard();
@@ -18,8 +24,16 @@ namespace GameModel
         /// <returns>A sequence of moves and their type</returns>
         public IEnumerable<MoveResult> PossibleMoves(BoardPosition pos) => _board.PossibleMoves(pos);
 
+        /// <summary>
+        /// Looks up a ChessPiece by position on the board
+        /// </summary>
+        /// <param name="pos">The position the query</param>
+        /// <returns>A ChessPiece reference or null</returns>
         public ChessPiece GetPieceByPosition(BoardPosition pos) => _board.GetPieceByPosition(pos);
 
+        /// <summary>
+        /// Enumerates all of the pieces on the board
+        /// </summary>
         public IEnumerable<ChessPiece> Pieces => _board.Pieces;
 
         /// <summary>

@@ -2,6 +2,9 @@ using GameModel.Data;
 
 namespace GameModel
 {
+    /// <summary>
+    /// A Queen piece instance
+    /// </summary>
     public class Queen : ChessPiece
     {
         /// <summary>

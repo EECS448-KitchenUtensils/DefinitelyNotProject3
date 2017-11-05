@@ -2,6 +2,9 @@ using GameModel.Data;
 
 namespace GameModel
 {
+    /// <summary>
+    /// A Bishop piece instance
+    /// </summary>
     public class Bishop : ChessPiece
     {
         internal Bishop(PlayerEnum owner, BoardPosition initialPosition)
@@ -17,7 +20,15 @@ namespace GameModel
             };
         }
 
-        protected override int _maxSteps => 18; //Chosen based on board dimensions + extra
+        /// <summary>
+        /// The maximum number of times the move rules can be applied.
+        /// Chosen based on board dimensions + extra
+        /// </summary>
+        protected override int _maxSteps => 18;
+
+        /// <summary>
+        /// The move rules for this piece
+        /// </summary>
         protected override PositionDelta[] _moveOffsets => _bishopMoves;
 
         private PositionDelta[] _bishopMoves;

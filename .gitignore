@@ -10,3 +10,5 @@
 #VS is a pig
 **/.vs
 server/packages/
+/Chess^2/Assets/plugins/GameModel.xml
+/documentation/GameModel.xml

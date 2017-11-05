@@ -4,12 +4,14 @@ using System.Collections.Generic;
 
 namespace GameModel
 {
+    /// <summary>
+    /// Base class for all ChessPieces
+    /// </summary>
     public abstract class ChessPiece
     {
         /// <summary>
         /// Enumerates all of the valid possible moves for this piece
         /// </summary>
-        /// <param name="from">The position to move from</param>
         /// <param name="positionChecker">A function that checks if a piece is at a given position and also bounds checks</param>
         /// <returns>The valid moves for this piece</returns>
         public virtual IEnumerable<MoveResult> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
@@ -49,7 +51,7 @@ namespace GameModel
         /// <summary>
         /// The current position of this piece on the board
         /// </summary>
-        public virtual BoardPosition Position { get; set; }
+        public virtual BoardPosition Position { get; internal set; }
 
         /// <summary>
         /// This should be overridden with the directions that a piece can move
