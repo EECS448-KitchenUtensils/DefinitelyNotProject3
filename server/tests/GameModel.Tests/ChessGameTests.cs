@@ -45,6 +45,7 @@ namespace GameModel.Tests
             var result = _chessGame.MakeMove(src, dest);
             Assert.That(result, Is.EqualTo(MoveType.Move));
             var pieceAtDest = _chessGame.GetPieceByPosition(dest);
+            Assert.That(piece.Position, Is.EqualTo(dest));
             Assert.That(pieceAtDest, Is.EqualTo(pieceAtDest));
         }
 

@@ -53,12 +53,16 @@ namespace GameModel
                 return MoveType.Failure;
             var currentPlayer = _players[_current_player];
             var piece = _board.GetPieceByPosition(src);
+            //Check piece ownership
+            if (piece.Owner != currentPlayer)
+                return MoveType.Failure;
             //Make sure move is possible
             var moves = _board.PossibleMoves(src)
                               .Where(move => move.Position == dest)
                               .ToList();
             if (moves.Count == 1)
             {
+                piece.Position = dest;
                 _current_player = (_current_player + 1) % 4; //Advance next player, mod 4
                 return moves[0].Outcome;
             }
