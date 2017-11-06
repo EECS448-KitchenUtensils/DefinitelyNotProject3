@@ -39,7 +39,7 @@ public class MainSceneStart : MonoBehaviour {
 	/// Main Update
 	/// </summary>
 	void Update () {
-		//BishopTest ();
+		
 	}
 
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using GameModel;
 using GameModel.Data;
@@ -9,7 +10,6 @@ public class PieceBehavior : MonoBehaviour {
 	public ChessPiece thisPiece;
 	public float startx;
 	public float starty;
-	public MoveType lastmovetype;
 	private GameObject[] tempSquare = new GameObject[50];
 	private Vector3 mousePosition;
 	private ChessGame Game{
@@ -50,7 +50,10 @@ public class PieceBehavior : MonoBehaviour {
 		float y = Mathf.Round(this.gameObject.transform.position.y);
 		foreach (var square in tempSquare) {
 			if (square != null && square.transform.position.x == x && square.transform.position.y == y) {
-				lastmovetype = Game.MakeMove(thisPiece.Position, new BoardPosition((XCoord) x, (int) y+1));
+				var lastmovetype = Game.MakeMove(thisPiece.Position, new BoardPosition((XCoord) x, (int) y+1));
+				if(lastmovetype == MoveType.Capture){
+					DestroyCapturedPieces();
+				}
 			} 
 		}
 		Vector3 position = new Vector3 ((float)thisPiece.Position.X, (float)thisPiece.Position.Y - 1, -1);
@@ -69,6 +72,16 @@ public class PieceBehavior : MonoBehaviour {
 			tempSquare [count].GetComponent<Renderer> ().material.color = this.gameObject.GetComponent<Renderer> ().material.color;
 			count++;
 		}
-			
+	}
+
+	void DestroyCapturedPieces(){
+		var oldPieces = GameObject.Find ("GameObject_Main").GetComponent<MainSceneStart> ().clientPiecesCollection;
+		var newPieces = Game.Pieces;
+		foreach (var pieceDict in oldPieces) {
+			var deadPieces = pieceDict.Keys.Except (newPieces);
+			foreach (var deadPiece in deadPieces) {
+				Destroy (pieceDict [deadPiece]);
+			}
+		}
 	}
 }
