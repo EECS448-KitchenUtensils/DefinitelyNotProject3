@@ -9,8 +9,14 @@ public class PieceBehavior : MonoBehaviour {
 	public ChessPiece thisPiece;
 	public float startx;
 	public float starty;
+	public MoveType lastmovetype;
 	private GameObject[] tempSquare = new GameObject[50];
 	private Vector3 mousePosition;
+	private ChessGame Game{
+		get{
+			return GameObject.Find ("GameObject_Main").GetComponent<MainSceneStart> ().game;
+		}
+	}
 
 
 	// Use this for initialization
@@ -44,7 +50,7 @@ public class PieceBehavior : MonoBehaviour {
 		float y = Mathf.Round(this.gameObject.transform.position.y);
 		foreach (var square in tempSquare) {
 			if (square != null && square.transform.position.x == x && square.transform.position.y == y) {
-				GameObject.Find ("GameObject_Main").GetComponent<MainSceneStart> ().game.MakeMove(thisPiece.Position, new BoardPosition((XCoord) x, (int) y+1));
+				lastmovetype = Game.MakeMove(thisPiece.Position, new BoardPosition((XCoord) x, (int) y+1));
 			} 
 		}
 		Vector3 position = new Vector3 ((float)thisPiece.Position.X, (float)thisPiece.Position.Y - 1, -1);
@@ -55,10 +61,7 @@ public class PieceBehavior : MonoBehaviour {
 
 		GameObject square = GameObject.Find ("whitesquare");
 
-		var moves = GameObject.Find ("GameObject_Main")
-							  .GetComponent<MainSceneStart> ()
-			                  .game
-			                  .PossibleMoves (thisPiece.Position);
+		var moves = Game.PossibleMoves (thisPiece.Position);
 
 		int count = 0;
 		foreach (var move in moves) {
