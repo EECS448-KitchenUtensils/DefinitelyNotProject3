@@ -11,7 +11,6 @@ namespace GameModel
         {
             Owner = owner;
             Position = initialPosition;
-            Check = false;
             _kingMoveOffsets = new[]
             {
                 new PositionDelta(1, 1),
@@ -25,6 +24,10 @@ namespace GameModel
             };
         }
 
+        internal void Checked() {
+            // Owner.checked();
+        }
+
         /// <summary>
         /// The King can only move once per turn
         /// </summary>
@@ -36,6 +39,5 @@ namespace GameModel
         protected override PositionDelta[] _moveOffsets => _kingMoveOffsets;
 
         private PositionDelta[] _kingMoveOffsets;
-        public bool Check { get; internal set; }
     }
 }

@@ -33,6 +33,11 @@ namespace GameModel
                     }
                     else if (status == SpaceStatus.Enemy)
                     {
+                        // check to see if the piece is a king
+                        // ChessPiece target = GetPieceByPosition(new BoardPosition(newX, newY));
+                        // if(target ==  PieceEnum.King) {
+                        //      target.Checked();
+                        // }
                         yield return new MoveResult(candidate, MoveType.Capture);
                         break;
                     }

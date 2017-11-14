@@ -10,9 +10,14 @@ namespace GameModel
     /// </summary>
     internal class ChessBoard
     {
+        // NOTE: constructor should make 4 players for the board to use
         internal ChessBoard()
         {
             _pieces = new List<ChessPiece>();
+            Player player1 = new Player(PlayerEnum.PLAYER_1);
+            Player player2 = new Player(PlayerEnum.PLAYER_2);
+            Player player3 = new Player(PlayerEnum.PLAYER_3);
+            Player player4 = new Player(PlayerEnum.PLAYER_4);
             InitBoard();
         }
         /// <summary>
