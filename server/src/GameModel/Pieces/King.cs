@@ -11,6 +11,7 @@ namespace GameModel
         {
             Owner = owner;
             Position = initialPosition;
+            Check = false;
             _kingMoveOffsets = new[]
             {
                 new PositionDelta(1, 1),
@@ -35,6 +36,6 @@ namespace GameModel
         protected override PositionDelta[] _moveOffsets => _kingMoveOffsets;
 
         private PositionDelta[] _kingMoveOffsets;
-        public bool Check { get; private set; }
+        public bool Check { get; internal set; }
     }
 }
