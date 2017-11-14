@@ -16,7 +16,7 @@ namespace GameModel
                 new PositionDelta(1, 1),
                 new PositionDelta(1, -1),
                 new PositionDelta(-1, -1),
-                new PositionDelta(-1, -1)
+                new PositionDelta(-1, 1)
             };
         }
 
