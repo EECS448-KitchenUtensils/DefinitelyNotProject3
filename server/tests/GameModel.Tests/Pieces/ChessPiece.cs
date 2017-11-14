@@ -49,8 +49,37 @@ namespace GameModel.Tests.Pieces
             return positionChecker;
         }
 
-        private static bool BoundsCheck(BoardPosition pos) =>
-            (pos.X >= XCoord.a && pos.X <= XCoord.h) && (pos.Y >= 1 && pos.Y <= 8);
+
+        private static bool BoundsCheck(BoardPosition pos) 
+        {
+            bool inBounds = true;
+
+            if(pos.X < XCoord.d) 
+            { // Identifies positions possibly in the left hand corners
+                if(pos.Y > 11) 
+                { // check for upper corner
+                    inBounds = false;
+                } else if(pos.Y < 4) 
+                { // check for lower corner
+                    inBounds = false;
+                }
+            } else if(pos.X > XCoord.k) {// Identifies positions possibly in the left hand corners
+                if (pos.Y > 11)
+                { // check for upper corner
+                    inBounds = false;
+                }
+                else if (pos.Y < 4)
+                { // check for lower corner
+                    inBounds = false;
+                }
+            }
+
+            return inBounds;
+        }
+        // NOTE: I don't think this functions is right.
+        //=>
+            //(pos.X >= XCoord.a && pos.X <= XCoord.h) && (pos.Y >= 1 && pos.Y <= 8);
+
         protected static BoardPosition Pos(XCoord x, int y) => new BoardPosition(x, y);
         protected static MoveResult Move(XCoord x, int y, MoveType result) => new MoveResult(Pos(x, y), result);
         /// <summary>
