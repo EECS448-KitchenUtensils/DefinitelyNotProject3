@@ -7,10 +7,12 @@ namespace GameModel
     /// </summary>
     public class King : ChessPiece
     {
-        internal King(PlayerEnum owner, BoardPosition initialPosition)
+        internal King(Player owner, BoardPosition initialPosition)
         {
             Owner = owner;
             Position = initialPosition;
+            PieceType = PieceEnum.KING;
+
             _kingMoveOffsets = new[]
             {
                 new PositionDelta(1, 1),
@@ -25,7 +27,7 @@ namespace GameModel
         }
 
         internal void Checked() {
-            // Owner.checked();
+            Owner.Checked = true;
         }
 
         /// <summary>

@@ -7,10 +7,12 @@ namespace GameModel
     /// </summary>
     public class Bishop : ChessPiece
     {
-        internal Bishop(PlayerEnum owner, BoardPosition initialPosition)
+        internal Bishop(Player owner, BoardPosition initialPosition)
         {
             Owner = owner;
             Position = initialPosition;
+            PieceType = PieceEnum.BISHOP;
+
             _bishopMoves = new[]
             {
                 new PositionDelta(1, 1),
