@@ -33,11 +33,6 @@ namespace GameModel
                     }
                     else if (status == SpaceStatus.Enemy)
                     {
-                        // check to see if the piece is a king
-                        // ChessPiece target = GetPieceByPosition(new BoardPosition(newX, newY));
-                        // if(target ==  PieceEnum.King) {
-                        //      target.Checked();
-                        // }
                         yield return new MoveResult(candidate, MoveType.Capture);
                         break;
                     }
@@ -51,7 +46,7 @@ namespace GameModel
         /// The owner of this piece
         /// </summary>
         /// <returns>A ChessPlayer reference</returns>
-        public PlayerEnum Owner { get; protected set; }
+        public Player Owner { get; protected set; }
 
         /// <summary>
         /// The current position of this piece on the board
@@ -68,5 +63,7 @@ namespace GameModel
         /// can be applied.
         /// </summary>
         protected virtual int _maxSteps { get; }
+
+        public PieceEnum PieceType { get; protected set; }
     }
 }

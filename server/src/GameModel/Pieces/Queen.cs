@@ -12,10 +12,12 @@ namespace GameModel
         /// </summary>
         /// <param name="owner">The owner of this Queen</param>
         /// <param name="initialPosition">The initial position on the board</param>
-        internal Queen(PlayerEnum owner, BoardPosition initialPosition)
+        internal Queen(Player owner, BoardPosition initialPosition)
         {
             Owner = owner;
             Position = initialPosition;
+            PieceType = PieceEnum.QUEEN;
+
             _queenMoveOffsets = new[]
             {
                 //rook moves

@@ -12,16 +12,17 @@ namespace GameModel.Tests.Pieces
         public void PossibleMoves(BoardPosition initialPosition, IEnumerable<MoveResult> validMoves, Func<BoardPosition, SpaceStatus> positionChecker, bool hasMovedYet)
         {
             Pawn pawn;
+            Player player1 = new Player(PlayerEnum.PLAYER_1);
 
             //Simulate a previous move
             if (hasMovedYet)
             {
-                pawn = new Pawn(PlayerEnum.PLAYER_1, Pos(XCoord.f, 4));
+                pawn = new Pawn(player1, Pos(XCoord.f, 4));
                 pawn.Position = Pos(XCoord.f, 5);
             }
             else
             {
-                pawn = new Pawn(PlayerEnum.PLAYER_1, Pos(XCoord.f, 5));
+                pawn = new Pawn(player1, Pos(XCoord.f, 5));
             }
             PossibleMovesReturnsOnlyValidMoves(pawn, validMoves, positionChecker);
         }
