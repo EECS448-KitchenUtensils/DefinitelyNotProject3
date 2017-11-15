@@ -71,7 +71,43 @@ namespace GameModel
             {
                 piece.Position = dest;
 
+                // ensure that the player is not in check as a result of this turn
+                foreach (ChessPiece p in Pieces)
+                {
+                    if (p.Owner != currentPlayer)
+                    {
+                        // get the possible captures for the piece
+                        var c = _board.PossibleMoves(p.Position)
+                                      .Where(move => move.Outcome == MoveType.Capture)
+                                      .ToList();
+
+                        // only check if the piece can capture something
+                        if (c.Count > 0)
+                        {
+                            // enemy checks, if applicable
+                            foreach (MoveResult move in c)
+                            {
+                                var target = GetPieceByPosition(move.Position);
+
+                                // if even one check is possible, the move cannot be made
+                                if (target.PieceType == PieceEnum.KING)
+                                {
+                                    if (target.Owner == currentPlayer)
+                                    {
+                                        piece.Position = src; // return piece to original location
+                                        return MoveType.Failure;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // at this point, the current player's king is not in check
+                currentPlayer.Checked = false;
+
                 // check for checks
+                // NOTE this only accounts for active checks. What about discovered checks?
                 var checks = _board.PossibleMoves(dest)
                                    .Where(move => move.Outcome == MoveType.Capture)
                                    .ToList();
@@ -87,7 +123,7 @@ namespace GameModel
 
                 _current_player = (_current_player + 1) % 4; //Advance next player, mod 4
                 if (moves[0].Outcome == MoveType.Capture)
-                    //_board.RemovePiece(pieceAtDest);
+                    _board.RemovePiece(pieceAtDest);
                 return moves[0].Outcome;
             }
             return MoveType.Failure;
