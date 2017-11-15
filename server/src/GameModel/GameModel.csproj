@@ -43,6 +43,7 @@
     <Compile Include="Data\BoardPosition.cs" />
     <Compile Include="Data\MoveResult.cs" />
     <Compile Include="Data\MoveType.cs" />
+    <Compile Include="Data\Player.cs" />
     <Compile Include="Data\SpaceStatus.cs" />
     <Compile Include="Data\PositonDelta.cs" />
     <Compile Include="Pieces\Bishop.cs" />
