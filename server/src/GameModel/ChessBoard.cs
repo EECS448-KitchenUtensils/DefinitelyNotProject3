@@ -1,6 +1,7 @@
 using GameModel.Data;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace GameModel
 {
@@ -68,11 +69,6 @@ namespace GameModel
         private static bool IsFriendly(ChessPiece ourPiece, ChessPiece theirPiece)
         {
             return ourPiece.Owner == theirPiece.Owner;
-        }
-
-        internal void RemovePiece(ChessPiece piece)
-        {
-            _pieces.Remove(piece);
         }
 
         /// <summary>
