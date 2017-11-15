@@ -97,7 +97,7 @@ namespace GameModel
         /// Gets which player owns the current turn
         /// </summary>
         /// <returns>The active player</returns>
-        public Player GetActivePlayer() => _players[_current_player];
+        public PlayerEnum GetActivePlayer() => _players[_current_player].Precedence;
 
         private int _current_player;
         private ChessBoard _board;
