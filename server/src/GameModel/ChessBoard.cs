@@ -71,6 +71,11 @@ namespace GameModel
             return ourPiece.Owner == theirPiece.Owner;
         }
 
+        internal void RemovePiece(ChessPiece piece)
+        {
+            _pieces.Remove(piece);
+        }
+
         /// <summary>
         /// Creates and places pieces at the correct initial positions
         /// </summary>
