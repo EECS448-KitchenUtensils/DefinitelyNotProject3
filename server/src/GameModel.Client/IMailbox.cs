@@ -1,4 +1,5 @@
 ﻿using GameModel.Messages;
+using System;
 
 namespace GameModel.Client
 {
@@ -11,14 +12,8 @@ namespace GameModel.Client
         void SendMessage(ModelMessage msg);
 
         /// <summary>
-        /// Attempts to retrieve a message from the queue
+        /// A stream of messages routed through this mailbox
         /// </summary>
-        /// <returns>A retrieved ModelMessage or null</returns>
-        ModelMessage RetrieveMessage();
-
-        /// <summary>
-        /// Checks if the receive queue has messages in it
-        /// </summary>
-        bool HasMessages { get; }
+        IObservable<ModelMessage> Messages { get; }
     }
 }

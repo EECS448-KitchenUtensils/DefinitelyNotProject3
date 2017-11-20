@@ -45,7 +45,7 @@ namespace GameModel
         /// <summary>
         /// The owner of this piece
         /// </summary>
-        /// <returns>A ChessPlayer reference</returns>
+        /// <returns>A Player reference</returns>
         public Player Owner { get; protected set; }
 
         /// <summary>
