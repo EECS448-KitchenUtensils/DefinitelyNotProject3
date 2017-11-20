@@ -23,7 +23,7 @@ namespace GameModel.Tests
         }
 
         [Test, TestCaseSource("GetPieceCases")]
-        public void GetPieceByPositionBeforeFirstMove(BoardPosition pos, bool exists, Type expectedType, PlayerEnum expectedOwner)
+        public void GetPieceByPositionBeforeFirstMove(BoardPosition pos, bool exists, Type expectedType, Player expectedOwner)
         {
             var piece = _chessGame.GetPieceByPosition(pos);
             if (exists)
@@ -98,9 +98,10 @@ namespace GameModel.Tests
         {
             get
             {
-                yield return new TestCaseData(Pos(XCoord.a, 1), false, typeof(ChessPiece), PlayerEnum.PLAYER_1)
+                var player1 = new Player(PlayerEnum.PLAYER_1);
+                yield return new TestCaseData(Pos(XCoord.a, 1), false, typeof(ChessPiece), player1)
                     .SetName("GetPieceByPositionReturnsNullForNonexistantPiece");
-                yield return new TestCaseData(Pos(XCoord.d, 2), true, typeof(Pawn), PlayerEnum.PLAYER_1)
+                yield return new TestCaseData(Pos(XCoord.d, 2), true, typeof(Pawn), player1)
                     .SetName("GetPieceByPositionPlayer1Pawn");
             }
         }
