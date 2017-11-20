@@ -23,7 +23,7 @@ namespace GameModel.Tests
         }
 
         [Test, TestCaseSource("GetPieceCases")]
-        public void GetPieceByPositionBeforeFirstMove(BoardPosition pos, bool exists, Type expectedType, PlayerEnum expectedOwner)
+        public void GetPieceByPositionBeforeFirstMove(BoardPosition pos, bool exists, Type expectedType, Player expectedOwner)
         {
             var piece = _chessGame.GetPieceByPosition(pos);
             if (exists)
@@ -63,11 +63,12 @@ namespace GameModel.Tests
         public void SingleValidMakeMoveIncrementsTurn()
         {
             var initialPlayer = _chessGame.GetActivePlayer();
-            Assert.That(initialPlayer, Is.EqualTo(PlayerEnum.PLAYER_1));
+            Assert.That(initialPlayer, Is.Not.Null);
             var result = _chessGame.MakeMove(Pos(XCoord.d, 2), Pos(XCoord.d, 4));
             Assert.That(result, Is.EqualTo(MoveType.Move)); //Make sure this test fails if the move failed
             var resultingPlayer = _chessGame.GetActivePlayer();
-            Assert.That(resultingPlayer, Is.EqualTo(PlayerEnum.PLAYER_2));
+            Assert.That(resultingPlayer, Is.Not.Null);
+            Assert.That(resultingPlayer, Is.Not.EqualTo(initialPlayer));
         }
 
         [Test]
@@ -98,9 +99,10 @@ namespace GameModel.Tests
         {
             get
             {
-                yield return new TestCaseData(Pos(XCoord.a, 1), false, typeof(ChessPiece), PlayerEnum.PLAYER_1)
+                var player1 = new Player(PlayerEnum.PLAYER_1);
+                yield return new TestCaseData(Pos(XCoord.a, 1), false, typeof(ChessPiece), player1)
                     .SetName("GetPieceByPositionReturnsNullForNonexistantPiece");
-                yield return new TestCaseData(Pos(XCoord.d, 2), true, typeof(Pawn), PlayerEnum.PLAYER_1)
+                yield return new TestCaseData(Pos(XCoord.d, 2), true, typeof(Pawn), player1)
                     .SetName("GetPieceByPositionPlayer1Pawn");
             }
         }

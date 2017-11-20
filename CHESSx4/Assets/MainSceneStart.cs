@@ -83,22 +83,22 @@ public class MainSceneStart : MonoBehaviour {
 		foreach (ChessPiece piece in game.Pieces) {
 
 			if (piece is King) {
-				clientPiecesCollection[(int)piece.Owner].Add (piece, (Instantiate (piece_king, new Vector3(1, 1, -1), Quaternion.identity)) );
+                clientPiecesCollection[(int)piece.Owner.Precedence].Add (piece, (Instantiate (piece_king, new Vector3(1, 1, -1), Quaternion.identity)) );
 			}
 			else if (piece is Queen) {
-				clientPiecesCollection[(int)piece.Owner].Add (piece, (Instantiate (piece_queen, new Vector3(1, 1, -1), Quaternion.identity)) );
+                clientPiecesCollection[(int)piece.Owner.Precedence].Add (piece, (Instantiate (piece_queen, new Vector3(1, 1, -1), Quaternion.identity)) );
 			}
 			else if (piece is Rook) {
-				clientPiecesCollection[(int)piece.Owner].Add (piece, (Instantiate (piece_rook, new Vector3(1, 1, -1), Quaternion.identity)) );
+                clientPiecesCollection[(int)piece.Owner.Precedence].Add (piece, (Instantiate (piece_rook, new Vector3(1, 1, -1), Quaternion.identity)) );
 			}
 			else if (piece is Knight) {
-				clientPiecesCollection[(int)piece.Owner].Add (piece, (Instantiate (piece_knight, new Vector3(1, 1, -1), Quaternion.identity)) );
+                clientPiecesCollection[(int)piece.Owner.Precedence].Add (piece, (Instantiate (piece_knight, new Vector3(1, 1, -1), Quaternion.identity)) );
 			}
 			else if (piece is Bishop) {
-				clientPiecesCollection[(int)piece.Owner].Add (piece, (Instantiate (piece_bishop, new Vector3(1, 1, -1), Quaternion.identity)) );
+                clientPiecesCollection[(int)piece.Owner.Precedence].Add (piece, (Instantiate (piece_bishop, new Vector3(1, 1, -1), Quaternion.identity)) );
 			}
 			else if (piece is Pawn) {
-				clientPiecesCollection[(int)piece.Owner].Add (piece, (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
+                clientPiecesCollection[(int)piece.Owner.Precedence].Add (piece, (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
 			}
 		}
 			

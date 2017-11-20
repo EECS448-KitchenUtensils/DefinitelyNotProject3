@@ -15,11 +15,13 @@ namespace GameModel
         /// </summary>
         /// <param name="owner">The owner of this Pawn</param>
         /// <param name="initialPosition">The initial position on the board</param>
-        internal Pawn(PlayerEnum owner, BoardPosition initialPosition)
+        internal Pawn(Player owner, BoardPosition initialPosition)
         {
             _hasMovedYet = false;
             Owner = owner;
             _position = initialPosition;
+            PieceType = PieceEnum.PAWN;
+
             _hasMovedMoveOffset = new[]
             {
                 //Player 1
@@ -74,9 +76,9 @@ namespace GameModel
         public override IEnumerable<MoveResult> PossibleMoves(Func<BoardPosition, SpaceStatus> positionChecker)
         {
             //Check both capture possiblities
-            var captureOffsets = new[] { _leftCaptureOffsets[(int)Owner], _rightCaptureOffsets[(int)Owner] };
-            var laterMoveOffset = _hasMovedMoveOffset[(int)Owner];
-            var firstMoveOffset = _hasNotMovedMoveOffset[(int)Owner];
+            var captureOffsets = new[] { _leftCaptureOffsets[(int)Owner.Precedence], _rightCaptureOffsets[(int)Owner.Precedence] };
+            var laterMoveOffset = _hasMovedMoveOffset[(int)Owner.Precedence];
+            var firstMoveOffset = _hasNotMovedMoveOffset[(int)Owner.Precedence];
             //At the beginning of the game, the pawn can move either one or two spaces forward
             var moveOffsets = (_hasMovedYet) ? new[] { laterMoveOffset } : new[] { firstMoveOffset, laterMoveOffset };
             var capturePositions = captureOffsets.Select(offset => Position + offset)

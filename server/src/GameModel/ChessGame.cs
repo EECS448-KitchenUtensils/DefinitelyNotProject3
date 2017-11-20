@@ -14,7 +14,12 @@ namespace GameModel
         /// </summary>
         public ChessGame()
         {
-            _board = new ChessBoard();
+            _players = new Player[4];
+            _players[0] = new Player(PlayerEnum.PLAYER_1);
+            _players[1] = new Player(PlayerEnum.PLAYER_2);
+            _players[2] = new Player(PlayerEnum.PLAYER_3);
+            _players[3] = new Player(PlayerEnum.PLAYER_4);
+            _board = new ChessBoard(_players);
             _current_player = 0;
         }
         /// <summary>
@@ -57,13 +62,29 @@ namespace GameModel
             //Check piece ownership
             if (piece.Owner != currentPlayer)
                 return MoveType.Failure;
-            //Make sure move is possible
+            // Make sure move is possible
             var moves = _board.PossibleMoves(src)
                               .Where(move => move.Position == dest)
                               .ToList();
+            
             if (moves.Count == 1)
             {
                 piece.Position = dest;
+
+                // check for checks
+                var checks = _board.PossibleMoves(dest)
+                                   .Where(move => move.Outcome == MoveType.Capture)
+                                   .ToList();
+
+                // check each player, if applicable
+                checks.ForEach(move => {
+                    var p = GetPieceByPosition(move.Position);
+                    if(p.PieceType == PieceEnum.KING) {
+                        Player enemy = p.Owner;
+                        enemy.Checked = true;
+                    }
+                });
+
                 _current_player = (_current_player + 1) % 4; //Advance next player, mod 4
                 if (moves[0].Outcome == MoveType.Capture)
                     _board.RemovePiece(pieceAtDest);
@@ -76,10 +97,10 @@ namespace GameModel
         /// Gets which player owns the current turn
         /// </summary>
         /// <returns>The active player</returns>
-        public PlayerEnum GetActivePlayer() => _players[_current_player];
+        public PlayerEnum GetActivePlayer() => _players[_current_player].Precedence;
 
         private int _current_player;
         private ChessBoard _board;
-        private PlayerEnum[] _players = {PlayerEnum.PLAYER_1, PlayerEnum.PLAYER_2, PlayerEnum.PLAYER_3, PlayerEnum.PLAYER_4};
+        private Player[] _players;
     }
 }

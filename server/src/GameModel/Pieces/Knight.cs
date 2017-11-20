@@ -12,10 +12,12 @@ namespace GameModel
         /// </summary>
         /// <param name="owner">The owner of this piece</param>
         /// <param name="initialPosition">The initial position on the board</param>
-        internal Knight(PlayerEnum owner, BoardPosition initialPosition)
+        internal Knight(Player owner, BoardPosition initialPosition)
         {
             Owner = owner;
             Position = initialPosition;
+            PieceType = PieceEnum.KNIGHT;
+
             _knightMoveOffsets = new[]
             {
                 new PositionDelta(1, 2),

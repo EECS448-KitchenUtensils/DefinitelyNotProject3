@@ -11,7 +11,8 @@ namespace GameModel.Tests.Pieces
         [Test, TestCaseSource("PossibleMoveCases")]
         public void PossibleMoves(BoardPosition initialPosition, IEnumerable<MoveResult> validMoves, Func<BoardPosition, SpaceStatus> positionChecker)
         {
-            var queen = new Queen(PlayerEnum.PLAYER_1, Pos(XCoord.d, 4));
+            Player player1 = new Player(PlayerEnum.PLAYER_1);
+            var queen = new Queen(player1, Pos(XCoord.d, 4));
             PossibleMovesReturnsOnlyValidMoves(queen, validMoves, positionChecker);
         }
         public static IEnumerable PossibleMoveCases

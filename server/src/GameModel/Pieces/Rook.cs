@@ -7,10 +7,12 @@ namespace GameModel
     /// </summary>
     public class Rook : ChessPiece
     {
-        internal Rook(PlayerEnum owner, BoardPosition initialPosition)
+        internal Rook(Player owner, BoardPosition initialPosition)
         {
             Owner = owner;
             Position = initialPosition;
+            PieceType = PieceEnum.ROOK;
+
             _rookMoveOffsets = new[]
             {
                 new PositionDelta(1, 0),
