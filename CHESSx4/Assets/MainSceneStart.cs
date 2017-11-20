@@ -29,6 +29,9 @@ public class MainSceneStart : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        if (PlayerPrefs.GetInt("local") == 0) local = false;
+
 		CreateGrid ();
 		CreatePieces ();
 		GivePiecesColors ();
