@@ -24,6 +24,7 @@ public class MainSceneStart : MonoBehaviour {
 	public Dictionary<ChessPiece, GameObject>[] clientPiecesCollection = new Dictionary<ChessPiece, GameObject>[4];
 
 	public bool moveState = false;
+    public bool local = true;
 
 
 	// Use this for initialization
