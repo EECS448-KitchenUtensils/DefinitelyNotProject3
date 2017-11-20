@@ -51,7 +51,7 @@ public class PieceBehavior : MonoBehaviour {
 		foreach (var square in tempSquare) {
 			if (square != null && square.transform.position.x == x && square.transform.position.y == y) {
 				var lastmovetype = Game.MakeMove(thisPiece.Position, new BoardPosition((XCoord) x, (int) y+1));
-				if(lastmovetype == MoveType.Capture){
+				if(lastmovetype.Outcome == MoveType.Capture){
 					DestroyCapturedPieces();
 				}
 			} 
