@@ -63,11 +63,12 @@ namespace GameModel.Tests
         public void SingleValidMakeMoveIncrementsTurn()
         {
             var initialPlayer = _chessGame.GetActivePlayer();
-            Assert.That(initialPlayer, Is.EqualTo(PlayerEnum.PLAYER_1));
+            Assert.That(initialPlayer, Is.Not.Null);
             var result = _chessGame.MakeMove(Pos(XCoord.d, 2), Pos(XCoord.d, 4));
             Assert.That(result, Is.EqualTo(MoveType.Move)); //Make sure this test fails if the move failed
             var resultingPlayer = _chessGame.GetActivePlayer();
-            Assert.That(resultingPlayer, Is.EqualTo(PlayerEnum.PLAYER_2));
+            Assert.That(resultingPlayer, Is.Not.Null);
+            Assert.That(resultingPlayer, Is.Not.EqualTo(initialPlayer));
         }
 
         [Test]
