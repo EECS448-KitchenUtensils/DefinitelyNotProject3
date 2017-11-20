@@ -78,5 +78,7 @@ namespace GameModel.Data {
         /// The vertical coordinate
         /// </summary>
         public int Y { get; }
+
+        public override string ToString() => string.Format("x={0}, y={1}", X, Y);
     }
 }

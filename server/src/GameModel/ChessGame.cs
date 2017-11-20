@@ -64,7 +64,7 @@ namespace GameModel
                 return MoveType.Failure;
             // Make sure move is possible
             var moves = _board.PossibleMoves(src)
-                              .Where(move => move.Position == dest)
+                              .Where(move => move.Destination == dest)
                               .ToList();
             
             if (moves.Count == 1)
@@ -78,7 +78,7 @@ namespace GameModel
 
                 // check each player, if applicable
                 checks.ForEach(move => {
-                    var p = GetPieceByPosition(move.Position);
+                    var p = GetPieceByPosition(move.Destination);
                     if(p.PieceType == PieceEnum.KING) {
                         Player enemy = p.Owner;
                         enemy.Checked = true;

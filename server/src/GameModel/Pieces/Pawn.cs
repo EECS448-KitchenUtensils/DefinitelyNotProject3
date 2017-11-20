@@ -83,10 +83,10 @@ namespace GameModel
             var moveOffsets = (_hasMovedYet) ? new[] { laterMoveOffset } : new[] { firstMoveOffset, laterMoveOffset };
             var capturePositions = captureOffsets.Select(offset => Position + offset)
                                                  .Where(position => positionChecker(position) == SpaceStatus.Enemy)
-                                                 .Select(position => new MoveResult(position, MoveType.Capture));
+                                                 .Select(position => new MoveResult(Position, position, MoveType.Capture));
             var forwardPositions = moveOffsets.Select(offset => Position + offset)
                                               .Where(position => positionChecker(position) == SpaceStatus.Empty)
-                                              .Select(position => new MoveResult(position, MoveType.Move));
+                                              .Select(position => new MoveResult(Position, position, MoveType.Move));
             return capturePositions.Concat(forwardPositions);
         }
 

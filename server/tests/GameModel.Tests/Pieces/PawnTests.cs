@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using static GameModel.Tests.TestUtils;
 
 namespace GameModel.Tests.Pieces
 {
@@ -17,29 +18,33 @@ namespace GameModel.Tests.Pieces
             //Simulate a previous move
             if (hasMovedYet)
             {
-                pawn = new Pawn(player1, Pos(XCoord.f, 4));
-                pawn.Position = Pos(XCoord.f, 5);
+                pawn = new Pawn(player1, DefaultPositionPreMove);
+                pawn.Position = DefaultPosition;
             }
             else
             {
-                pawn = new Pawn(player1, Pos(XCoord.f, 5));
+                pawn = new Pawn(player1, DefaultPosition);
             }
             PossibleMovesReturnsOnlyValidMoves(pawn, validMoves, positionChecker);
         }
+
+        public static BoardPosition DefaultPosition => Pos(XCoord.f, 5);
+        public static BoardPosition DefaultPositionPreMove => Pos(XCoord.f, 4);
+
         public static IEnumerable PossibleMoveCases
         {
             get
             {
-                yield return new TestCaseData(Pos(XCoord.f, 5), new[]
+                yield return new TestCaseData(DefaultPosition, new[]
                 {
-                    Move(XCoord.g, 6, MoveType.Capture),
-                    Move(XCoord.e, 6, MoveType.Capture)
+                    Move(DefaultPosition, Pos(XCoord.g, 6), MoveType.Capture),
+                    Move(DefaultPosition, Pos(XCoord.e, 6), MoveType.Capture)
                 }, BoxChecker(Pos(XCoord.f, 5), 0, SpaceStatus.Enemy), false
                 ).SetName("PawnPossibleMovesSurroundedByEnemiesFirstMove");
                 yield return new TestCaseData(Pos(XCoord.f, 5), new[]
                 {
-                    Move(XCoord.g, 6, MoveType.Capture),
-                    Move(XCoord.e, 6, MoveType.Capture)
+                    Move(DefaultPosition, Pos(XCoord.g, 6), MoveType.Capture),
+                    Move(DefaultPosition, Pos(XCoord.e, 6), MoveType.Capture)
                 }, BoxChecker(Pos(XCoord.f, 5), 0, SpaceStatus.Enemy), true
                 ).SetName("PawnPossibleMovesSurroundedByEnemiesNotFirstMove");
                 yield return new TestCaseData(Pos(XCoord.f, 5), Array.Empty<MoveResult>(), BoxChecker(Pos(XCoord.f, 5), 0), false)
@@ -48,13 +53,13 @@ namespace GameModel.Tests.Pieces
                     .SetName("PawnPossibleMovesSurroundedByFriendsNotFirstMove");
                 yield return new TestCaseData(Pos(XCoord.f, 5), new[]
                 {
-                    Move(XCoord.f, 6, MoveType.Move),
-                    Move(XCoord.f, 7, MoveType.Move)
+                    Move(DefaultPosition, Pos(XCoord.f, 6), MoveType.Move),
+                    Move(DefaultPosition, Pos(XCoord.f, 7), MoveType.Move)
                 }, EmptyChecker(), false
                 ).SetName("PawnPossibleMovesEmptySpaceFirstMove");
                 yield return new TestCaseData(Pos(XCoord.f, 5), new[]
                 {
-                    Move(XCoord.f, 6, MoveType.Move)
+                    Move(DefaultPosition, Pos(XCoord.f, 6), MoveType.Move)
                 }, EmptyChecker(), true
                 ).SetName("PawnPossibleMovesEmptySpaceNotFirstMove");
             }

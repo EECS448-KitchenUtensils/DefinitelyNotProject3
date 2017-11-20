@@ -29,11 +29,11 @@ namespace GameModel
                     var status = positionChecker(candidate);
                     if (status == SpaceStatus.Empty)
                     {
-                        yield return new MoveResult(candidate, MoveType.Move);
+                        yield return new MoveResult(Position, candidate, MoveType.Move);
                     }
                     else if (status == SpaceStatus.Enemy)
                     {
-                        yield return new MoveResult(candidate, MoveType.Capture);
+                        yield return new MoveResult(Position, candidate, MoveType.Capture);
                         break;
                     }
                     else
