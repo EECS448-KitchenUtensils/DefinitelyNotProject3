@@ -87,7 +87,7 @@ namespace GameModel
 
                 _current_player = (_current_player + 1) % 4; //Advance next player, mod 4
                 if (moves[0].Outcome == MoveType.Capture)
-                    //_board.RemovePiece(pieceAtDest);
+                    _board.RemovePiece(pieceAtDest);
                 return moves[0].Outcome;
             }
             return MoveType.Failure;
