@@ -19,7 +19,7 @@ namespace GameModel.Tests
         public void MakeMoveBoundChecks(BoardPosition src, BoardPosition dest)
         {
             var result = _chessGame.MakeMove(src, dest);
-            Assert.That(result, Is.EqualTo(MoveType.Failure));
+            Assert.That(result.Outcome, Is.EqualTo(MoveType.Failure));
         }
 
         [Test, TestCaseSource("GetPieceCases")]
@@ -43,7 +43,7 @@ namespace GameModel.Tests
         {
             var piece = _chessGame.GetPieceByPosition(src);
             var result = _chessGame.MakeMove(src, dest);
-            Assert.That(result, Is.EqualTo(MoveType.Move));
+            Assert.That(result.Outcome, Is.EqualTo(MoveType.Move));
             var pieceAtDest = _chessGame.GetPieceByPosition(dest);
             Assert.That(piece.Position, Is.EqualTo(dest));
             Assert.That(pieceAtDest, Is.EqualTo(pieceAtDest));
@@ -54,7 +54,7 @@ namespace GameModel.Tests
         {
             var piece = _chessGame.GetPieceByPosition(src);
             var result = _chessGame.MakeMove(src, dest);
-            Assert.That(result, Is.EqualTo(MoveType.Failure));
+            Assert.That(result.Outcome, Is.EqualTo(MoveType.Failure));
             var pieceAtDest = _chessGame.GetPieceByPosition(dest);
             Assert.That(pieceAtDest?.GetType(), Is.EqualTo(expectedPieceAtDest));
         }
@@ -65,7 +65,7 @@ namespace GameModel.Tests
             var initialPlayer = _chessGame.GetActivePlayer();
             Assert.That(initialPlayer, Is.Not.Null);
             var result = _chessGame.MakeMove(Pos(XCoord.d, 2), Pos(XCoord.d, 4));
-            Assert.That(result, Is.EqualTo(MoveType.Move)); //Make sure this test fails if the move failed
+            Assert.That(result.Outcome, Is.EqualTo(MoveType.Move)); //Make sure this test fails if the move failed
             var resultingPlayer = _chessGame.GetActivePlayer();
             Assert.That(resultingPlayer, Is.Not.Null);
             Assert.That(resultingPlayer, Is.Not.EqualTo(initialPlayer));
@@ -81,7 +81,7 @@ namespace GameModel.Tests
             var result = _chessGame.MakeMove(Pos(XCoord.d, 4), Pos(XCoord.d, 5));
             //Make sure player 1 was active
             Assert.That(initialPlayer, Is.EqualTo(PlayerEnum.PLAYER_1));
-            Assert.That(result, Is.EqualTo(MoveType.Failure));
+            Assert.That(result.Outcome, Is.EqualTo(MoveType.Failure));
         }
 
         public static IEnumerable BoundsCheckCases

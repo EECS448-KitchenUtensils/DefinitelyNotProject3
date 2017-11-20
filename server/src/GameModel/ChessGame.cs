@@ -48,49 +48,45 @@ namespace GameModel
         /// <param name="src">The current position of a piece</param>
         /// <param name="dest">The intended destination of the piece</param>
         /// <returns>Failure on invalid moves, Move on valid moves, Capture on valid Captures</returns>
-        public MoveType MakeMove(BoardPosition src, BoardPosition dest)
+        public MoveResult MakeMove(BoardPosition src, BoardPosition dest)
         {
-            //Source must be valid
-            if (!ChessBoard.CheckPositionExists(src))
-                return MoveType.Failure;
-            //Destination must be valid
-            if (!ChessBoard.CheckPositionExists(dest))
-                return MoveType.Failure;
+            bool checkPositions() => (ChessBoard.CheckPositionExists(src) && ChessBoard.CheckPositionExists(dest));
+            //Source and Destination must be valid
+            if (checkPositions() == false)
+                return new MoveResult(src, dest, MoveType.Failure);
             var currentPlayer = _players[_current_player];
             var piece = _board.GetPieceByPosition(src);
-            var pieceAtDest = _board.GetPieceByPosition(dest);
             //Check piece ownership
             if (piece.Owner != currentPlayer)
-                return MoveType.Failure;
-            // Make sure move is possible
+                return new MoveResult(src, dest, MoveType.Failure);
+            // ToList or equivalent must be called since this enumerable will be used multiple times
             var moves = _board.PossibleMoves(src)
-                              .Where(move => move.Destination == dest)
                               .ToList();
-            
-            if (moves.Count == 1)
+            //Check there is a valid move from source to destination for this piece
+            if (moves.Count(move => move.Destination == dest) == 1)
             {
+                var pieceAtDest = _board.GetPieceByPosition(dest);
+                // Update Piece position
                 piece.Position = dest;
-
-                // check for checks
-                var checks = _board.PossibleMoves(dest)
-                                   .Where(move => move.Outcome == MoveType.Capture)
-                                   .ToList();
-
-                // check each player, if applicable
-                checks.ForEach(move => {
-                    var p = GetPieceByPosition(move.Destination);
-                    if(p.PieceType == PieceEnum.KING) {
-                        Player enemy = p.Owner;
-                        enemy.Checked = true;
-                    }
-                });
 
                 _current_player = (_current_player + 1) % 4; //Advance next player, mod 4
                 if (moves[0].Outcome == MoveType.Capture)
                     _board.RemovePiece(pieceAtDest);
-                return moves[0].Outcome;
+                // check for checks
+                var playersInCheck = _board.PossibleMoves(dest)
+                                   .Where(move => move.Outcome == MoveType.Capture)
+                                   .Select(move => GetPieceByPosition(move.Destination))
+                                   .Where(p => p is King)
+                                   .Select(p => p.Owner);
+
+                // process each check that was found
+                foreach (var player in playersInCheck)
+                {
+                    player.Checked = true;
+                }
+                return new MoveResult(src, dest, moves[0].Outcome);
             }
-            return MoveType.Failure;
+            return new MoveResult(src, dest, MoveType.Failure);
         }
 
         /// <summary>
