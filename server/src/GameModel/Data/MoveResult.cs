@@ -15,6 +15,7 @@
             Source = src;
             Destination = dest;
             Outcome = outcome;
+            Destroyed = null;
         }
 
         public MoveResult(BoardPosition src, BoardPosition dest, MoveType outcome, ChessPiece destroyed): this(src, dest, outcome)

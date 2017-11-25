@@ -84,7 +84,7 @@ namespace GameModel
             return new MoveResult(src, dest, MoveType.Failure);
         }
 
-        private TurnController _turnController;
+        private ITurnController _turnController;
         private ChessBoard _board;
     }
 }
