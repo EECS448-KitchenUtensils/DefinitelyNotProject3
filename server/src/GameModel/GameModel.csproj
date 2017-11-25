@@ -60,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\XCoord.cs" />
     <Compile Include="Data\PieceEnum.cs" />
+    <Compile Include="TurnController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
