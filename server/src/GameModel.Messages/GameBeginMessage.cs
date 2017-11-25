@@ -3,11 +3,11 @@
 namespace GameModel.Messages
 {
     /// <summary>
-    /// Base class for all status and data messages
+    /// Emitted when the master arbitrator is ready to begin the game
     /// </summary>
     [DataContract]
-    public abstract class ModelMessage
+    public class GameBeginMessage
     {
-
+        
     }
 }

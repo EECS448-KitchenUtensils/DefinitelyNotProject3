@@ -1,12 +1,12 @@
 ﻿using GameModel.Data;
-using System;
+using System.Runtime.Serialization;
 
 namespace GameModel.Messages
 {
     /// <summary>
     /// Emitted when a turn is advanced
     /// </summary>
-    [Serializable]
+    [DataContract]
     public class SetTurnMessage: ModelMessage
     {
         /// <summary>
@@ -18,9 +18,11 @@ namespace GameModel.Messages
             this.player = player.Precedence;
         }
 
+
         /// <summary>
         /// The player that owns the new turn
         /// </summary>
+        [DataMember]
         public readonly PlayerEnum player;
     }
 }

@@ -18,6 +18,8 @@ namespace GameModel.Messages
             this.player = player;
         }
 
+        private LostMessage() { }
+
         public readonly Reason reason;
         public readonly Player player;
 
