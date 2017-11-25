@@ -133,6 +133,6 @@ namespace GameModel.Tests
         }
 
         private ChessGame _chessGame;
-        private TurnController _tc;
+        private ITurnController _tc;
     }
 }

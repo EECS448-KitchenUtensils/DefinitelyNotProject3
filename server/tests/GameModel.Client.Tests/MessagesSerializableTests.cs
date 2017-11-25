@@ -31,12 +31,18 @@ namespace GameModel.Client.Tests
             get
             {
                 var assembly = typeof(ModelMessage).Assembly;
-                foreach(var type in assembly.ExportedTypes.Where(type => type.IsAbstract == false && Attribute.IsDefined(type, typeof(DataContractAttribute))))
+                foreach(var type in assembly.ExportedTypes)
                 {
-                    yield return new TestCaseData(type)
-                        .SetName(String.Format("Is Serializable: {0}", type.ToString()))
-                        .SetCategory(nameof(MessagesSerializableTests));
-
+                    if (type.IsAbstract)
+                    {
+                        Debug.WriteLine(String.Format("Skipping abstract class {0}", type.Name));
+                    }
+                    else
+                    {
+                        yield return new TestCaseData(type)
+                                        .SetName(String.Format("Is Serializable: {0}", type.ToString()))
+                                        .SetCategory(nameof(MessagesSerializableTests));
+                    }
                 }
                 yield break;
             }
