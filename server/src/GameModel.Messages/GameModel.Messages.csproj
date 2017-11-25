@@ -45,6 +45,7 @@
     <Compile Include="LostMessage.cs" />
     <Compile Include="ModelMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetTurnMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
