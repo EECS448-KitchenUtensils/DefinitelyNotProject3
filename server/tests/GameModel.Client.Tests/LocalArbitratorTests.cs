@@ -22,6 +22,20 @@ namespace GameModel.Client.Tests
             Assert.That(piecesCreated, Is.EqualTo(64));
         }
 
+        [Test]
+        public void EmitsInitialSetTurnMessage()
+        {
+            ModelMessage msg;
+            bool emitted = false;
+            while (_uut.TryGetLatestMessage(out msg))
+            {
+                if (msg is SetTurnMessage)
+                {
+                    emitted = true;
+                }
+            }
+            Assert.That(emitted, Is.True);
+        }
 
         /// <summary>
         /// Creates a new <see cref="LocalArbitrator"/> for each test

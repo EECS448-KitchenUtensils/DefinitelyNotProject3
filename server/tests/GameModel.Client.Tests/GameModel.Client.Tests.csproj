@@ -58,6 +58,10 @@
       <Project>{CBED8838-99C5-491B-9435-1D4F1DD8BE56}</Project>
       <Name>GameModel.Messages</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\GameModel\GameModel.csproj">
+      <Project>{F8BB67A2-5FD2-4DD7-8608-C52101A31BE2}</Project>
+      <Name>GameModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

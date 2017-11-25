@@ -14,8 +14,9 @@ namespace GameModel.Client
             _game = new ChessGame(_tc);
             _queue = new ConcurrentQueue<ModelMessage>();
             EmitCreatePieces();
+            EmitSetTurn();
         }
-
+        
         public void Forfeit()
         {
             _queue.Enqueue(new LostMessage(LostMessage.Reason.Forfeit, _tc.Current));
@@ -53,6 +54,14 @@ namespace GameModel.Client
                 _queue.Enqueue(msg);
             }
         }
+
+
+        private void EmitSetTurn()
+        {
+            var msg = new SetTurnMessage(_tc.Current);
+            _queue.Enqueue(msg);
+        }
+
         private TurnController _tc;
         private ChessGame _game;
         private ConcurrentQueue<ModelMessage> _queue;
