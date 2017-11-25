@@ -61,10 +61,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapter.cs" />
     <Compile Include="IArbitrator.cs" />
-    <Compile Include="IMailbox.cs" />
-    <Compile Include="ModelArbitrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
