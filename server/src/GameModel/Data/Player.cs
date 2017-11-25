@@ -1,6 +1,8 @@
-﻿namespace GameModel.Data
+﻿using System;
+
+namespace GameModel.Data
 {
-    public class Player
+    public class Player : IEquatable<Player>
     {
         /// <summary>
         /// Creates a <see cref="Player"/> instance
@@ -12,7 +14,7 @@
             Checked = false;
             InGame = true;
         }
-        
+
         /// <summary>
         /// The player's order (1, 2, etc.)
         /// </summary>
@@ -27,5 +29,41 @@
         /// Is this player still in the game?
         /// </summary>
         public bool InGame { get; internal set; }
+
+        /// <summary>
+        /// Checks structural equality
+        /// </summary>
+        /// <param name="other">Another <see cref="object"/> to check against</param>
+        /// <returns>true if structural equal, else false</returns>
+        public override bool Equals(object obj)
+        {
+            switch (obj)
+            {
+                case Player other:
+                    return Equals(other);
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks structural equality
+        /// </summary>
+        /// <param name="other">Another <see cref="Player"/> to check against</param>
+        /// <returns>true if structural equal, else false</returns>
+        public bool Equals(Player other)
+        {
+            if (other == null)
+                return false;
+            return Precedence == other.Precedence &&
+                   Checked == other.Checked &&
+                   InGame == other.InGame;
+        }
+
+        /// <summary>
+        /// Generates a unchanging hash code
+        /// </summary>
+        /// <returns>A hash code</returns>
+        public override int GetHashCode() => base.GetHashCode();
     }
 }
