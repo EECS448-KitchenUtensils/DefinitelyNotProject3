@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace GameModel.Client.Tests
 {
     [TestFixture]
-    public class LocalArbitratorTests
+    public class UnmockedLocalArbitratorTests
     {
         /// <summary>
         /// Tests to see if <see cref="LocalArbitrator"/> emits the initial 64 <see cref="CreatePieceMessage"/>s
