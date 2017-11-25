@@ -13,7 +13,8 @@ namespace GameModel.Tests
         [SetUp]
         public void Init()
         {
-            _chessGame = new ChessGame();
+            _tc = new TurnController(PlayerEnum.PLAYER_1);
+            _chessGame = new ChessGame(_tc);
         }
         [Test, TestCaseSource("BoundsCheckCases")]
         public void MakeMoveBoundChecks(BoardPosition src, BoardPosition dest)
@@ -62,11 +63,11 @@ namespace GameModel.Tests
         [Test]
         public void SingleValidMakeMoveIncrementsTurn()
         {
-            var initialPlayer = _chessGame.GetActivePlayer();
+            var initialPlayer = _tc.Current;
             Assert.That(initialPlayer, Is.Not.Null);
             var result = _chessGame.MakeMove(Pos(XCoord.d, 2), Pos(XCoord.d, 4));
             Assert.That(result.Outcome, Is.EqualTo(MoveType.Move)); //Make sure this test fails if the move failed
-            var resultingPlayer = _chessGame.GetActivePlayer();
+            var resultingPlayer = _tc.Current;
             Assert.That(resultingPlayer, Is.Not.Null);
             Assert.That(resultingPlayer, Is.Not.EqualTo(initialPlayer));
         }
@@ -74,13 +75,13 @@ namespace GameModel.Tests
         [Test]
         public void MakeMoveHonorsCurrentActivePlayer()
         {
-            var initialPlayer = _chessGame.GetActivePlayer();
+            var initialPlayer = _tc.Current;
             //Move Player 1 Pawn 1
             _chessGame.MakeMove(Pos(XCoord.d, 2), Pos(XCoord.d, 4));
             //Try to do it again
             var result = _chessGame.MakeMove(Pos(XCoord.d, 4), Pos(XCoord.d, 5));
             //Make sure player 1 was active
-            Assert.That(initialPlayer, Is.EqualTo(PlayerEnum.PLAYER_1));
+            Assert.That(initialPlayer, Is.EqualTo(_tc.Player1));
             Assert.That(result.Outcome, Is.EqualTo(MoveType.Failure));
         }
 
@@ -132,5 +133,6 @@ namespace GameModel.Tests
         }
 
         private ChessGame _chessGame;
+        private TurnController _tc;
     }
 }

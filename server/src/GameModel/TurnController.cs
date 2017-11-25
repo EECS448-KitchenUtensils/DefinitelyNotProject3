@@ -45,7 +45,36 @@ namespace GameModel
         /// Advances the turn
         /// </summary>
         /// <returns>The new current <see cref="Player"/></returns>
-        public Player Next() => LoopPlayers().FirstOrDefault(player => player.InGame);
+        public Player Next()
+        {
+            var nextPlayer = LoopPlayers().FirstOrDefault(player => player.InGame);
+            if (nextPlayer != null)
+            {
+                _currentIndex = nextPlayer.Precedence;
+            }
+            return Current;
+
+        }
+
+        /// <summary>
+        /// Accesses the <see cref="Player"/> instance for the first player
+        /// </summary>
+        public Player Player1 => _players[(int)PlayerEnum.PLAYER_1];
+
+        /// <summary>
+        /// Accesses the <see cref="Player"/> instance for the second player
+        /// </summary>
+        public Player Player2 => _players[(int)PlayerEnum.PLAYER_2];
+
+        /// <summary>
+        /// Accesses the <see cref="Player"/> instance for the third player
+        /// </summary>
+        public Player Player3 => _players[(int)PlayerEnum.PLAYER_3];
+
+        /// <summary>
+        /// Accesses the <see cref="Player"/> instance for the fourth player
+        /// </summary>
+        public Player Player4 => _players[(int)PlayerEnum.PLAYER_4];
 
         private IEnumerable<Player> LoopPlayers()
         {

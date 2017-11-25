@@ -12,15 +12,10 @@ namespace GameModel
         /// <summary>
         /// Default constructor for ChessGame
         /// </summary>
-        public ChessGame()
+        public ChessGame(TurnController tc)
         {
-            _players = new Player[4];
-            _players[0] = new Player(PlayerEnum.PLAYER_1);
-            _players[1] = new Player(PlayerEnum.PLAYER_2);
-            _players[2] = new Player(PlayerEnum.PLAYER_3);
-            _players[3] = new Player(PlayerEnum.PLAYER_4);
-            _board = new ChessBoard(_players);
-            _current_player = 0;
+            _turnController = tc;
+            _board = new ChessBoard(tc.Player1, tc.Player2, tc.Player3, tc.Player4);
         }
         /// <summary>
         /// Generates all the possible moves of a piece
@@ -54,7 +49,7 @@ namespace GameModel
             //Source and Destination must be valid
             if (checkPositions() == false)
                 return new MoveResult(src, dest, MoveType.Failure);
-            var currentPlayer = _players[_current_player];
+            var currentPlayer = _turnController.Current;
             var piece = _board.GetPieceByPosition(src);
             //Check piece ownership
             if (piece.Owner != currentPlayer)
@@ -69,7 +64,7 @@ namespace GameModel
                 // Update Piece position
                 piece.Position = dest;
 
-                _current_player = (_current_player + 1) % 4; //Advance next player, mod 4
+                _turnController.Next();
                 if (moves[0].Outcome == MoveType.Capture)
                     _board.RemovePiece(pieceAtDest);
                 // check for checks
@@ -89,14 +84,7 @@ namespace GameModel
             return new MoveResult(src, dest, MoveType.Failure);
         }
 
-        /// <summary>
-        /// Gets which player owns the current turn
-        /// </summary>
-        /// <returns>The active player</returns>
-        public PlayerEnum GetActivePlayer() => _players[_current_player].Precedence;
-
-        private int _current_player;
+        private TurnController _turnController;
         private ChessBoard _board;
-        private Player[] _players;
     }
 }

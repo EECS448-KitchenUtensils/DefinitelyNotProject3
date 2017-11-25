@@ -10,7 +10,8 @@ namespace GameModel.Client
     {
         public LocalArbitrator()
         {
-            _game = new ChessGame();
+            _tc = new TurnController(PlayerEnum.PLAYER_1);
+            _game = new ChessGame(_tc);
             _queue = new ConcurrentQueue<ModelMessage>();
         }
 
@@ -42,6 +43,7 @@ namespace GameModel.Client
         public bool TryGetLatestMessage(out ModelMessage message) =>
             _queue.TryDequeue(out message);
 
+        private TurnController _tc;
         private ChessGame _game;
         private ConcurrentQueue<ModelMessage> _queue;
     }
