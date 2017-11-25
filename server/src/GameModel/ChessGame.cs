@@ -7,12 +7,12 @@ namespace GameModel
     /// <summary>
     /// The main model class. Manages the state of the entire game.
     /// </summary>
-    public class ChessGame
+    public class ChessGame: IGameModel
     {
         /// <summary>
         /// Default constructor for ChessGame
         /// </summary>
-        public ChessGame(TurnController tc)
+        public ChessGame(ITurnController tc)
         {
             _turnController = tc;
             _board = new ChessBoard(tc.Player1, tc.Player2, tc.Player3, tc.Player4);

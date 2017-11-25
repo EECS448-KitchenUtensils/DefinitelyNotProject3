@@ -1,13 +1,10 @@
 ﻿using GameModel.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameModel
 {
-    public class TurnController
+    public class TurnController: ITurnController
     {
         /// <summary>
         /// Constructor for general use

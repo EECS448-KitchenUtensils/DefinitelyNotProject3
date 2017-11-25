@@ -17,6 +17,15 @@ namespace GameModel.Client
             EmitSetTurn();
         }
         
+        public LocalArbitrator(ITurnController tc, IGameModel gameModel)
+        {
+            _tc = tc;
+            _game = gameModel;
+            _queue = new ConcurrentQueue<ModelMessage>();
+            EmitCreatePieces();
+            EmitSetTurn();
+        }
+
         public void Forfeit()
         {
             _queue.Enqueue(new LostMessage(LostMessage.Reason.Forfeit, _tc.Current));
@@ -62,8 +71,8 @@ namespace GameModel.Client
             _queue.Enqueue(msg);
         }
 
-        private TurnController _tc;
-        private ChessGame _game;
+        private ITurnController _tc;
+        private IGameModel _game;
         private ConcurrentQueue<ModelMessage> _queue;
     }
 }
