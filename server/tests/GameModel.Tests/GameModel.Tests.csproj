@@ -55,6 +55,7 @@
     <Compile Include="Pieces\KingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUtils.cs" />
+    <Compile Include="TurnControllerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
