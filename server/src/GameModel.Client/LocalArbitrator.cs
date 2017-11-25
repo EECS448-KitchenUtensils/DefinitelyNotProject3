@@ -13,6 +13,7 @@ namespace GameModel.Client
             _tc = new TurnController(PlayerEnum.PLAYER_1);
             _game = new ChessGame(_tc);
             _queue = new ConcurrentQueue<ModelMessage>();
+            EmitCreatePieces();
         }
 
         public void Forfeit()
@@ -44,6 +45,14 @@ namespace GameModel.Client
         public bool TryGetLatestMessage(out ModelMessage message) =>
             _queue.TryDequeue(out message);
 
+        private void EmitCreatePieces()
+        {
+            foreach (var piece in _game.Pieces)
+            {
+                var msg = new CreatePieceMessage(piece);
+                _queue.Enqueue(msg);
+            }
+        }
         private TurnController _tc;
         private ChessGame _game;
         private ConcurrentQueue<ModelMessage> _queue;
