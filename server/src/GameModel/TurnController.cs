@@ -39,7 +39,7 @@ namespace GameModel
         /// <summary>
         /// Returns the current <see cref="Player"/>
         /// </summary>
-        public Player Current => _players[(int)_currentIndex];
+        public Player Current => LoopPlayers(0).FirstOrDefault(player => player.InGame);
 
         /// <summary>
         /// Advances the turn
@@ -47,13 +47,12 @@ namespace GameModel
         /// <returns>The new current <see cref="Player"/></returns>
         public Player Next()
         {
-            var nextPlayer = LoopPlayers().FirstOrDefault(player => player.InGame);
+            var nextPlayer = LoopPlayers(1).FirstOrDefault(player => player.InGame);
             if (nextPlayer != null)
             {
                 _currentIndex = nextPlayer.Precedence;
             }
-            return Current;
-
+            return nextPlayer;
         }
 
         /// <summary>
@@ -76,10 +75,10 @@ namespace GameModel
         /// </summary>
         public Player Player4 => _players[(int)PlayerEnum.PLAYER_4];
 
-        private IEnumerable<Player> LoopPlayers()
+        private IEnumerable<Player> LoopPlayers(int incr)
         {
-            var nextIndex = ((int)_currentIndex + 1) % 4;
-            while (nextIndex != (int)_currentIndex)
+            var nextIndex = ((int)_currentIndex + incr) % 4;
+            for (var i = 0; i < 4; i++)
             {
                 yield return _players[nextIndex];
                 nextIndex = (nextIndex + 1) % 4;

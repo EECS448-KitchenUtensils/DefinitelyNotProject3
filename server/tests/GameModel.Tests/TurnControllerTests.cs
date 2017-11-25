@@ -14,6 +14,22 @@ namespace GameModel.Tests
             Assert.That(tc.Next(), Is.EqualTo(expected));
         }
 
+        [Test]
+        public void ForfeitAdvancesTurn()
+        {
+            var tc = new TurnController(Players, PlayerEnum.PLAYER_1);
+            tc.Player1.Forfeit();
+            Assert.That(tc.Current, Is.EqualTo(tc.Player2));
+        }
+
+        [Test]
+        public void LossAdvancesTurn()
+        {
+            var tc = new TurnController(Players, PlayerEnum.PLAYER_1);
+            tc.Player1.Loss();
+            Assert.That(tc.Current, Is.EqualTo(tc.Player2));
+        }
+
         public static IEnumerable NextCases
         {
             get

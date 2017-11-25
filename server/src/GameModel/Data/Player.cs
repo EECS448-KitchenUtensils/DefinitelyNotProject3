@@ -16,6 +16,22 @@ namespace GameModel.Data
         }
 
         /// <summary>
+        /// Disables this <see cref="Player"/> because of forfeit
+        /// </summary>
+        public void Forfeit()
+        {
+            InGame = false;
+        }
+
+        /// <summary>
+        /// Disables this <see cref="Player"/> because of loss (King capture, checkmate, etc)
+        /// </summary>
+        public void Loss()
+        {
+            InGame = false;
+        }
+
+        /// <summary>
         /// The player's order (1, 2, etc.)
         /// </summary>
         public PlayerEnum Precedence { get; }
