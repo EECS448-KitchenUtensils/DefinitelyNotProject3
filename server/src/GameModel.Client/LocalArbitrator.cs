@@ -15,9 +15,10 @@ namespace GameModel.Client
             _queue = new ConcurrentQueue<ModelMessage>();
         }
 
-        public void Forfeit(Player player)
+        public void Forfeit()
         {
-            throw new NotImplementedException();
+            _queue.Enqueue(new LostMessage(LostMessage.Reason.Forfeit, _tc.Current));
+            _tc.Current.Forfeit();
         }
 
         public void MakeMove(BoardPosition src, BoardPosition dest)

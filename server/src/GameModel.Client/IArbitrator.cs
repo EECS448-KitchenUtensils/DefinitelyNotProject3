@@ -25,8 +25,7 @@ namespace GameModel
         /// <summary>
         /// Signals that a given player is forfeiting the game
         /// </summary>
-        /// <param name="player">Which player to forfeit for</param>
-        void Forfeit(Player player);
+        void Forfeit();
 
         /// <summary>
         /// Stops the game (completely for local, connection for remote)
