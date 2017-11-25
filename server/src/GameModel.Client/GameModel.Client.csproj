@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adapter.cs" />
+    <Compile Include="IArbitrator.cs" />
     <Compile Include="IMailbox.cs" />
     <Compile Include="ModelArbitrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +71,10 @@
     <ProjectReference Include="..\GameModel.Messages\GameModel.Messages.csproj">
       <Project>{CBED8838-99C5-491B-9435-1D4F1DD8BE56}</Project>
       <Name>GameModel.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameModel\GameModel.csproj">
+      <Project>{F8BB67A2-5FD2-4DD7-8608-C52101A31BE2}</Project>
+      <Name>GameModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
