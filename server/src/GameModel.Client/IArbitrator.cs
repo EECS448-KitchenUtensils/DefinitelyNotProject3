@@ -20,7 +20,7 @@ namespace GameModel
         /// <param name="src">The current position of a piece</param>
         /// <param name="dest">The intended destination of the piece</param>
         /// <returns>Failure on invalid moves, Move on valid moves, Capture on valid Captures</returns>
-        MoveType MakeMove(BoardPosition src, BoardPosition dest);
+        void MakeMove(BoardPosition src, BoardPosition dest);
 
         /// <summary>
         /// Signals that a given player is forfeiting the game
