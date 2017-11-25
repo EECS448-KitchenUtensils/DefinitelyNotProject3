@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreatePieceMessage.cs" />
+    <Compile Include="DestroyPieceMessage.cs" />
     <Compile Include="GameBeginMessage.cs" />
     <Compile Include="LostMessage.cs" />
     <Compile Include="ModelMessage.cs" />

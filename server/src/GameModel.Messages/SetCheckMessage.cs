@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace GameModel.Messages
 {
     [DataContract]
-    public class SetCheckMessage
+    public class SetCheckMessage: ModelMessage
     {
         public SetCheckMessage(Player player)
         {
