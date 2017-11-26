@@ -41,11 +41,9 @@ namespace GameModel.Client
                 _tc.Player3,
                 _tc.Player4
             };
-            PlayerEnum[] InGame() => players.Where(p => p.InGame)
-                                            .Select(p => p.Precedence)
+            Player[] InGame() => players.Where(p => p.InGame)
                                             .ToArray();
-            PlayerEnum[] InCheck() => players.Where(p => p.InGame && p.Checked)
-                                             .Select(p => p.Precedence)
+            Player[] InCheck() => players.Where(p => p.InGame && p.Checked)
                                              .ToArray();
             var playersInGamePre = InGame();
             var playersInCheckPre = InCheck();
@@ -107,22 +105,38 @@ namespace GameModel.Client
 
         private void EmitPieceMove(BoardPosition src, BoardPosition dest)
         {
-            throw new NotImplementedException();
+            var msg = new TranslatePieceMessage(src, dest);
+            _queue.Enqueue(msg);
         }
 
         private void EmitPieceDestroy(ChessPiece destroyed)
         {
-            throw new NotImplementedException();
+            var msg = new DestroyPieceMessage(destroyed);
+            _queue.Enqueue(msg);
         }
 
-        private void EmitInCheck(PlayerEnum[] playersInCheckPre, PlayerEnum[] playersInCheckPost)
+        private void EmitInCheck(Player[] playersInCheckPre, Player[] playersInCheckPost)
         {
-            throw new NotImplementedException();
+            foreach(var newInCheck in playersInCheckPost.Except(playersInCheckPre))
+            {
+                var msg = new SetCheckMessage(newInCheck);
+                _queue.Enqueue(msg);
+            }
+            foreach(var leavingCheck in playersInCheckPre.Except(playersInCheckPost))
+            {
+                var msg = new SetCheckMessage(leavingCheck);
+                _queue.Enqueue(msg);
+            }
         }
 
-        private void EmitLoss(PlayerEnum[] playersInGamePre, PlayerEnum[] playersInGamePost)
+        private void EmitLoss(Player[] playersInGamePre, Player[] playersInGamePost)
         {
-            throw new NotImplementedException();
+            foreach(var losingPlayer in playersInGamePost.Except(playersInGamePre))
+            {
+                var reason = losingPlayer.Checked ? LostMessage.Reason.Checkmate : LostMessage.Reason.KingCapture;
+                var msg = new LostMessage(reason, losingPlayer);
+                _queue.Enqueue(msg);
+            }
         }
 
         private ITurnController _tc;
