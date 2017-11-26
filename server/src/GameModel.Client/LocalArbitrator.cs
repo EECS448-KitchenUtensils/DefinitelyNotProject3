@@ -3,6 +3,7 @@ using GameModel.Messages;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameModel.Client
 {
@@ -34,7 +35,39 @@ namespace GameModel.Client
 
         public void MakeMove(BoardPosition src, BoardPosition dest)
         {
-            throw new NotImplementedException();
+            var players = new[] {
+                _tc.Player1,
+                _tc.Player2,
+                _tc.Player3,
+                _tc.Player4
+            };
+            PlayerEnum[] InGame() => players.Where(p => p.InGame)
+                                            .Select(p => p.Precedence)
+                                            .ToArray();
+            PlayerEnum[] InCheck() => players.Where(p => p.InGame && p.Checked)
+                                             .Select(p => p.Precedence)
+                                             .ToArray();
+            var playersInGamePre = InGame();
+            var playersInCheckPre = InCheck();
+            var result = _game.MakeMove(src, dest);
+            var playersInGamePost = InGame();
+            var playersInCheckPost = InCheck();
+            switch (result.Outcome)
+            {
+                case MoveType.Move:
+                    EmitPieceMove(src, dest);
+                    EmitLoss(playersInGamePre, playersInGamePost);
+                    EmitInCheck(playersInCheckPre, playersInCheckPost);
+                    EmitSetTurn();
+                    break;
+                case MoveType.Capture:
+                    EmitPieceMove(src, dest);
+                    EmitPieceDestroy(result.Destroyed);
+                    EmitLoss(playersInGamePre, playersInGamePost);
+                    EmitInCheck(playersInCheckPre, playersInCheckPost);
+                    EmitSetTurn();
+                    break;
+            }
         }
 
         /// <summary>
@@ -69,6 +102,27 @@ namespace GameModel.Client
         {
             var msg = new SetTurnMessage(_tc.Current);
             _queue.Enqueue(msg);
+        }
+
+
+        private void EmitPieceMove(BoardPosition src, BoardPosition dest)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void EmitPieceDestroy(ChessPiece destroyed)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void EmitInCheck(PlayerEnum[] playersInCheckPre, PlayerEnum[] playersInCheckPost)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void EmitLoss(PlayerEnum[] playersInGamePre, PlayerEnum[] playersInGamePost)
+        {
+            throw new NotImplementedException();
         }
 
         private ITurnController _tc;
