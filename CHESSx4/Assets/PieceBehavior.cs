@@ -51,7 +51,7 @@ public class PieceBehavior : MonoBehaviour {
 		foreach (var square in tempSquare) {
 			if (square != null && square.transform.position.x == x && square.transform.position.y == y) {
 				var lastmovetype = Game.MakeMove(thisPiece.Position, new BoardPosition((XCoord) x, (int) y+1));
-				if(lastmovetype == MoveType.Capture){
+				if(lastmovetype.Outcome == MoveType.Capture){
 					DestroyCapturedPieces();
 				}
 			} 
@@ -68,7 +68,7 @@ public class PieceBehavior : MonoBehaviour {
 
 		int count = 0;
 		foreach (var move in moves) {
-			tempSquare [count] = Instantiate (square, new Vector3 ((float)move.Position.X, (float)move.Position.Y - 1, -0.1f), Quaternion.identity);
+			tempSquare [count] = Instantiate (square, new Vector3 ((float)move.Destination.X, (float)move.Destination.Y - 1, -0.1f), Quaternion.identity);
 			tempSquare [count].GetComponent<Renderer> ().material.color = this.gameObject.GetComponent<Renderer> ().material.color;
 			count++;
 		}

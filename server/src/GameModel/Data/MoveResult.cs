@@ -8,22 +8,42 @@
         /// <summary>
         /// Creates new MoveResult
         /// </summary>
-        /// <param name="pos">The destination position of this move</param>
+        /// <param name="dest">The destination position of this move</param>
         /// <param name="outcome">The outcome of this move</param>
-        public MoveResult(BoardPosition pos, MoveType outcome)
+        public MoveResult(BoardPosition src, BoardPosition dest, MoveType outcome)
         {
-            Position = pos;
+            Source = src;
+            Destination = dest;
             Outcome = outcome;
+            Destroyed = null;
         }
-        
+
+        public MoveResult(BoardPosition src, BoardPosition dest, MoveType outcome, ChessPiece destroyed): this(src, dest, outcome)
+        {
+            Destroyed = destroyed;
+        }
+
+        /// <summary>
+        /// The source position of this move
+        /// </summary>
+        public BoardPosition Source { get; }
+
         /// <summary>
         /// The destination position of this move
         /// </summary>
-        public BoardPosition Position { get; }
+        public BoardPosition Destination { get; }
 
         /// <summary>
         /// The outcome of this move
         /// </summary>
         public MoveType Outcome { get; }
+
+        /// <summary>
+        /// A piece destroyed (captured) by this move
+        /// </summary>
+        public ChessPiece Destroyed { get; }
+
+        public override string ToString() =>
+            string.Format("src={0}, dest={1}, outcome={2}", Source, Destination, Outcome);
     }
 }

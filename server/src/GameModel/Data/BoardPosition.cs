@@ -1,7 +1,10 @@
+using System.Runtime.Serialization;
+
 namespace GameModel.Data {
     /// <summary>
     /// Represents a position on the board
     /// </summary>
+    [DataContract]
     public struct BoardPosition {
         /// <summary>
         /// Initializes a BoardPosition
@@ -72,11 +75,15 @@ namespace GameModel.Data {
         /// <summary>
         /// The horizontal coordinate
         /// </summary>
-        public XCoord X { get; }
+        [DataMember]
+        public readonly XCoord X;
 
         /// <summary>
         /// The vertical coordinate
         /// </summary>
-        public int Y { get; }
+        [DataMember]
+        public readonly int Y;
+
+        public override string ToString() => string.Format("x={0}, y={1}", X, Y);
     }
 }

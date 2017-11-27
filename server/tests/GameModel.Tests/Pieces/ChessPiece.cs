@@ -51,8 +51,6 @@ namespace GameModel.Tests.Pieces
 
         private static bool BoundsCheck(BoardPosition pos) =>
             (pos.X >= XCoord.a && pos.X <= XCoord.h) && (pos.Y >= 1 && pos.Y <= 8);
-        protected static BoardPosition Pos(XCoord x, int y) => new BoardPosition(x, y);
-        protected static MoveResult Move(XCoord x, int y, MoveType result) => new MoveResult(Pos(x, y), result);
         /// <summary>
         /// Helper method that allows the tests to generalized
         /// </summary>
@@ -61,8 +59,8 @@ namespace GameModel.Tests.Pieces
         /// <param name="positionChecker"></param>
         protected void PossibleMovesReturnsOnlyValidMoves(ChessPiece piece, IEnumerable<MoveResult> expectedMoves, Func<BoardPosition, SpaceStatus> positionChecker)
         {
-            var calculatedMoves = new HashSet<MoveResult>(piece.PossibleMoves(positionChecker));
-            Assert.That(() => calculatedMoves.SetEquals(expectedMoves), Is.True);
+            var calculatedMoves = piece.PossibleMoves(positionChecker);
+            CollectionAssert.AreEquivalent(expectedMoves, calculatedMoves);
         }
     }
 }
