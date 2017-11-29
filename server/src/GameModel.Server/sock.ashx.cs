@@ -10,6 +10,14 @@ namespace GameModel.Server
     /// </summary>
     public class WebSocketHttpHandler : IHttpHandler
     {
+        static WebSocketHttpHandler()
+        {
+            GameModelHandler
+                .Connections
+                .MakeMatches()
+                .AssignPlayerSlots()
+                .ProxyGameModel();
+        }
         /// <summary>
         /// Processes an HTTP request
         /// </summary>
