@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TurnBehavior : MonoBehaviour {
 
+    public int turn = 0;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -11,7 +13,6 @@ public class TurnBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		var turn = (int) GameObject.Find ("GameObject_Main").GetComponent<MainSceneStart> ().game.GetActivePlayer();
 		switch (turn) {
 		case 0:
 			GetComponent<Renderer> ().material.color = new Color (0, 0, 1);
