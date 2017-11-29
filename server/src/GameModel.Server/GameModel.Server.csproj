@@ -108,12 +108,10 @@
     <Compile Include="UnassignedLobby.cs" />
     <Compile Include="MatchMaking.cs" />
     <Compile Include="MessageProcessing.cs" />
-    <Compile Include="Plumbing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sock.ashx.cs">
       <DependentUpon>sock.ashx</DependentUpon>
     </Compile>
-    <Compile Include="StateMachine.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameModel.Client\GameModel.Client.csproj">
