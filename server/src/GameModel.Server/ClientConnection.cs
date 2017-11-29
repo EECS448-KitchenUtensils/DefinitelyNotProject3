@@ -13,25 +13,28 @@ namespace GameModel.Server
         /// <param name="clientId">An identifier unique to this client</param>
         /// <param name="messages">A stream of unparsed messages</param>
         /// <param name="sendCallback">A callback for sending messages back to the client</param>
-        public ClientConnection(Guid clientId, IObservable<string> messages, Action<string> sendCallback)
+        public ClientConnection(Guid clientId, IObservable<byte[]> messages, Action<byte[]> sendCallback)
         {
             ClientId = clientId;
             IncomingMessages = messages;
             SendCallback = sendCallback;
+            IsRunning = true;
         }
         /// <summary>
         /// An identifier unique to this client
         /// </summary>
         public Guid ClientId;
 
+        public bool IsRunning;
+
         /// <summary>
         /// A stream of unparsed incoming messages
         /// </summary>
-        public IObservable<string> IncomingMessages;
+        public IObservable<byte[]> IncomingMessages;
 
         /// <summary>
         /// A method to call to send a message back to a client
         /// </summary>
-        public Action<string> SendCallback;
+        public Action<byte[]> SendCallback;
     }
 }
