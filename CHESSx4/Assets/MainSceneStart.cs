@@ -135,8 +135,6 @@ public class MainSceneStart : MonoBehaviour {
                 var o = clientPiecesCollection[actualMessage.position];
                 Destroy(o);
             }
-
-            
         }
 	}
 
