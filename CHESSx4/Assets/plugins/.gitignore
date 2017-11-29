@@ -1,3 +1,4 @@
 GameModel.dll
-GameModel.dll.mdb
+*.mdb
 *.dll
+*.xml
