@@ -65,8 +65,6 @@ public class PieceBehavior : MonoBehaviour {
 
 	void OnMouseDown (){
 
-        Debug.Log("heyyyyyyy");
-
 		GameObject square = GameObject.Find ("whitesquare");
 
 		var moves = arby.PossibleMoves(currentPosition);

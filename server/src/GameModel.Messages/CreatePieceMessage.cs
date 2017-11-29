@@ -10,8 +10,9 @@ namespace GameModel.Messages
         /// Creates a <see cref="CreatePieceMessage"/>
         /// </summary>
         /// <param name="piece">The <see cref="ChessPiece"/> being created</param>
-        public CreatePieceMessage(ChessPiece piece)
+        public CreatePieceMessage(ChessPiece cpiece)
         {
+            piece = cpiece;
             pieceType = piece.PieceType; //Always returns the deepest downcast possible (King, Bishop, etc.)
             owner = piece.Owner.Precedence;
             position = piece.Position;
@@ -22,6 +23,12 @@ namespace GameModel.Messages
         /// </summary>
         [DataMember]
         public readonly PieceEnum pieceType;
+
+        /// <summary>
+        /// The <see cref="PieceEnum"/> of the created piece
+        /// </summary>
+        [DataMember]
+        public readonly ChessPiece piece;
 
         /// <summary>
         /// The owner of the created piece

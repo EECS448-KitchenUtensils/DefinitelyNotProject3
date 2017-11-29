@@ -56,6 +56,7 @@ public class MainSceneStart : MonoBehaviour {
         bool message_recieved = arby.TryGetLatestMessage(out message);
         if (message_recieved)
         {
+            Debug.Log(message);
             //Create piece message
             if(message is CreatePieceMessage)
             {
@@ -126,7 +127,19 @@ public class MainSceneStart : MonoBehaviour {
             {
                 var actualMessage = (TranslatePieceMessage)message;
                 var o = clientPiecesCollection[actualMessage.src];
+                try
+                {
+                    var d = clientPiecesCollection[actualMessage.dest];
+                    clientPiecesCollection.Remove(actualMessage.dest);
+                    Destroy(d);
+                }
+                catch
+                {
+
+                }
                 o.GetComponent<PieceBehavior>().currentPosition = actualMessage.dest;
+                clientPiecesCollection[actualMessage.dest] = o;
+                clientPiecesCollection.Remove(actualMessage.src);
             }
 
             else if(message is DestroyPieceMessage)
