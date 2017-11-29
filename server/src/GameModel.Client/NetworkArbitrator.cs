@@ -4,60 +4,61 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
+using System.Threading;
+using System.Runtime.Serialization;
+using System.IO;
 
 namespace GameModel.Client
 {
-    class NetworkArbitrator : IArbitrator
+    public class NetworkArbitrator : IArbitrator
     {
-        //As of now just the same as local, need to make networked turn controller
-        public NetworkArbitrator()
+        public NetworkArbitrator(Uri wsAddress)
         {
+            _wsAddress = wsAddress;
+            _ws = new ClientWebSocket();
+            Connect();
+            
             _tc = new TurnController(PlayerEnum.PLAYER_1);
             _game = new ChessGame(_tc);
             _queue = new ConcurrentQueue<ModelMessage>();
-            EmitCreatePieces();
-            EmitSetTurn();
+        }
+
+        public async void Connect()
+        {
+            await _ws.ConnectAsync(_wsAddress, CancellationToken.None);
+        }
+
+        public void CreateSerializer()
+        {
+            var knownTypes = new[]
+            {
+                typeof(CreatePieceMessage),
+                typeof(TranslatePieceMessage),
+                typeof(GameBeginMessage),
+                typeof(DestroyPieceMessage),
+                typeof(SetTurnMessage),
+                typeof(PieceEnum),
+                typeof(PlayerEnum),
+                typeof(XCoord)
+            };
+
+            _serializer = new DataContractSerializer(typeof(ModelMessage), knownTypes);
         }
 
         public void Forfeit()
         {
-            _queue.Enqueue(new LostMessage(LostMessage.Reason.Forfeit, _tc.Current));
-            _tc.Current.Forfeit();
+            //Nothing rn
         }
 
-        public void MakeMove(BoardPosition src, BoardPosition dest)
+        public async void MakeMove(BoardPosition src, BoardPosition dest)
         {
-            var players = new[] {
-                _tc.Player1,
-                _tc.Player2,
-                _tc.Player3,
-                _tc.Player4
-            };
-            Player[] InGame() => players.Where(p => p.InGame)
-                                            .ToArray();
-            Player[] InCheck() => players.Where(p => p.InGame && p.Checked)
-                                             .ToArray();
-            var playersInGamePre = InGame();
-            var playersInCheckPre = InCheck();
-            var result = _game.MakeMove(src, dest);
-            var playersInGamePost = InGame();
-            var playersInCheckPost = InCheck();
-            switch (result.Outcome)
-            {
-                case MoveType.Move:
-                    EmitPieceMove(src, dest);
-                    EmitLoss(playersInGamePre, playersInGamePost);
-                    EmitInCheck(playersInCheckPre, playersInCheckPost);
-                    EmitSetTurn();
-                    break;
-                case MoveType.Capture:
-                    EmitPieceMove(src, dest);
-                    EmitPieceDestroy(result.Destroyed);
-                    EmitLoss(playersInGamePre, playersInGamePost);
-                    EmitInCheck(playersInCheckPre, playersInCheckPost);
-                    EmitSetTurn();
-                    break;
-            }
+
+            TranslatePieceMessage moveToTry = new TranslatePieceMessage(src, dest);
+            var stream = new MemoryStream();
+            _serializer.WriteObject(stream, moveToTry);
+            await _ws.SendAsync(new ArraySegment<byte>(stream.ToArray()), WebSocketMessageType.Text, true, CancellationToken.None);
+           
         }
 
         /// <summary>
@@ -131,9 +132,43 @@ namespace GameModel.Client
             }
         }
 
+        private async void CheckForMessages()
+        {
+            while (true)
+            {
+                var buffer = new ArraySegment<byte>();
+                await _ws.ReceiveAsync(buffer, CancellationToken.None);
+                var recievedStream = new MemoryStream(buffer.ToArray());
+                var recievedObject = (ModelMessage)_serializer.ReadObject(recievedStream);
+                if(recievedObject is TranslatePieceMessage)
+                {
+                    var message = (TranslatePieceMessage)recievedObject;
+                    var players = new[] {
+                            _tc.Player1,
+                            _tc.Player2,
+                            _tc.Player3,
+                            _tc.Player4
+                        };
+                        Player[] InGame() => players.Where(p => p.InGame)
+                                                        .ToArray();
+                        Player[] InCheck() => players.Where(p => p.InGame && p.Checked)
+                                                            .ToArray();
+                        var playersInGamePre = InGame();
+                        var playersInCheckPre = InCheck();
+                        var result = _game.MakeMove(message.src, message.dest);
+                        var playersInGamePost = InGame();
+                        var playersInCheckPost = InCheck();
+                }
+                _queue.Enqueue(recievedObject);
+            }
+        }
+
+        private DataContractSerializer _serializer;
+        private PlayerEnum _player;
+        private Uri _wsAddress;
+        private ClientWebSocket _ws;
         private ITurnController _tc;
         private IGameModel _game;
         private ConcurrentQueue<ModelMessage> _queue;
-
     }
 }
