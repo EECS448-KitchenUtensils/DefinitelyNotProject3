@@ -21,6 +21,10 @@ namespace GameModel.Server
             var knownTypes = new[]
             {
                 typeof(CreatePieceMessage),
+                typeof(TranslatePieceMessage),
+                typeof(GameBeginMessage),
+                typeof(DestroyPieceMessage),
+                typeof(SetTurnMessage),
                 typeof(PieceEnum),
                 typeof(PlayerEnum),
                 typeof(XCoord)
