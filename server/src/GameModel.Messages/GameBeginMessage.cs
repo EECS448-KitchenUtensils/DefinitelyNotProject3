@@ -6,7 +6,7 @@ namespace GameModel.Messages
     /// Emitted when the master arbitrator is ready to begin the game
     /// </summary>
     [DataContract]
-    public class GameBeginMessage
+    public class GameBeginMessage: ModelMessage
     {
         
     }
