@@ -18,11 +18,14 @@ namespace GameModel.Server
             ClientId = clientId;
             IncomingMessages = messages;
             SendCallback = sendCallback;
+            IsRunning = true;
         }
         /// <summary>
         /// An identifier unique to this client
         /// </summary>
         public Guid ClientId;
+
+        public bool IsRunning;
 
         /// <summary>
         /// A stream of unparsed incoming messages

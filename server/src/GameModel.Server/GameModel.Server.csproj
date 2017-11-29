@@ -104,6 +104,8 @@
   <ItemGroup>
     <Compile Include="ClientConnection.cs" />
     <Compile Include="GameModelHandler.cs" />
+    <Compile Include="UnassignedLobby.cs" />
+    <Compile Include="MatchMaking.cs" />
     <Compile Include="MessageProcessing.cs" />
     <Compile Include="Plumbing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

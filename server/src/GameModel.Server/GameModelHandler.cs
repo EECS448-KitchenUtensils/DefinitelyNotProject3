@@ -40,6 +40,7 @@ namespace GameModel.Server
         public override void OnClose()
         {
             _running = false;
+            _client.IsRunning = false;
             base.OnClose();
         }
 
