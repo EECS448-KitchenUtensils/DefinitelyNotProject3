@@ -23,7 +23,7 @@ public class MainSceneStart : MonoBehaviour {
 	public float gridWidth;
 	public float gridDepth;
 	public Transform[, ] squares = new Transform[14, 14];
-	public Dictionary<BoardPosition, GameObject>[] clientPiecesCollection = new Dictionary<BoardPosition, GameObject>[4];
+	public Dictionary<BoardPosition, GameObject> clientPiecesCollection = new Dictionary<BoardPosition, GameObject>();
 
 	public bool moveState = false;
     public bool local = true;
@@ -31,12 +31,6 @@ public class MainSceneStart : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
-        for (int i = 0; i < 4; i++)
-        {
-            clientPiecesCollection[i] = new Dictionary<BoardPosition, GameObject>();
-
-        }
 
         if (PlayerPrefs.GetInt("local") == 0) local = false;
         if (local)
@@ -69,36 +63,36 @@ public class MainSceneStart : MonoBehaviour {
                 //King
                 if (actualMessage.pieceType == PieceEnum.KING)
                 {
-                    clientPiecesCollection[(int)actualMessage.owner].Add(actualMessage.position, (Instantiate(piece_king, new Vector3((float) actualMessage.position.X, (float) actualMessage.position.Y - 1, -1), Quaternion.identity)));
+                    clientPiecesCollection.Add(actualMessage.position, (Instantiate(piece_king, new Vector3((float) actualMessage.position.X, (float) actualMessage.position.Y - 1, -1), Quaternion.identity)));
                 }
                 //Queen
                 else if (actualMessage.pieceType == PieceEnum.QUEEN)
                 {
-                    clientPiecesCollection[(int)actualMessage.owner].Add(actualMessage.position, (Instantiate(piece_queen, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
+                    clientPiecesCollection.Add(actualMessage.position, (Instantiate(piece_queen, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
                 }
                 //Rook
                 else if (actualMessage.pieceType == PieceEnum.ROOK)
                 {
-                    clientPiecesCollection[(int)actualMessage.owner].Add(actualMessage.position, (Instantiate(piece_rook, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
+                    clientPiecesCollection.Add(actualMessage.position, (Instantiate(piece_rook, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
                 }
                 //Knight
                 else if (actualMessage.pieceType == PieceEnum.KNIGHT)
                 {
-                    clientPiecesCollection[(int)actualMessage.owner].Add(actualMessage.position, (Instantiate(piece_knight, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
+                    clientPiecesCollection.Add(actualMessage.position, (Instantiate(piece_knight, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
                 }
                 //Bishop
                 else if (actualMessage.pieceType == PieceEnum.BISHOP)
                 {
-                    clientPiecesCollection[(int)actualMessage.owner].Add(actualMessage.position, (Instantiate(piece_bishop, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
+                    clientPiecesCollection.Add(actualMessage.position, (Instantiate(piece_bishop, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
                 }
                 //Pawn
                 else if (actualMessage.pieceType == PieceEnum.PAWN)
                 {
-                    clientPiecesCollection[(int)actualMessage.owner].Add(actualMessage.position, (Instantiate(piece_pawn, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
+                    clientPiecesCollection.Add(actualMessage.position, (Instantiate(piece_pawn, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
                 }
 
                 //Add Color
-                var o = clientPiecesCollection[(int)actualMessage.owner][actualMessage.position];
+                var o = clientPiecesCollection[actualMessage.position];
                 Renderer rend = o.GetComponent<Renderer>();
                 if((int)actualMessage.owner == 0)
                 {
@@ -128,6 +122,21 @@ public class MainSceneStart : MonoBehaviour {
                 GameObject.Find("whitesquare").GetComponent<TurnBehavior>().turn = (int) actualMessage.player;
             }
 
+            else if(message is TranslatePieceMessage)
+            {
+                var actualMessage = (TranslatePieceMessage)message;
+                var o = clientPiecesCollection[actualMessage.src];
+                o.GetComponent<PieceBehavior>().currentPosition = actualMessage.dest;
+            }
+
+            else if(message is DestroyPieceMessage)
+            {
+                var actualMessage = (DestroyPieceMessage)message;
+                var o = clientPiecesCollection[actualMessage.position];
+                Destroy(o);
+            }
+
+            
         }
 	}
 

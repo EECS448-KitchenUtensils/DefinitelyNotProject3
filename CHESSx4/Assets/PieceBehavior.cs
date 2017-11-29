@@ -8,6 +8,7 @@ using GameModel.Data;
 public class PieceBehavior : MonoBehaviour {
 
     public BoardPosition currentPosition;
+    public BoardPosition oldPosition;
 	public float startx;
 	public float starty;
 	private GameObject[] tempSquare = new GameObject[50];
@@ -26,6 +27,13 @@ public class PieceBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if(oldPosition != currentPosition)
+        {
+            transform.position = new Vector3((float)currentPosition.X, (float)currentPosition.Y - 1, -1);
+            oldPosition = currentPosition;
+        }
+
 			
 		if(Input.GetMouseButtonUp(0)){
 			foreach (var o in tempSquare) {
@@ -45,11 +53,12 @@ public class PieceBehavior : MonoBehaviour {
 	}
 
 	void OnMouseUp() {
+        oldPosition = new BoardPosition((XCoord)0, 1);
 		float x = Mathf.Round(this.gameObject.transform.position.x);
 		float y = Mathf.Round(this.gameObject.transform.position.y);
 		foreach (var square in tempSquare) {
 			if (square != null && square.transform.position.x == x && square.transform.position.y == y) {
-                arby.MakeMove(currentPosition, new BoardPosition((XCoord)x, (int) y));
+                arby.MakeMove(currentPosition, new BoardPosition((XCoord)x, (int) y + 1));
 			} 
 		}
 	}
