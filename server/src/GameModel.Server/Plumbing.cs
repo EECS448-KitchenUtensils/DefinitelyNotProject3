@@ -1,4 +1,6 @@
-﻿namespace GameModel.Server
+﻿using System.Reactive.Linq;
+
+namespace GameModel.Server
 {
     public class Plumbing
     {
@@ -12,7 +14,8 @@
         public void Plumb()
         {
             _client.IncomingMessages
-                
+                .ParseMessages();
+                //.Select()
         }
         private ClientConnection _client;
     }

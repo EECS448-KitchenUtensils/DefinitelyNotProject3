@@ -33,7 +33,7 @@ namespace GameModel.Server
         /// </summary>
         /// <param name="rawMessages">An <see cref="IObserver{T}"/> of raw messages</param>
         /// <returns>An <see cref="IObserver{T}"/> of hydrated messages</returns>
-        public static IObservable<ModelMessage> ParseMessages(IObservable<byte[]> rawMessages) =>
+        public static IObservable<ModelMessage> ParseMessages(this IObservable<byte[]> rawMessages) =>
             rawMessages.Select(rawMessage =>
             {
                 var stream = new MemoryStream(rawMessage);
@@ -45,7 +45,7 @@ namespace GameModel.Server
         /// </summary>
         /// <param name="messages"></param>
         /// <returns></returns>
-        public static IObservable<byte[]> SerializeMessages(IObservable<ModelMessage> messages) =>
+        public static IObservable<byte[]> SerializeMessages(this IObservable<ModelMessage> messages) =>
             messages.Select(msg =>
             {
                 var stream = new MemoryStream();
