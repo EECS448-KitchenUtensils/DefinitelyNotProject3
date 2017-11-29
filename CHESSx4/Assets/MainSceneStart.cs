@@ -142,12 +142,12 @@ public class MainSceneStart : MonoBehaviour {
                 clientPiecesCollection.Remove(actualMessage.src);
             }
 
-            else if(message is DestroyPieceMessage)
-            {
-                var actualMessage = (DestroyPieceMessage)message;
-                var o = clientPiecesCollection[actualMessage.position];
-                Destroy(o);
-            }
+            //else if(message is DestroyPieceMessage)
+            //{
+            //    var actualMessage = (DestroyPieceMessage)message;
+            //    var o = clientPiecesCollection[actualMessage.position];
+            //    Destroy(o);
+            //}
         }
 	}
 
