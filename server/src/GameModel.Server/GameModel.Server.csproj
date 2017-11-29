@@ -87,6 +87,13 @@
     <Compile Include="sock.ashx.cs">
       <DependentUpon>sock.ashx</DependentUpon>
     </Compile>
+    <Compile Include="StateMachine.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameModel.Messages\GameModel.Messages.csproj">
+      <Project>{CBED8838-99C5-491B-9435-1D4F1DD8BE56}</Project>
+      <Name>GameModel.Messages</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
