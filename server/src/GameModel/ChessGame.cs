@@ -61,11 +61,12 @@ namespace GameModel
             if (moves.Count(move => move.Destination == dest) == 1)
             {
                 var pieceAtDest = _board.GetPieceByPosition(dest);
+                var outcome = moves[0].Outcome;
                 // Update Piece position
                 piece.Position = dest;
 
                 _turnController.Next();
-                if (moves[0].Outcome == MoveType.Capture)
+                if (outcome == MoveType.Capture)
                     _board.RemovePiece(pieceAtDest);
                 // check for checks
                 var playersInCheck = _board.PossibleMoves(dest)
@@ -79,7 +80,14 @@ namespace GameModel
                 {
                     player.Checked = true;
                 }
-                return new MoveResult(src, dest, moves[0].Outcome);
+                if (outcome == MoveType.Capture)
+                {
+                    return new MoveResult(src, dest, MoveType.Capture, pieceAtDest);
+                }
+                else
+                {
+                    return new MoveResult(src, dest, outcome);
+                }
             }
             return new MoveResult(src, dest, MoveType.Failure);
         }
