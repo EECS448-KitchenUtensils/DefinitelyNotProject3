@@ -104,6 +104,7 @@
   <ItemGroup>
     <Compile Include="ClientConnection.cs" />
     <Compile Include="GameModelHandler.cs" />
+    <Compile Include="GameModelProxy.cs" />
     <Compile Include="UnassignedLobby.cs" />
     <Compile Include="MatchMaking.cs" />
     <Compile Include="MessageProcessing.cs" />
@@ -115,6 +116,10 @@
     <Compile Include="StateMachine.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GameModel.Client\GameModel.Client.csproj">
+      <Project>{A4C75EB7-C945-4217-BDBA-C7FAA82AA2C1}</Project>
+      <Name>GameModel.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameModel.Messages\GameModel.Messages.csproj">
       <Project>{CBED8838-99C5-491B-9435-1D4F1DD8BE56}</Project>
       <Name>GameModel.Messages</Name>
