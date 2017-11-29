@@ -7,22 +7,21 @@ using GameModel.Data;
 
 public class PieceBehavior : MonoBehaviour {
 
-	public ChessPiece thisPiece;
+    public BoardPosition currentPosition;
 	public float startx;
 	public float starty;
 	private GameObject[] tempSquare = new GameObject[50];
 	private Vector3 mousePosition;
-	private ChessGame Game{
+	private IArbitrator arby{
 		get{
-			return GameObject.Find ("GameObject_Main").GetComponent<MainSceneStart> ().game;
+			return GameObject.Find ("GameObject_Main").GetComponent<MainSceneStart> ().arby;
 		}
 	}
 
 
 	// Use this for initialization
 	void Start () {
-		Vector3 position = new Vector3 ((float)thisPiece.Position.X, (float)thisPiece.Position.Y - 1, -1);
-		transform.position = position;
+
 	}
 	
 	// Update is called once per frame
@@ -50,38 +49,24 @@ public class PieceBehavior : MonoBehaviour {
 		float y = Mathf.Round(this.gameObject.transform.position.y);
 		foreach (var square in tempSquare) {
 			if (square != null && square.transform.position.x == x && square.transform.position.y == y) {
-				var lastmovetype = Game.MakeMove(thisPiece.Position, new BoardPosition((XCoord) x, (int) y+1));
-				if(lastmovetype.Outcome == MoveType.Capture){
-					DestroyCapturedPieces();
-				}
+                arby.MakeMove(currentPosition, new BoardPosition((XCoord)x, (int) y));
 			} 
 		}
-		Vector3 position = new Vector3 ((float)thisPiece.Position.X, (float)thisPiece.Position.Y - 1, -1);
-		transform.position = position;
 	}
 
 	void OnMouseDown (){
 
+        Debug.Log("heyyyyyyy");
+
 		GameObject square = GameObject.Find ("whitesquare");
 
-		var moves = Game.PossibleMoves (thisPiece.Position);
+		var moves = arby.PossibleMoves(currentPosition);
 
 		int count = 0;
 		foreach (var move in moves) {
 			tempSquare [count] = Instantiate (square, new Vector3 ((float)move.Destination.X, (float)move.Destination.Y - 1, -0.1f), Quaternion.identity);
 			tempSquare [count].GetComponent<Renderer> ().material.color = this.gameObject.GetComponent<Renderer> ().material.color;
 			count++;
-		}
-	}
-
-	void DestroyCapturedPieces(){
-		var oldPieces = GameObject.Find ("GameObject_Main").GetComponent<MainSceneStart> ().clientPiecesCollection;
-		var newPieces = Game.Pieces;
-		foreach (var pieceDict in oldPieces) {
-			var deadPieces = pieceDict.Keys.Except (newPieces);
-			foreach (var deadPiece in deadPieces) {
-				Destroy (pieceDict [deadPiece]);
-			}
 		}
 	}
 }

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using GameModel;
+using GameModel.Client;
+using GameModel.Messages;
 using GameModel.Data;
 
 public class MainSceneStart : MonoBehaviour {
 
-	public ChessGame game = new ChessGame();
+    public IArbitrator arby;
 
 	public Transform square_dark;
 	public Transform square_light;
@@ -21,7 +23,7 @@ public class MainSceneStart : MonoBehaviour {
 	public float gridWidth;
 	public float gridDepth;
 	public Transform[, ] squares = new Transform[14, 14];
-	public Dictionary<ChessPiece, GameObject>[] clientPiecesCollection = new Dictionary<ChessPiece, GameObject>[4];
+	public Dictionary<BoardPosition, GameObject>[] clientPiecesCollection = new Dictionary<BoardPosition, GameObject>[4];
 
 	public bool moveState = false;
     public bool local = true;
@@ -30,12 +32,23 @@ public class MainSceneStart : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+        for (int i = 0; i < 4; i++)
+        {
+            clientPiecesCollection[i] = new Dictionary<BoardPosition, GameObject>();
+
+        }
+
         if (PlayerPrefs.GetInt("local") == 0) local = false;
+        if (local)
+        {
+            arby = new LocalArbitrator();
+        }
+        else
+        {
+            
+        }
 
 		CreateGrid ();
-		CreatePieces ();
-		GivePiecesColors ();
-		GivePiecesBehavior ();
 	}
 
 	// Update is called once per frame
@@ -43,7 +56,79 @@ public class MainSceneStart : MonoBehaviour {
 	/// Main Update
 	/// </summary>
 	void Update () {
-		
+
+        //Check for messages during update
+        ModelMessage message;
+        bool message_recieved = arby.TryGetLatestMessage(out message);
+        if (message_recieved)
+        {
+            //Create piece message
+            if(message is CreatePieceMessage)
+            {
+                var actualMessage = (CreatePieceMessage)message;
+                //King
+                if (actualMessage.pieceType == PieceEnum.KING)
+                {
+                    clientPiecesCollection[(int)actualMessage.owner].Add(actualMessage.position, (Instantiate(piece_king, new Vector3((float) actualMessage.position.X, (float) actualMessage.position.Y - 1, -1), Quaternion.identity)));
+                }
+                //Queen
+                else if (actualMessage.pieceType == PieceEnum.QUEEN)
+                {
+                    clientPiecesCollection[(int)actualMessage.owner].Add(actualMessage.position, (Instantiate(piece_queen, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
+                }
+                //Rook
+                else if (actualMessage.pieceType == PieceEnum.ROOK)
+                {
+                    clientPiecesCollection[(int)actualMessage.owner].Add(actualMessage.position, (Instantiate(piece_rook, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
+                }
+                //Knight
+                else if (actualMessage.pieceType == PieceEnum.KNIGHT)
+                {
+                    clientPiecesCollection[(int)actualMessage.owner].Add(actualMessage.position, (Instantiate(piece_knight, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
+                }
+                //Bishop
+                else if (actualMessage.pieceType == PieceEnum.BISHOP)
+                {
+                    clientPiecesCollection[(int)actualMessage.owner].Add(actualMessage.position, (Instantiate(piece_bishop, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
+                }
+                //Pawn
+                else if (actualMessage.pieceType == PieceEnum.PAWN)
+                {
+                    clientPiecesCollection[(int)actualMessage.owner].Add(actualMessage.position, (Instantiate(piece_pawn, new Vector3((float)actualMessage.position.X, (float)actualMessage.position.Y - 1, -1), Quaternion.identity)));
+                }
+
+                //Add Color
+                var o = clientPiecesCollection[(int)actualMessage.owner][actualMessage.position];
+                Renderer rend = o.GetComponent<Renderer>();
+                if((int)actualMessage.owner == 0)
+                {
+                    rend.material.color = new Color(0, 0, 1);
+                }
+                else if ((int)actualMessage.owner == 1)
+                {
+                    rend.material.color = new Color(1, 0, 0);
+                }
+                else if ((int)actualMessage.owner == 2)
+                {
+                    rend.material.color = new Color(1.0f, 0.92f, 0.016f);
+                }
+                else if ((int)actualMessage.owner == 3)
+                {
+                    rend.material.color = new Color(0, 1, 0);
+                }
+
+                //Add Behavior
+                o.AddComponent<PieceBehavior>();
+                o.GetComponent<PieceBehavior>().currentPosition = actualMessage.position;
+            }
+
+            else if(message is SetTurnMessage)
+            {
+                var actualMessage = (SetTurnMessage)message;
+                GameObject.Find("whitesquare").GetComponent<TurnBehavior>().turn = (int) actualMessage.player;
+            }
+
+        }
 	}
 
 
@@ -73,75 +158,4 @@ public class MainSceneStart : MonoBehaviour {
 		}
 	}
 
-	/// <summary>
-	/// Creates the pieces. Adds them to a dictionary for future use.
-	/// </summary>
-	void CreatePieces(){
-
-		for (int i = 0; i < 4; i++) {
-			clientPiecesCollection [i] = new Dictionary<ChessPiece, GameObject> ();
-
-		}
-			
-
-		foreach (ChessPiece piece in game.Pieces) {
-
-			if (piece is King) {
-                clientPiecesCollection[(int)piece.Owner.Precedence].Add (piece, (Instantiate (piece_king, new Vector3(1, 1, -1), Quaternion.identity)) );
-			}
-			else if (piece is Queen) {
-                clientPiecesCollection[(int)piece.Owner.Precedence].Add (piece, (Instantiate (piece_queen, new Vector3(1, 1, -1), Quaternion.identity)) );
-			}
-			else if (piece is Rook) {
-                clientPiecesCollection[(int)piece.Owner.Precedence].Add (piece, (Instantiate (piece_rook, new Vector3(1, 1, -1), Quaternion.identity)) );
-			}
-			else if (piece is Knight) {
-                clientPiecesCollection[(int)piece.Owner.Precedence].Add (piece, (Instantiate (piece_knight, new Vector3(1, 1, -1), Quaternion.identity)) );
-			}
-			else if (piece is Bishop) {
-                clientPiecesCollection[(int)piece.Owner.Precedence].Add (piece, (Instantiate (piece_bishop, new Vector3(1, 1, -1), Quaternion.identity)) );
-			}
-			else if (piece is Pawn) {
-                clientPiecesCollection[(int)piece.Owner.Precedence].Add (piece, (Instantiate (piece_pawn, new Vector3(1, 1, -1), Quaternion.identity)) );
-			}
-		}
-			
-	}
-
-	/// <summary>
-	/// Gives the pieces colors.
-	/// </summary>
-	void GivePiecesColors(){
-		//Player 1, blue
-		foreach (GameObject o in clientPiecesCollection[0].Values) {
-			Renderer rend = o.GetComponent<Renderer> ();
-			rend.material.color = new Color (0, 0, 1);
-		}
-		//Player 2, red
-		foreach (GameObject o in clientPiecesCollection[1].Values) {
-			Renderer rend = o.GetComponent<Renderer> ();
-			rend.material.color = new Color (1, 0, 0);
-		}
-		//Player 3, yellow
-		foreach (GameObject o in clientPiecesCollection[2].Values) {
-			Renderer rend = o.GetComponent<Renderer> ();
-			rend.material.color = new Color (1.0f, 0.92f, 0.016f);
-		}
-		//Player 4, green
-		foreach (GameObject o in clientPiecesCollection[3].Values) {
-			Renderer rend = o.GetComponent<Renderer> ();
-			rend.material.color = new Color (0, 1, 0);
-		}
-	}
-
-	void GivePiecesBehavior(){
-
-		for (int i = 0; i < 4; i++) {
-			foreach (ChessPiece key in clientPiecesCollection[i].Keys) {
-				clientPiecesCollection [i] [key].AddComponent<PieceBehavior> ();
-				clientPiecesCollection [i] [key].GetComponent<PieceBehavior> ().thisPiece = key;
-			}
-		}
-
-	}
 }
