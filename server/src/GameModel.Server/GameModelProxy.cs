@@ -42,6 +42,7 @@ namespace GameModel.Server
                 //Send messages back to clients
                 Observable.Interval(TimeSpan.FromMilliseconds(200))
                     .SelectMany((i) => MessagesFromArbitrator(arby))
+                    .StartWith(new[] { new GameBeginMessage() })
                     .SerializeMessages()
                     .Do(msg =>
                     {
