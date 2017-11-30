@@ -1,22 +1,22 @@
-﻿using GameModel.Messages;
-using Microsoft.Web.WebSockets;
-using System;
+﻿using System;
 using System.Reactive.Linq;
+using WebSocketSharp;
+using WebSocketSharp.Server;
 
 namespace GameModel.Server
 {
     /// <summary>
     /// Handles a connection with a client GameModel over a websocket
     /// </summary>
-    public class GameModelHandler : WebSocketHandler
+    public class GameModelHandler : WebSocketBehavior
     {
         /// <summary>
         /// Called when a connection is opened
         /// </summary>
-        public override void OnOpen()
+        protected override void OnOpen()
         {
             _running = true;
-            var msgStream = Observable.FromEventPattern<MessageEventArgs>(
+            var msgStream = Observable.FromEventPattern<GameMessageEventArgs>(
                 handler => _messages += handler,
                 handler => _messages -= handler)
                 .TakeWhile(evArg => _running)
@@ -29,19 +29,18 @@ namespace GameModel.Server
         /// Called when a websocket message is received
         /// </summary>
         /// <param name="message"></param>
-        public override void OnMessage(byte[] message)
+        protected override void OnMessage(MessageEventArgs e)
         {
-            _messages?.Invoke(this, new MessageEventArgs(message));
+            _messages?.Invoke(this, new GameMessageEventArgs(e.RawData));
         }
 
         /// <summary>
         /// Called when a connection is closed
         /// </summary>
-        public override void OnClose()
+        protected override void OnError(ErrorEventArgs e)
         {
             _running = false;
             _client.IsRunning = false;
-            base.OnClose();
         }
 
         /// <summary>
@@ -59,9 +58,9 @@ namespace GameModel.Server
             }
         }
 
-        private class MessageEventArgs: EventArgs
+        private class GameMessageEventArgs: EventArgs
         {
-            public MessageEventArgs(byte[] message)
+            public GameMessageEventArgs(byte[] message)
             {
                 Message = message;
             }
@@ -78,9 +77,8 @@ namespace GameModel.Server
         }
 
         private static event EventHandler<HandlerEventArgs> _connections;
-        private event EventHandler<MessageEventArgs> _messages;
+        private event EventHandler<GameMessageEventArgs> _messages;
         private ClientConnection _client;
-        private Plumbing _plumbing;
         private bool _running;
     }
 }

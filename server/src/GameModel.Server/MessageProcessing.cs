@@ -39,27 +39,29 @@ namespace GameModel.Server
         /// <param name="rawMessages">An <see cref="IObserver{T}"/> of raw messages</param>
         /// <returns>An <see cref="IObserver{T}"/> of hydrated messages</returns>
         public static IObservable<ModelMessage> ParseMessages(this IObservable<byte[]> rawMessages) =>
-            rawMessages.Select(rawMessage =>
-            {
-                Debug.WriteLine($"Parsing {rawMessage}");
-                var stream = new MemoryStream(rawMessage);
-                return (ModelMessage)_serializer.ReadObject(stream);
-            });
+            rawMessages.Select(ParseMessage);
 
+        public static ModelMessage ParseMessage(byte[] rawMessage)
+        {
+            Debug.WriteLine($"Parsing {rawMessage}");
+            var stream = new MemoryStream(rawMessage);
+            return (ModelMessage)_serializer.ReadObject(stream);
+        }
         /// <summary>
         /// Dehydrates messages
         /// </summary>
         /// <param name="messages"></param>
         /// <returns></returns>
         public static IObservable<byte[]> SerializeMessages(this IObservable<ModelMessage> messages) =>
-            messages.Select(msg =>
-            {
-                Debug.WriteLine($"Serializing a {msg}");
-                var stream = new MemoryStream();
-                _serializer.WriteObject(stream, msg);
-                return stream.ToArray();
-            });
+            messages.Select(SerializeMessage);
 
+        public static byte[] SerializeMessage(ModelMessage msg)
+        {
+            Debug.WriteLine($"Serializing a {msg}");
+            var stream = new MemoryStream();
+            _serializer.WriteObject(stream, msg);
+            return stream.ToArray();
+        }
         private static DataContractSerializer _serializer;
     }
 }
