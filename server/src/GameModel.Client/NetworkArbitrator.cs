@@ -1,5 +1,6 @@
 ﻿using GameModel.Data;
 using GameModel.Messages;
+using UnityEngine;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -15,21 +16,21 @@ namespace GameModel.Client
     {
         public NetworkArbitrator(Uri wsAddress)
         {
-            
             _wsAddress = wsAddress;
             _ws = new ClientWebSocket();
+            _th = new Thread(CheckForMessages);
             Connect();
             CreateSerializer();
             _tc = new TurnController(PlayerEnum.PLAYER_1);
             _game = new ChessGame(_tc);
             _queue = new ConcurrentQueue<ModelMessage>();
-            _th = new Thread(CheckForMessages);
-            _th.Start()
         }
 
         public async void Connect()
         {
             await _ws.ConnectAsync(_wsAddress, CancellationToken.None);
+            _th.Start();
+            Debug.Log("Connected");
         }
 
         public void CreateSerializer()
@@ -137,10 +138,13 @@ namespace GameModel.Client
 
         private async void CheckForMessages()
         {
+            UnityEngine.Debug.Log("Check Message Service Started");
             while (true)
             {
+                Debug.Log("Loop");
                 var buffer = new ArraySegment<byte>();
                 await _ws.ReceiveAsync(buffer, CancellationToken.None);
+                UnityEngine.Debug.Log("Message from server recieved");
                 var recievedStream = new MemoryStream(buffer.ToArray());
                 var recievedObject = (ModelMessage)_serializer.ReadObject(recievedStream);
                 if(recievedObject is TranslatePieceMessage)
