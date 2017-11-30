@@ -19,14 +19,19 @@ namespace GameModel.Server
             ClientId = clientId;
             IncomingMessages = messages;
             SendCallback = sendCallback;
-            IsRunning = true;
+            _isRunning = true;
         }
         /// <summary>
         /// An identifier unique to this client
         /// </summary>
         public Guid ClientId;
 
-        public bool IsRunning;
+        public bool IsRunning => _isRunning;
+
+        public void Stop()
+        {
+            _isRunning = false;
+        }
 
         /// <summary>
         /// A stream of unparsed incoming messages
@@ -37,5 +42,6 @@ namespace GameModel.Server
         /// A method to call to send a message back to a client
         /// </summary>
         public Action<byte[]> SendCallback;
+        private bool _isRunning;
     }
 }
