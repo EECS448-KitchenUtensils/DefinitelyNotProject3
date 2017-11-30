@@ -30,8 +30,16 @@ namespace GameModel.Server
 
         private void SendText(byte[] data)
         {
-            var str = Encoding.UTF8.GetString(data);
-            Send(str);
+            if (Context.WebSocket.IsAlive)
+            {
+                Debug.WriteLine($"Sending a message to {Context.UserEndPoint}");
+                var str = Encoding.UTF8.GetString(data);
+                Send(str);
+            }
+            else
+            {
+                Debug.WriteLine($"Attempt to send a message to a dead connection");
+            }
         }
 
         /// <summary>
