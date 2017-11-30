@@ -32,9 +32,11 @@ namespace GameModel.Server
         {
             if (Context.WebSocket.IsAlive)
             {
-                Debug.WriteLine($"Sending a message to {Context.UserEndPoint}");
                 var str = Encoding.UTF8.GetString(data);
-                Send(str);
+                SendAsync(str, (success) =>
+                {
+                    Debug.WriteLine($"Sending a message to {Context.UserEndPoint}, {success}");
+                });
             }
             else
             {
@@ -54,10 +56,9 @@ namespace GameModel.Server
         /// <summary>
         /// Called when a connection is closed
         /// </summary>
-        protected override void OnError(ErrorEventArgs e)
+        protected override void OnClose(CloseEventArgs e)
         {
-            _running = false;
-            _client.IsRunning = false;
+            _client.Stop();
         }
 
         /// <summary>
