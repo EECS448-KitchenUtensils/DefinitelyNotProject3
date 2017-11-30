@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -26,7 +27,8 @@ namespace GameModel.Server
         {
             if (context.IsWebSocketRequest)
             {
-                context.AcceptWebSocketRequest(new GameModelHandler().ProcessWebSocketRequestAsync);
+                Debug.WriteLine("Accepting WebSocket request");
+                context.AcceptWebSocketRequest(new GameModelHandler().StartAsync);
             }
             else
             {

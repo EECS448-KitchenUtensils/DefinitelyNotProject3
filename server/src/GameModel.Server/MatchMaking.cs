@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Web;
@@ -12,19 +13,18 @@ namespace GameModel.Server
     {
         public static IObservable<UnassignedLobby> MakeMatches(this IObservable<ClientConnection> unmatchedConnections)
         {
-            var accumulator = new UnassignedLobby(Array.Empty<ClientConnection>());
+            var accumulator = new UnassignedLobby(new List<ClientConnection>());
             return unmatchedConnections
             .Synchronize()
             .Select(connection =>
             {
-                var activePlayers = accumulator.Players
-                           .Where(conn => conn.IsRunning)
-                           .ToList();
-                activePlayers.Add(connection);
+                Debug.WriteLine($"Adding new player {connection.ClientId}");
+                accumulator.Players.Add(connection);
                 if (accumulator.IsFull)
                 {
                     var oldAccumulator = accumulator;
-                    accumulator = new UnassignedLobby(Array.Empty<ClientConnection>());
+                    accumulator = new UnassignedLobby(new List<ClientConnection>());
+                    Debug.WriteLine($"Filled a lobby");
                     return oldAccumulator;
                 }
                 else
@@ -45,6 +45,7 @@ namespace GameModel.Server
                     assignedLobby[counter] = player;
                     counter++;
                 }
+                Debug.WriteLine("Assigned player orders to lobby");
                 return assignedLobby;
             });
         }

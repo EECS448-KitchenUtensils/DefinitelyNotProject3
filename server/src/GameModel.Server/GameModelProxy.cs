@@ -3,6 +3,7 @@ using GameModel.Data;
 using GameModel.Messages;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
@@ -32,6 +33,7 @@ namespace GameModel.Server
                         .Cast<TranslatePieceMessage>()
                         .Do(translatation =>
                         {
+                            Debug.WriteLine($"Processing message: {translatation}");
                             lock (arbyLock)
                             {
                                 arby.MakeMove(translatation.src, translatation.dest);
@@ -54,6 +56,7 @@ namespace GameModel.Server
                             }
                             else
                             {
+                                Debug.WriteLine("Terminating lobby");
                                 terminateGame.Cancel();
                             }
                         }

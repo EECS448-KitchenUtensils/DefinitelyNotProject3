@@ -1,6 +1,7 @@
 ﻿using GameModel.Data;
 using GameModel.Messages;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
@@ -40,6 +41,7 @@ namespace GameModel.Server
         public static IObservable<ModelMessage> ParseMessages(this IObservable<byte[]> rawMessages) =>
             rawMessages.Select(rawMessage =>
             {
+                Debug.WriteLine($"Parsing {rawMessage}");
                 var stream = new MemoryStream(rawMessage);
                 return (ModelMessage)_serializer.ReadObject(stream);
             });
@@ -52,6 +54,7 @@ namespace GameModel.Server
         public static IObservable<byte[]> SerializeMessages(this IObservable<ModelMessage> messages) =>
             messages.Select(msg =>
             {
+                Debug.WriteLine($"Serializing a {msg}");
                 var stream = new MemoryStream();
                 _serializer.WriteObject(stream, msg);
                 return stream.ToArray();
