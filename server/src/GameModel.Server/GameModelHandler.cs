@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Text;
 using WebSocketSharp;
@@ -16,6 +17,7 @@ namespace GameModel.Server
         /// </summary>
         protected override void OnOpen()
         {
+            Debug.WriteLine($"Got a connection from: {Context.UserEndPoint}");
             _running = true;
             var msgStream = Observable.FromEventPattern<GameMessageEventArgs>(
                 handler => _messages += handler,
