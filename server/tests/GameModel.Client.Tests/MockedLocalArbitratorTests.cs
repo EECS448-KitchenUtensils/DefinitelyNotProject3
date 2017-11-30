@@ -12,7 +12,7 @@ namespace GameModel.Client.Tests
         [Test]
         public void InvalidMoveEmitsNothing()
         {
-
+            Assert.Inconclusive("Implement me!");
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace GameModel.Client.Tests
         [Test]
         public void ValidMoveEmitsTranslatePieceSetTurn()
         {
-
+            Assert.Inconclusive("Implement me!");
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace GameModel.Client.Tests
         [Test]
         public void MoveThatCausesCheckEmitsTranslatePieceSetCheckSetTurn()
         {
-
+            Assert.Inconclusive("Implement me!");
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace GameModel.Client.Tests
         [Test]
         public void MoveThatCausesLossEmitsTranslatePieceLostSetTurn()
         {
-
+            Assert.Inconclusive("Implement me!");
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace GameModel.Client.Tests
         [Test]
         public void CaptureThatCausesLossEmitsDestroyPieceTranslatePieceLostSetTurn()
         {
-
+            Assert.Inconclusive("Implement me!");
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace GameModel.Client.Tests
         [Test]
         public void MoveThatRemovesCheckEmitsSetCheckTranslatePieceSetTurn()
         {
-
+            Assert.Inconclusive("Implement me!");
         }
     }
 }
