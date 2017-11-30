@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Text;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
@@ -21,8 +22,14 @@ namespace GameModel.Server
                 handler => _messages -= handler)
                 .TakeWhile(evArg => _running)
                 .Select(evArgs => evArgs.EventArgs.Message);
-            _client = new ClientConnection(Guid.NewGuid(), msgStream, Send);
+            _client = new ClientConnection(Guid.NewGuid(), msgStream, SendText);
             _connections?.Invoke(this, new HandlerEventArgs(this));
+        }
+
+        private void SendText(byte[] data)
+        {
+            var str = Encoding.UTF8.GetString(data);
+            Send(str);
         }
 
         /// <summary>
