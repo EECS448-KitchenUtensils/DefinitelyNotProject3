@@ -15,13 +15,16 @@ namespace GameModel.Client
     {
         public NetworkArbitrator(Uri wsAddress)
         {
+            
             _wsAddress = wsAddress;
             _ws = new ClientWebSocket();
             Connect();
-            
+            CreateSerializer();
             _tc = new TurnController(PlayerEnum.PLAYER_1);
             _game = new ChessGame(_tc);
             _queue = new ConcurrentQueue<ModelMessage>();
+            _th = new Thread(CheckForMessages);
+            _th.Start()
         }
 
         public async void Connect()
@@ -163,8 +166,8 @@ namespace GameModel.Client
             }
         }
 
+        private Thread _th;
         private DataContractSerializer _serializer;
-        private PlayerEnum _player;
         private Uri _wsAddress;
         private ClientWebSocket _ws;
         private ITurnController _tc;

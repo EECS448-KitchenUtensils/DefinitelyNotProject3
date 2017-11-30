@@ -39,9 +39,9 @@ public class MainSceneStart : MonoBehaviour {
         }
         else
         {
-            
+            arby = new NetworkArbitrator(new System.Uri("ws://192.168.1.107:1337"));
         }
-
+        
 		CreateGrid ();
 	}
 
