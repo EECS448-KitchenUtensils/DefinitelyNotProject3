@@ -20,6 +20,7 @@ namespace GameModel.Server
             {
                 Debug.WriteLine($"Adding new player {connection.ClientId}");
                 accumulator.Players.Add(connection);
+                accumulator.RemoveDead();
                 if (accumulator.IsFull)
                 {
                     var oldAccumulator = accumulator;

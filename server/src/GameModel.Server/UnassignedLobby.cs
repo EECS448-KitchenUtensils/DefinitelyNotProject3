@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace GameModel.Server
 {
@@ -8,8 +9,15 @@ namespace GameModel.Server
         {
             Players = players;
         }
+
+        public void RemoveDead()
+        {
+            Players = Players.Where(p => p.IsRunning)
+                             .ToList();
+        }
+
         public bool IsFull => Players.Count == FULL_SIZE;
-        public readonly ICollection<ClientConnection> Players;
+        public ICollection<ClientConnection> Players { get; private set; }
         public const int FULL_SIZE = 4;
     }
 }
