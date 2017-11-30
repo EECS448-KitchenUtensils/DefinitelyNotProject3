@@ -19,10 +19,13 @@ namespace GameModel.Server
         {
             Debug.WriteLine($"Got a connection from: {Context.UserEndPoint}");
             _running = true;
+            var closeStream = Observable.FromEventPattern<EventArgs>(
+                handler => _closeEvent += handler,
+                handler => _closeEvent -= handler);
             var msgStream = Observable.FromEventPattern<GameMessageEventArgs>(
                 handler => _messages += handler,
                 handler => _messages -= handler)
-                .TakeWhile(evArg => _running)
+                .TakeUntil(closeStream)
                 .Select(evArgs => evArgs.EventArgs.Message);
             _client = new ClientConnection(Guid.NewGuid(), msgStream, SendText);
             _connections?.Invoke(this, new HandlerEventArgs(this));
@@ -58,6 +61,7 @@ namespace GameModel.Server
         /// </summary>
         protected override void OnClose(CloseEventArgs e)
         {
+            _closeEvent?.Invoke(this, new EventArgs());
             _client.Stop();
         }
 
@@ -95,6 +99,7 @@ namespace GameModel.Server
         }
 
         private static event EventHandler<HandlerEventArgs> _connections;
+        private event EventHandler<EventArgs> _closeEvent;
         private event EventHandler<GameMessageEventArgs> _messages;
         private ClientConnection _client;
         private bool _running;

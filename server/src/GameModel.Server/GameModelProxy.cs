@@ -42,7 +42,7 @@ namespace GameModel.Server
                         .Subscribe(terminateGame.Token);
                 }
                 //Send messages back to clients
-                Observable.Interval(TimeSpan.FromMilliseconds(200))
+                Observable.Interval(TimeSpan.FromMilliseconds(50))
                     .SelectMany((i) => MessagesFromArbitrator(arby))
                     .StartWith(new[] { new GameBeginMessage() })
                     .SerializeMessages()
