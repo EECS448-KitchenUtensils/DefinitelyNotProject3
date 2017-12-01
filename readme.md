@@ -5,6 +5,7 @@ Ambitious little 4-way chess app.
 Most of the project documentation is on the Wiki attached to this repository.
 
 *Notice* The tests can only be ran from the server solution file in visual studio.
+*Notice* This project consists of two parts: A Unity project and a Visual Studio solution. The Visual Studio solution **must be built first**. If this procedure is not followed, Unity will not build.
 
 File Hierarchy Overview
 * CHESSx4
