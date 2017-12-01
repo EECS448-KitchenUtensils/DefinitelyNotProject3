@@ -6,6 +6,7 @@ using GameModel;
 using GameModel.Client;
 using GameModel.Messages;
 using GameModel.Data;
+using AssemblyCSharp;
 
 public class MainSceneStart : MonoBehaviour {
 
@@ -28,10 +29,13 @@ public class MainSceneStart : MonoBehaviour {
 	public bool moveState = false;
     public bool local = true;
 
+    public ConfigFileLoader Config { get; private set; }
 
-	// Use this for initialization
-	void Start () {
 
+    // Use this for initialization
+    void Start () {
+        Config = new ConfigFileLoader();
+        Config.ReadFile();
         if (PlayerPrefs.GetInt("local") == 0) local = false;
         if (local)
         {
@@ -39,7 +43,7 @@ public class MainSceneStart : MonoBehaviour {
         }
         else
         {
-            arby = new NetworkArbitrator("ws://192.168.1.107:1337");
+            arby = new NetworkArbitrator(Config.Server);
         }
         
 		CreateGrid ();
