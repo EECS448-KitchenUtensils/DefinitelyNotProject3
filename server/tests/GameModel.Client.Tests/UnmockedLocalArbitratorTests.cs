@@ -3,6 +3,9 @@ using NUnit.Framework;
 
 namespace GameModel.Client.Tests
 {
+    /// <summary>
+    /// Contains tests for <see cref="LocalArbitrator"/> that do not require mocking
+    /// </summary>
     [TestFixture]
     public class UnmockedLocalArbitratorTests
     {

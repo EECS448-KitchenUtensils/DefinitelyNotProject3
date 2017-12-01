@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace GameModel.Messages
 {
+    /// <summary>
+    /// Communicates that a <see cref="ChessPiece"/> has been created
+    /// </summary>
     [DataContract]
     public class CreatePieceMessage: ModelMessage
     {

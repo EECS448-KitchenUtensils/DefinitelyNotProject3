@@ -9,6 +9,10 @@ namespace GameModel.Messages
     [DataContract]
     public class DestroyPieceMessage: ModelMessage
     {
+        /// <summary>
+        /// Creates a <see cref="DestroyPieceMessage"/> from a <see cref="ChessPiece"/>
+        /// </summary>
+        /// <param name="piece"><see cref="ChessPiece"/> to destroy</param>
         public DestroyPieceMessage(ChessPiece piece)
         {
             pieceType = piece.PieceType;

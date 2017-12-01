@@ -1,14 +1,20 @@
 ﻿using GameModel.Data;
 using GameModel.Messages;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GameModel.Client
 {
+    /// <summary>
+    /// Emulates having a connection to a remote server using only a local <see cref="ChessGame"/>
+    /// </summary>
     public class LocalArbitrator : IArbitrator
     {
+        /// <summary>
+        /// Creates a <see cref="LocalArbitrator"/> with the default implementations
+        /// of <see cref="IGameModel"/> and <see cref="ITurnController"/>
+        /// </summary>
         public LocalArbitrator()
         {
             _tc = new TurnController(PlayerEnum.PLAYER_1);
@@ -18,6 +24,12 @@ namespace GameModel.Client
             EmitSetTurn();
         }
         
+        /// <summary>
+        /// Creates a <see cref="LocalArbitrator"/> with provided implementations
+        /// of <see cref="IGameModel"/> and <see cref="ITurnController"/> for testing purposes
+        /// </summary>
+        /// <param name="tc">An <see cref="ITurnController"/> implementation or mock</param>
+        /// <param name="gameModel">An <see cref="IGameModel"/> implementation or mock</param>
         public LocalArbitrator(ITurnController tc, IGameModel gameModel)
         {
             _tc = tc;
@@ -27,12 +39,20 @@ namespace GameModel.Client
             EmitSetTurn();
         }
 
+        /// <summary>
+        /// Signals that the local client would like to forfeit the game
+        /// </summary>
         public void Forfeit()
         {
             _queue.Enqueue(new LostMessage(LostMessage.Reason.Forfeit, _tc.Current));
             _tc.Current.Forfeit();
         }
 
+        /// <summary>
+        /// Signals that the local client would like to move a piece
+        /// </summary>
+        /// <param name="src">The source <see cref="BoardPosition"/> to move a piece from</param>
+        /// <param name="dest">The destination <see cref="BoardPosition"/> to move a piece to</param>
         public void MakeMove(BoardPosition src, BoardPosition dest)
         {
             var players = new[] {
@@ -83,6 +103,11 @@ namespace GameModel.Client
         {
         }
 
+        /// <summary>
+        /// Attempts to retrieve a <see cref="ModelMessage"/> representing a change in game state
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public bool TryGetLatestMessage(out ModelMessage message) =>
             _queue.TryDequeue(out message);
 

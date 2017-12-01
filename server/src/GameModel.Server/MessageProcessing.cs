@@ -41,6 +41,11 @@ namespace GameModel.Server
         public static IObservable<ModelMessage> ParseMessages(this IObservable<byte[]> rawMessages) =>
             rawMessages.Select(ParseMessage);
 
+        /// <summary>
+        /// Parses raw message buffers into <see cref="ModelMessage"/> instances
+        /// </summary>
+        /// <param name="rawMessage"></param>
+        /// <returns></returns>
         public static ModelMessage ParseMessage(byte[] rawMessage)
         {
             Debug.WriteLine($"Parsing {rawMessage}");
@@ -55,6 +60,11 @@ namespace GameModel.Server
         public static IObservable<byte[]> SerializeMessages(this IObservable<ModelMessage> messages) =>
             messages.Select(SerializeMessage);
 
+        /// <summary>
+        /// Serializes a <see cref="ModelMessage"/> into XML
+        /// </summary>
+        /// <param name="msg">Message to serialize</param>
+        /// <returns>The XML representation of the message</returns>
         public static byte[] SerializeMessage(ModelMessage msg)
         {
             Debug.WriteLine($"Serializing a {msg}");

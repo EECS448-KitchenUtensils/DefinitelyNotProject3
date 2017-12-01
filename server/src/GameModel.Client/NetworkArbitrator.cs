@@ -1,19 +1,26 @@
 ﻿using GameModel.Data;
 using GameModel.Messages;
-using UnityEngine;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using WebSocketSharp;
-using System.Threading;
-using System.Runtime.Serialization;
 using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Threading;
+using UnityEngine;
+using WebSocketSharp;
 
 namespace GameModel.Client
 {
+    /// <summary>
+    /// Synchronizes a <see cref="ChessGame"/> over the network by connecting to a remote server
+    /// </summary>
     public class NetworkArbitrator : IArbitrator
     {
+        /// <summary>
+        /// Creates and starts a new <see cref="NetworkArbitrator"/>
+        /// </summary>
+        /// <param name="wsAddress">Address of the server</param>
         public NetworkArbitrator(string wsAddress)
         {
             _ws = new WebSocket(wsAddress);
@@ -25,6 +32,9 @@ namespace GameModel.Client
             _queue = new ConcurrentQueue<ModelMessage>();
         }
 
+        /// <summary>
+        /// Connects to the server and begins receiving messages
+        /// </summary>
         public void Connect()
         {
             _ws.Connect();
@@ -32,7 +42,7 @@ namespace GameModel.Client
             Debug.Log("Connected");
         }
 
-        public void CreateSerializer()
+        private void CreateSerializer()
         {
             var knownTypes = new[]
             {
@@ -49,11 +59,19 @@ namespace GameModel.Client
             _serializer = new DataContractSerializer(typeof(ModelMessage), knownTypes);
         }
 
+        /// <summary>
+        /// Signals that the local client would like to forfeit the game
+        /// </summary>
         public void Forfeit()
         {
             //Nothing rn
         }
 
+        /// <summary>
+        /// Signals that the local client would like to move a piece on the board
+        /// </summary>
+        /// <param name="src">Source position to move a piece from</param>
+        /// <param name="dest">Destination position of the piece</param>
         public void MakeMove(BoardPosition src, BoardPosition dest)
         {
 
@@ -79,6 +97,11 @@ namespace GameModel.Client
         {
         }
 
+        /// <summary>
+        /// Attempts to get a message that has been received from the server
+        /// </summary>
+        /// <param name="message">Message received from server (out variable)</param>
+        /// <returns>true if a message was successfully retrieved</returns>
         public bool TryGetLatestMessage(out ModelMessage message) =>
             _queue.TryDequeue(out message);
 
@@ -140,13 +163,9 @@ namespace GameModel.Client
             Debug.Log("Check for Messages");
             _ws.OnMessage += (sender, e) => ParseMessage(sender, e);
         }
-
-        public void ParseMessage(object sender, MessageEventArgs e)
+        
+        private void ParseMessage(object sender, MessageEventArgs e)
         {
-            //var bufferArray = new byte[1024];
-            //var buffer = new ArraySegment<byte>(bufferArray);
-            //await _ws.ReceiveAsync(buffer, CancellationToken.None);
-            //UnityEngine.Debug.Log("Message from server recieved");
             var recievedStream = new MemoryStream(e.RawData);
             var recievedObject = (ModelMessage)_serializer.ReadObject(recievedStream);
             if (recievedObject is TranslatePieceMessage)
@@ -173,7 +192,6 @@ namespace GameModel.Client
 
         private Thread _th;
         private DataContractSerializer _serializer;
-        private Uri _wsAddress;
         private WebSocket _ws;
         private ITurnController _tc;
         private IGameModel _game;

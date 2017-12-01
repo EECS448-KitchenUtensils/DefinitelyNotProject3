@@ -18,7 +18,6 @@ namespace GameModel.Server
         protected override void OnOpen()
         {
             Debug.WriteLine($"Got a connection from: {Context.UserEndPoint}");
-            _running = true;
             var closeStream = Observable.FromEventPattern<EventArgs>(
                 handler => _closeEvent += handler,
                 handler => _closeEvent -= handler);
@@ -50,7 +49,7 @@ namespace GameModel.Server
         /// <summary>
         /// Called when a websocket message is received
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="e">Data retrieved from this websocket message</param>
         protected override void OnMessage(MessageEventArgs e)
         {
             _messages?.Invoke(this, new GameMessageEventArgs(e.RawData));
@@ -102,6 +101,5 @@ namespace GameModel.Server
         private event EventHandler<EventArgs> _closeEvent;
         private event EventHandler<GameMessageEventArgs> _messages;
         private ClientConnection _client;
-        private bool _running;
     }
 }

@@ -7,17 +7,19 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
 
 namespace GameModel.Client.Tests
 {
+    /// <summary>
+    /// Contains tests to all derived classes of <see cref="ModelMessage"/> are completely serializable
+    /// </summary>
     [TestFixture]
     public class MessagesSerializableTests
     {
         /// <summary>
         /// Checks to make sure a message type is Serializable
         /// </summary>
-        /// <param name="msg">Message type to check</param>
+        /// <param name="msgType">Message type to check</param>
         [Test, TestCaseSource(nameof(MessageTypes))]
         public void MessagesAreSerializable(Type msgType)
         {
@@ -26,6 +28,10 @@ namespace GameModel.Client.Tests
             stream.Position = 0;
             Debug.WriteLine(new StreamReader(stream).ReadToEnd());
         }
+
+        /// <summary>
+        /// Enumerates the types in <see cref="GameModel.Messages"/> using reflection
+        /// </summary>
         public static IEnumerable MessageTypes
         {
             get

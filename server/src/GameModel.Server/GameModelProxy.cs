@@ -10,6 +10,9 @@ using System.Threading;
 
 namespace GameModel.Server
 {
+    /// <summary>
+    /// Contains methods to keep a lobby of connected clients in sync with a server-side game model
+    /// </summary>
     public static class GameModelProxy
     {
         /// <summary>

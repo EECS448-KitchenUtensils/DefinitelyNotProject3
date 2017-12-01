@@ -20,7 +20,14 @@ namespace GameModel.Messages
 
         private LostMessage() { }
 
+        /// <summary>
+        /// The <see cref="Reason"/> a player has lost/left the game.
+        /// </summary>
         public readonly Reason reason;
+
+        /// <summary>
+        /// Which <see cref="Player"/> has lost/left the game
+        /// </summary>
         public readonly Player player;
 
         /// <summary>
@@ -28,8 +35,17 @@ namespace GameModel.Messages
         /// </summary>
         public enum Reason
         {
+            /// <summary>
+            /// The <see cref="Player"/> has forfeited the game
+            /// </summary>
             Forfeit,
+            /// <summary>
+            /// The <see cref="Player"/> has failed to defend against a check
+            /// </summary>
             Checkmate,
+            /// <summary>
+            /// The <see cref="Player"/> has had their <see cref="King"/> captured by another <see cref="Player"/>
+            /// </summary>
             KingCapture
         }
     }

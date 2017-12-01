@@ -1,16 +1,22 @@
 ﻿using GameModel.Data;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Web;
 
 namespace GameModel.Server
 {
+    /// <summary>
+    /// Contains methods to make lobbies out of connecting clients
+    /// </summary>
     public static class MatchMaking
     {
+        /// <summary>
+        /// Makes lobbies out of incoming connections
+        /// </summary>
+        /// <param name="unmatchedConnections">Incoming connections that have yet to be assigned to a lobby</param>
+        /// <returns>A stream of filled lobbies that have not yet had player precendences assigned</returns>
         public static IObservable<UnassignedLobby> MakeMatches(this IObservable<ClientConnection> unmatchedConnections)
         {
             var accumulator = new UnassignedLobby(new List<ClientConnection>());
@@ -35,6 +41,12 @@ namespace GameModel.Server
             })
             .Where(lobby => lobby != null);
         }
+
+        /// <summary>
+        /// Assigns precendence values to each player in a newly-filled lobby
+        /// </summary>
+        /// <param name="lobbies">A stream of new lobbies</param>
+        /// <returns>A stream of assigned lobbies</returns>
         public static IObservable<IDictionary<PlayerEnum, ClientConnection>> AssignPlayerSlots(this IObservable<UnassignedLobby> lobbies)
         {
             return lobbies.Select(lobby =>

@@ -64,6 +64,9 @@ namespace GameModel
         /// </summary>
         protected virtual int _maxSteps { get; }
 
+        /// <summary>
+        /// The <see cref="PieceEnum"/> corresponding to the type of this <see cref="ChessPiece"/>
+        /// </summary>
         public PieceEnum PieceType { get; protected set; }
     }
 }

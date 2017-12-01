@@ -26,8 +26,14 @@ namespace GameModel.Server
         /// </summary>
         public Guid ClientId;
 
+        /// <summary>
+        /// Indicates whether this <see cref="ClientConnection"/> still represents a living connection
+        /// </summary>
         public bool IsRunning => _isRunning;
 
+        /// <summary>
+        /// Signals that this <see cref="ClientConnection"/> no longer represents a living connection
+        /// </summary>
         public void Stop()
         {
             _isRunning = false;

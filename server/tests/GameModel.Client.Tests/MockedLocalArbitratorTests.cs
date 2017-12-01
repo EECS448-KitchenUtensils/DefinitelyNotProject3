@@ -3,6 +3,10 @@ using GameModel.Messages;
 
 namespace GameModel.Client.Tests
 {
+    /// <summary>
+    /// Contains tests for <see cref="LocalArbitrator"/> that require the use
+    /// of a mocked <see cref="ITurnController"/> and <see cref="IGameModel"/>
+    /// </summary>
     [TestFixture]
     public class MockedLocalArbitratorTests
     {

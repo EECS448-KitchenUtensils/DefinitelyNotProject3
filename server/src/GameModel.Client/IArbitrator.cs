@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace GameModel
 {
+    /// <summary>
+    /// Encapsulates the <see cref="ChessGame"/> in order to provide synchronization between clients
+    /// </summary>
     public interface IArbitrator
     {
         /// <summary>

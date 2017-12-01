@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace GameModel
 {
+    /// <summary>
+    /// Encapsulates logic for telling which player owns the current turn
+    /// </summary>
     public class TurnController: ITurnController
     {
         /// <summary>

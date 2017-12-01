@@ -2,6 +2,9 @@
 
 namespace GameModel.Data
 {
+    /// <summary>
+    /// Holds state that belongs to a user playing the game
+    /// </summary>
     public class Player : IEquatable<Player>
     {
         /// <summary>
@@ -49,7 +52,7 @@ namespace GameModel.Data
         /// <summary>
         /// Checks structural equality
         /// </summary>
-        /// <param name="other">Another <see cref="object"/> to check against</param>
+        /// <param name="obj">Another <see cref="object"/> to check against</param>
         /// <returns>true if structural equal, else false</returns>
         public override bool Equals(object obj)
         {

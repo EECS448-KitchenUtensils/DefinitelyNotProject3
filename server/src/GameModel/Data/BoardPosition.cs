@@ -84,6 +84,10 @@ namespace GameModel.Data {
         [DataMember]
         public readonly int Y;
 
+        /// <summary>
+        /// Makes a <see cref="System.String"/> representation of this <see cref="BoardPosition"/>
+        /// </summary>
+        /// <returns></returns>
         public override string ToString() => string.Format("x={0}, y={1}", X, Y);
     }
 }
