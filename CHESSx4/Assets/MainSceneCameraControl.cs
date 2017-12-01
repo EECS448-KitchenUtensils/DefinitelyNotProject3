@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class MainSceneCameraControl : MonoBehaviour {
 
-	// Use this for initialization
+	/// <summary>
+    /// Change the camera to be centered on the game.
+    /// </summary>
 	void Start () {
 		//Move main camera to center of grid.
 		float gridWidth = GameObject.Find ("GameObject_Main").GetComponent<MainSceneStart> ().gridWidth;

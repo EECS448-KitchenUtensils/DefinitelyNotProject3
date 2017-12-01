@@ -6,14 +6,18 @@ using UnityEngine.SceneManagement;
 public class JoinButtonBehaviour : MonoBehaviour
 {
 
-    //Switch Scene
+    /// <summary>
+    /// Start the game in local mode.
+    /// </summary>
     public void GoToMainSceneLocal()
     {
         SceneManager.LoadScene("main_scene");
         PlayerPrefs.SetInt("local", 1);
     }
 
-    //Switch Scene
+    /// <summary>
+    /// Start the game in networked mode.
+    /// </summary>
     public void GoToMainSceneOnline()
     {
         SceneManager.LoadScene("main_scene");

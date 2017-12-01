@@ -7,10 +7,18 @@ using GameModel.Data;
 
 public class PieceBehavior : MonoBehaviour {
 
+    /// <summary>
+    /// Position according to Arby
+    /// </summary>
     public BoardPosition currentPosition;
+
+    /// <summary>
+    /// Position according to client pieces collection.
+    /// </summary>
     public BoardPosition oldPosition;
-	public float startx;
-	public float starty;
+
+	private float startx;
+	private float starty;
 	private GameObject[] tempSquare = new GameObject[50];
 	private Vector3 mousePosition;
 	private IArbitrator arby{
@@ -20,12 +28,16 @@ public class PieceBehavior : MonoBehaviour {
 	}
 
 
-	// Use this for initialization
+	/// <summary>
+    /// Initialization.
+    /// </summary>
 	void Start () {
 
 	}
 	
-	// Update is called once per frame
+	/// <summary>
+    /// Every framse check if their is a new position needed to move to.
+    /// </summary>
 	void Update () {
 
         if(oldPosition != currentPosition)
@@ -42,16 +54,18 @@ public class PieceBehavior : MonoBehaviour {
 		}
 	}
 
-
-	//Theses need to be changed to work with ChessPiece as key instead of tree.
-
-
+    /// <summary>
+    /// While dragging a piece keep it on mouse.
+    /// </summary>
 	void OnMouseDrag() {
 		mousePosition = Input.mousePosition;
 		mousePosition = Camera.main.ScreenToWorldPoint (mousePosition);
 		transform.position = Vector3.Lerp (transform.position, new Vector3(mousePosition.x, mousePosition.y, -1), 0.5f);
 	}
 
+    /// <summary>
+    /// When piece is dropped try and make move to the position.
+    /// </summary>
 	void OnMouseUp() {
         oldPosition = new BoardPosition((XCoord)0, 1);
 		float x = Mathf.Round(this.gameObject.transform.position.x);
@@ -63,6 +77,9 @@ public class PieceBehavior : MonoBehaviour {
 		}
 	}
 
+    /// <summary>
+    /// Piece is clicked; generate possible moves.
+    /// </summary>
 	void OnMouseDown (){
 
 		GameObject square = GameObject.Find ("whitesquare");

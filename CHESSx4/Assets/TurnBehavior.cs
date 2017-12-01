@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TurnBehavior : MonoBehaviour {
 
+    /// <summary>
+    /// Holds the value of the current turn
+    /// </summary>
     public int turn = 0;
 
 	// Use this for initialization
@@ -11,7 +14,9 @@ public class TurnBehavior : MonoBehaviour {
 		
 	}
 	
-	// Update is called once per frame
+	/// <summary>
+    /// Change color of the turn indicator if new turn.
+    /// </summary>
 	void Update () {
 		switch (turn) {
 		case 0:

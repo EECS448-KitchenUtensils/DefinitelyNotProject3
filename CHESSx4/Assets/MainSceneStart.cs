@@ -10,6 +10,9 @@ using AssemblyCSharp;
 
 public class MainSceneStart : MonoBehaviour {
 
+    /// <summary>
+    /// Arbitrator that delegates game.
+    /// </summary>
     public IArbitrator arby;
 
 	public Transform square_dark;
@@ -23,16 +26,31 @@ public class MainSceneStart : MonoBehaviour {
 
 	public float gridWidth;
 	public float gridDepth;
+
+    /// <summary>
+    /// 2D array that represents local board.
+    /// </summary>
 	public Transform[, ] squares = new Transform[14, 14];
+
+    /// <summary>
+    /// Dictionary that maps the board position to the game object there.
+    /// </summary>
 	public Dictionary<BoardPosition, GameObject> clientPiecesCollection = new Dictionary<BoardPosition, GameObject>();
 
 	public bool moveState = false;
+
+    /// <summary>
+    /// Value to hold whether or not the game is networked.
+    /// </summary>
     public bool local = true;
 
     public ConfigFileLoader Config { get; private set; }
 
 
-    // Use this for initialization
+    /// <summary>
+    /// Initializes on launch of the game.
+    /// Determines if local or network and creates/runs arby
+    /// </summary>
     void Start () {
         Config = new ConfigFileLoader();
         Config.ReadFile();
@@ -57,8 +75,7 @@ public class MainSceneStart : MonoBehaviour {
 
         //Check for messages during update
         ModelMessage message;
-        bool message_recieved = arby.TryGetLatestMessage(out message);
-        if (message_recieved)
+        while (arby.TryGetLatestMessage(out message))
         {
             Debug.Log(message);
             //Create piece message
